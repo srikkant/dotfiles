@@ -12,9 +12,6 @@ keymap.set('n', 'dw', 'vb"_d')
 -- Select all
 keymap.set('n', '<C-a>', 'gg<S-v>G')
 
--- Save with root permission (not working for now)
---vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})
-
 -- New tab
 keymap.set('n', 'te', ':tabedit')
 -- Split window
@@ -35,5 +32,6 @@ keymap.set('n', '<C-w><down>', '<C-w>-')
 
 -- Custom Mappings
 keymap.set('n', 'tt', ':tabnew<Enter>') -- open a new tab
-keymap.set('n', '<space>fb', ':Telescope file_browser<Enter>', { noremap = true })
+keymap.set('n', '<space>fb', ':Telescope file_browser path=%:p:h:<Enter>', { noremap = true })
 keymap.set('n', '<C-`>', ':ter<Enter>') -- open ter in the current tab
+keymap.set('n', '<C-q>', ':lua vim.lsp.buf.code_action()<CR>')
