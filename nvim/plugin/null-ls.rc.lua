@@ -3,14 +3,20 @@ if (not status) then return end
 
 local augroup_format = vim.api.nvim_create_augroup("Format", { clear = true })
 
-null_ls.setup {
+null_ls.setup({
     sources = {
-        null_ls.builtins.diagnostics.eslint_d.with({
-            diagnostics_format = '[eslint] #{m}\n(#{c})'
-        }),
-        null_ls.builtins.diagnostics.fish
+        null_ls.builtins.code_actions.eslint_d,
+
+        null_ls.builtins.diagnostics.editorconfig_checker,
+        null_ls.builtins.diagnostics.eslint_d,
+        null_ls.builtins.diagnostics.fish,
+        null_ls.builtins.diagnostics.markdownlint,
+
+        null_ls.builtins.formatting.eslint_d,
+        null_ls.builtins.formatting.prettierd,
+        null_ls.builtins.formatting.stylelint
     },
-    
+
     on_attach = function(client, bufnr)
         if client.server_capabilities.documentFormattingProvider then
             vim.api.nvim_clear_autocmds { buffer = 0, group = augroup_format }
@@ -21,4 +27,4 @@ null_ls.setup {
             })
         end
     end,
-}
+})
