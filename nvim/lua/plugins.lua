@@ -1,13 +1,13 @@
 local status, packer = pcall(require, "packer")
 if (not status) then
-  print("Packer is not installed!")
-  return
+    print("Packer is not installed!")
+    return
 end
 
 vim.cmd [[packadd packer.nvim]]
 
 packer.startup(function(use)
-    -- package manager. 
+    -- package manager.
     -- absolutely essential
     use 'wbthomason/packer.nvim'
 
@@ -34,16 +34,15 @@ packer.startup(function(use)
     use 'windwp/nvim-ts-autotag'
     use 'norcalli/nvim-colorizer.lua'
     use 'akinsho/nvim-bufferline.lua'
+    use 'kyazdani42/nvim-web-devicons'
 
-    -- git related features! 
+    -- git related features!
     -- For git blame & browse
     use 'lewis6991/gitsigns.nvim'
     use 'dinhhuy258/git.nvim'
 
-    -- themes and more! 
-    -- Nightfox is a very elegant theme with a few light and dark variants.
-    use 'EdenEast/nightfox.nvim'
-    use 'f-person/auto-dark-mode.nvim'
+    -- themes and more!
+    use { "catppuccin/nvim", as = "catppuccin" }
 
     use {
         'nvim-treesitter/nvim-treesitter',
@@ -52,7 +51,7 @@ packer.startup(function(use)
 
     use {
         'tzachar/cmp-tabnine',
-        run='./install.sh',
+        run = './install.sh',
         requires = 'hrsh7th/nvim-cmp'
     }
 
