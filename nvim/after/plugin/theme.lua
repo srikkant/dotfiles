@@ -1,7 +1,7 @@
 local status, catpuccin = pcall(require, "catppuccin")
 if (not status) then return end
 
-vim.g.catppuccin_flavour = "latte" -- latte, frappe, macchiato, mocha
+vim.g.catppuccin_flavour = vim.env.CATPPUCCIN_FLAVOUR
 
 catpuccin.setup()
 
