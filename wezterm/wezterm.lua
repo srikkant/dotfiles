@@ -1,4 +1,5 @@
 local wezterm = require "wezterm"
+local mux = wezterm.mux
 
 function scheme_for_appearance(appearance)
 	  if appearance:find "Dark" then
@@ -8,8 +9,14 @@ function scheme_for_appearance(appearance)
 	  end
 end
 
+wezterm.on("gui-startup", function()
+  local _, _, window = mux.spawn_window{}
+  window:gui_window():maximize()
+end)
+
 return {
-	  color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
+    color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
+    default_cwd = "/Users/srikkant/Work",
     font_size = 13,
     enable_tab_bar = false
 }
