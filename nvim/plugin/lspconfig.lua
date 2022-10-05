@@ -74,28 +74,6 @@ nvim_lsp.sourcekit.setup {
     on_attach = on_attach,
 }
 
-nvim_lsp.svelte.setup {
-    on_attach = on_attach,
-}
-
-nvim_lsp.sumneko_lua.setup {
-    on_attach = on_attach,
-    settings = {
-        Lua = {
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = { 'vim' },
-            },
-
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file("", true),
-                checkThirdParty = false
-            },
-        },
-    },
-}
-
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
         underline = true,

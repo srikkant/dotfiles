@@ -6,3 +6,5 @@ end
 set -gx PNPM_HOME "/Users/srikkant/Library/pnpm"
 set -gx PATH "$PNPM_HOME" $PATH
 # pnpm end
+
+starship init fish | source
