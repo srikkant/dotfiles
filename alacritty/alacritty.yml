@@ -1,17 +1,16 @@
 window:
   padding:
-    x: 8
-    y: 8
+    x: 4
+    y: 0
 
   startup_mode: Maximized
 
 font:
   normal:
-    family: Hack Nerd Font Mono
-    style: Regular
+    family: BlexMono Nerd Font Mono
+    style: Book
   bold:
-    family: Hack Nerd Font Mono
-    style: Regular
+    style: Book
 
   size: 14
 
