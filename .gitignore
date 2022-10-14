@@ -1,0 +1,4 @@
+.*.yml
+
+tmux/plugins
+!./tmux/plugins/tpm
