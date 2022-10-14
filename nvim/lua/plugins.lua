@@ -43,6 +43,7 @@ packer.startup(function(use)
 
     -- themes and more!
     use { "catppuccin/nvim", as = "catppuccin" }
+    use { "mcchrish/zenbones.nvim", requires = "rktjmp/lush.nvim" }
 
     use {
         'nvim-treesitter/nvim-treesitter',

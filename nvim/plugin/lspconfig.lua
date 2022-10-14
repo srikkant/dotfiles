@@ -70,6 +70,10 @@ nvim_lsp.tsserver.setup {
     capabilities = capabilities
 }
 
+nvim_lsp.remark_ls.setup{
+    on_attach = on_attach
+}
+
 nvim_lsp.sourcekit.setup {
     on_attach = on_attach,
 }

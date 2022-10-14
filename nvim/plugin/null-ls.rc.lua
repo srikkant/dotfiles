@@ -10,7 +10,6 @@ null_ls.setup({
         null_ls.builtins.diagnostics.editorconfig_checker,
         null_ls.builtins.diagnostics.eslint_d,
         null_ls.builtins.diagnostics.fish,
-        null_ls.builtins.diagnostics.markdownlint,
 
         null_ls.builtins.formatting.eslint_d,
         null_ls.builtins.formatting.prettierd,

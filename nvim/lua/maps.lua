@@ -32,7 +32,7 @@ keymap.set('n', '<C-w><down>', '<C-w>-')
 
 -- Custom Mappings
 keymap.set('n', 'tt', ':tabnew<Enter>') -- open a new tab
-keymap.set('n', '<space>fb', ':Telescope file_browser path=%:p:h:<Enter>', { noremap = true })
+keymap.set('n', 'fb', ':Telescope file_browser path=%:p:h:<Enter>', { noremap = true })
 keymap.set('n', '<C-`>', ':ter<Enter>') -- open ter in the current tab
 keymap.set('n', '<space>a', ':lua vim.lsp.buf.code_action()<CR>')
-keymap.set('n', '<space>ff', ':Telescope find_files path=%:p:h:<Enter>', { noremap = true })
+keymap.set('n', 'ff', ':Telescope find_files path=%:p:h:<Enter>', { noremap = true })
