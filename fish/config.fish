@@ -12,3 +12,7 @@ starship init fish | source
 # tabtab source for packages
 # uninstall by removing these lines
 [ -f ~/.config/tabtab/__tabtab.fish ]; and . ~/.config/tabtab/__tabtab.fish; or true
+
+# rust
+set PATH $HOME/.cargo/bin $PATH
+# rust end
