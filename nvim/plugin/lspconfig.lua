@@ -15,7 +15,7 @@ local on_attach = function(client, bufnr)
     --Enable completion triggered by <c-x><c-o>
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    -- Mappings.
+
     local opts = { noremap = true, silent = true }
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -74,8 +74,27 @@ nvim_lsp.remark_ls.setup{
     on_attach = on_attach
 }
 
-nvim_lsp.sourcekit.setup {
+nvim_lsp.rust_analyzer.setup{
     on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        ["rust-analyzer"] = {
+            imports = {
+                granularity = {
+                    group = "module",
+                },
+                prefix = "self",
+            },
+            cargo = {
+                buildScripts = {
+                    enable = true,
+                },
+            },
+            procMacro = {
+                enable = true
+            },
+        }
+    }
 }
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
