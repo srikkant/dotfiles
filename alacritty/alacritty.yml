@@ -7,6 +7,7 @@ window:
 
 font:
   normal:
+    #   family: Monaco Nerd Font
     family: BlexMono Nerd Font Mono
     style: Book
   bold:

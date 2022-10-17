@@ -16,7 +16,10 @@ null_ls.setup({
         null_ls.builtins.formatting.stylelint,
         null_ls.builtins.formatting.stylua,
  
-        null_ls.builtins.formatting.rustfmt
+        null_ls.builtins.formatting.rustfmt,
+        
+        null_ls.builtins.formatting.gofmt, 
+        null_ls.builtins.formatting.goimports,
     },
 
     on_attach = function(client, bufnr)
