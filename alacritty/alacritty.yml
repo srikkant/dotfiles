@@ -7,16 +7,12 @@ window:
 
 font:
   normal:
-    #   family: Monaco Nerd Font
-    family: BlexMono Nerd Font Mono
-    style: Book
+    family: MonoLisa Nerd Font
+    style: Regular
   bold:
-    style: Book
+    style: Regular
 
   size: 14
-
-  offset:
-    y: 0
 
 import:
   - ~/.config/alacritty/.activetheme.yml
