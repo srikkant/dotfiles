@@ -26,6 +26,7 @@ lualine.setup({
 			},
 			"filetype",
 		},
+		lualine_y = {},
 		lualine_z = { "location" },
 	},
 	inactive_sections = {
