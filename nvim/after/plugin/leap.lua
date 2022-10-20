@@ -3,4 +3,4 @@ if not status then
 	return
 end
 
-leap.add_default_mappings()
+leap.add_default_mappings(true)
