@@ -19,13 +19,15 @@ null_ls.setup({
 
 		-- Golang
 		null_ls.builtins.formatting.goimports,
-		null_ls.builtins.formatting.golines,
 
 		-- Shell script
 		null_ls.builtins.code_actions.shellcheck,
 		null_ls.builtins.diagnostics.shellcheck,
 		null_ls.builtins.formatting.shellharden,
 		null_ls.builtins.formatting.shfmt,
+
+		-- Flutter
+		null_ls.builtins.formatting.dart_format,
 	},
 
 	on_attach = function(client)

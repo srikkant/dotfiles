@@ -46,6 +46,7 @@ telescope.setup({
 })
 
 telescope.load_extension("file_browser")
+telescope.load_extension("flutter")
 
 vim.keymap.set("n", ";f", function()
 	builtin.find_files({

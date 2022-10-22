@@ -12,9 +12,6 @@ keymap.set("n", "-", "<C-x>")
 -- Delete a word backwards
 keymap.set("n", "dw", 'vb"_d')
 
--- Select all
-keymap.set("n", "<C-a>", "gg<S-v>G")
-
 -- New tab
 keymap.set("n", "te", ":tabedit")
 
@@ -30,10 +27,7 @@ keymap.set("", "sj", "<C-w>j")
 keymap.set("", "sl", "<C-w>l")
 
 -- Resize window
-keymap.set("n", "<C-w><left>", "<C-w><")
-keymap.set("n", "<C-w><right>", "<C-w>>")
-keymap.set("n", "<C-w><up>", "<C-w>+")
-keymap.set("n", "<C-w><down>", "<C-w>-")
-
--- Custom Mappings
-keymap.set("n", "<Leader>tt", ":tabnew<Enter>") -- open a new tab
+keymap.set("n", "SH", "<C-w><")
+keymap.set("n", "SL", "<C-w>>")
+keymap.set("n", "SJ", "<C-w>+")
+keymap.set("n", "SK", "<C-w>-")
