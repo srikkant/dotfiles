@@ -12,6 +12,7 @@ end
 local fb_actions = require("telescope").extensions.file_browser.actions
 
 telescope.setup({
+	initial_mode = "normal",
 	defaults = {
 		mappings = {
 			n = {
@@ -21,10 +22,12 @@ telescope.setup({
 	},
 	extensions = {
 		file_browser = {
+			initial_mode = "normal",
 			theme = "dropdown",
 			-- disables netrw and use telescope-file-browser in its place
 			hidden = true,
 			hijack_netrw = true,
+			grouped = true,
 			mappings = {
 				-- your custom insert mode mappings
 				["i"] = {
@@ -46,6 +49,7 @@ telescope.setup({
 })
 
 telescope.load_extension("file_browser")
+telescope.load_extension("fzf")
 telescope.load_extension("flutter")
 
 vim.keymap.set("n", ";f", function()

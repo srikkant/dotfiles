@@ -7,12 +7,18 @@ window:
 
 font:
   normal:
-    family: MonoLisa Nerd Font
-    style: Regular
+    family: SFMono Nerd Font
+    style: Light
   bold:
     style: Regular
 
-  size: 14
+  size: 15
+
+  offset:
+    x: 0
+
+  glyph_offset:
+    x: 0
 
 import:
   - ~/.config/alacritty/.activetheme.yml

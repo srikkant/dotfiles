@@ -16,3 +16,5 @@ starship init fish | source
 # rust
 set PATH $HOME/.cargo/bin $PATH
 # rust end
+
+source "$HOME/.config/fish/nnn.fish"
