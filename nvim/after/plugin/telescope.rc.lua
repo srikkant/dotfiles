@@ -90,3 +90,5 @@ vim.keymap.set("n", "<Leader>fb", ":Telescope file_browser path=%:p:h:<Enter>", 
 vim.keymap.set("n", "<Leader>ff", ":Telescope find_files path=%:p:h:<Enter>", { noremap = true })
 vim.keymap.set("n", "<Leader>fv", ":Telescope buffers<Enter>", { noremap = true })
 vim.keymap.set("n", "<Leader>fh", ":Telescope help_tags<Enter>", { noremap = true })
+vim.keymap.set("n", "<Leader>fg", ":Telescope live_grep<Enter>", { noremap = true })
+vim.keymap.set("n", "<Leader>fd", ":Telescope grep_string<Enter>", { noremap = true })
