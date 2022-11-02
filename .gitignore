@@ -6,3 +6,6 @@ tmux/plugins
 fish/fish_variables
 fish/config.fish
 fish/themes
+fish/completions
+fish/functions
+fish/conf.d

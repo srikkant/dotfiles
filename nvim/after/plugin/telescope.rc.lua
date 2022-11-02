@@ -39,6 +39,7 @@ telescope.setup({
 					-- your custom normal mode mappings
 					["N"] = fb_actions.create,
 					["h"] = fb_actions.goto_parent_dir,
+					["H"] = fb_actions.toggle_hidden,
 					["/"] = function()
 						vim.cmd("startinsert")
 					end,
@@ -51,6 +52,7 @@ telescope.setup({
 telescope.load_extension("file_browser")
 telescope.load_extension("fzf")
 telescope.load_extension("flutter")
+telescope.load_extension("noice")
 
 vim.keymap.set("n", ";f", function()
 	builtin.find_files({
