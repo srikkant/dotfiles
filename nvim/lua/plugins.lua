@@ -46,7 +46,7 @@ packer.startup(function(use)
 	use("akinsho/flutter-tools.nvim")
 
 	-- themes and more!
-	use({ "catppuccin/nvim", as = "catppuccin" })
+	use("arcticicestudio/nord-vim")
 
 	use({
 		"nvim-treesitter/nvim-treesitter",
