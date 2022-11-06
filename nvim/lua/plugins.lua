@@ -43,10 +43,13 @@ packer.startup(function(use)
 	-- For git blame & browse
 	use("lewis6991/gitsigns.nvim")
 	use("dinhhuy258/git.nvim")
+
 	use("akinsho/flutter-tools.nvim")
+	use("jose-elias-alvarez/typescript.nvim")
 
 	-- themes and more!
-	use("arcticicestudio/nord-vim")
+	use("atelierbram/Base2Tone-nvim")
+	use("sainnhe/everforest")
 
 	use({
 		"nvim-treesitter/nvim-treesitter",

@@ -9,8 +9,8 @@ window:
     lines: 0
 
   padding:
-    x: 20
-    y: 15
+    x: 2
+    y: 2
 
 scrolling:
   history: 10000
@@ -23,7 +23,7 @@ font:
   bold:
     style: Medium
 
-  size: 15
+  size: 14.5
 
 live_config_reload: true
 
