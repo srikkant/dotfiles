@@ -154,11 +154,6 @@ _G.packer_plugins = {
     path = "/Users/srikkant/.local/share/nvim/site/pack/packer/start/noice.nvim",
     url = "https://github.com/folke/noice.nvim"
   },
-  ["nord-vim"] = {
-    loaded = true,
-    path = "/Users/srikkant/.local/share/nvim/site/pack/packer/start/nord-vim",
-    url = "https://github.com/arcticicestudio/nord-vim"
-  },
   ["nui.nvim"] = {
     loaded = true,
     path = "/Users/srikkant/.local/share/nvim/site/pack/packer/start/nui.nvim",
@@ -243,6 +238,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/srikkant/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
+  },
+  ["typescript.nvim"] = {
+    loaded = true,
+    path = "/Users/srikkant/.local/share/nvim/site/pack/packer/start/typescript.nvim",
+    url = "https://github.com/jose-elias-alvarez/typescript.nvim"
   }
 }
 

@@ -48,7 +48,6 @@ packer.startup(function(use)
 	use("jose-elias-alvarez/typescript.nvim")
 
 	-- themes and more!
-	use("atelierbram/Base2Tone-nvim")
 	use("sainnhe/everforest")
 
 	use({
