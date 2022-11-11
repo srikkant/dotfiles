@@ -1,13 +1,11 @@
 vim.cmd("autocmd!")
 
 vim.g.mapleader = ";"
+vim.wo.number = true
 
 vim.scriptencoding = "utf-8"
 vim.opt.encoding = "utf-8"
 vim.opt.fileencoding = "utf-8"
-
-vim.wo.number = true
-
 vim.opt.title = true
 vim.opt.autoindent = true
 vim.opt.smartindent = true
@@ -31,8 +29,10 @@ vim.opt.backspace = { "start", "eol", "indent" }
 vim.opt.path:append({ "**" }) -- Finding files - Search down into subfolders
 vim.opt.wildignore:append({ "*/node_modules/*" })
 vim.opt.rnu = true
-
 vim.opt.clipboard:append({ "unnamedplus" })
+vim.opt.cursorline = true
+vim.opt.termguicolors = true
+vim.opt.guicursor = "n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor"
 
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])

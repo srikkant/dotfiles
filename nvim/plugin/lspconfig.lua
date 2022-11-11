@@ -7,17 +7,6 @@ end
 
 local protocol = require("vim.lsp.protocol")
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(_, bufnr)
-    local function buf_set_option(...)
-        vim.api.nvim_buf_set_option(bufnr, ...)
-    end
-
-    --Enable completion triggered by <c-x><c-o>
-    buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-end
-
 protocol.CompletionItemKind = {
     "", -- Text
     "", -- Method
@@ -50,7 +39,6 @@ protocol.CompletionItemKind = {
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 nvim_lsp.rust_analyzer.setup({
-    on_attach = on_attach,
     capabilities = capabilities,
     settings = {
         ["rust-analyzer"] = {
@@ -73,7 +61,6 @@ nvim_lsp.rust_analyzer.setup({
 })
 
 nvim_lsp.gopls.setup({
-    on_attach = on_attach,
     capabilities = capabilities,
 })
 

@@ -1,74 +1,66 @@
 local status, packer = pcall(require, "packer")
 if not status then
-	print("Packer is not installed!")
-	return
+    print("Packer is not installed!")
+    return
 end
 
 vim.cmd([[packadd packer.nvim]])
 
 packer.startup(function(use)
-	-- package manager.
-	-- absolutely essential
-	use("wbthomason/packer.nvim")
+    -- package manager.
+    -- absolutely essential
+    use("wbthomason/packer.nvim")
 
-	-- mason is used for managing external tools
-	use("williamboman/mason.nvim")
-	use("williamboman/mason-lspconfig.nvim")
+    -- Common utilities
+    use("nvim-lua/plenary.nvim")
 
-	-- general UI enhancements!
-	-- refer to the inline comment for more information.
-	use("nvim-lualine/lualine.nvim") -- Statusline
-	use("nvim-lua/plenary.nvim") -- Common utilities
-	use("onsails/lspkind-nvim") -- vscode-like pictograms
-	use("hrsh7th/cmp-buffer") -- nvim-cmp source for buffer words
-	use("hrsh7th/cmp-nvim-lsp") -- nvim-cmp source for neovim's built-in LSP
-	use("hrsh7th/nvim-cmp") -- Completion
-	use("neovim/nvim-lspconfig") -- LSP
-	use("jose-elias-alvarez/null-ls.nvim") -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua
-	use("MunifTanjim/prettier.nvim") -- Prettier plugin for Neovim's built-in LSP client
-	use("glepnir/lspsaga.nvim") -- LSP UIs
-	use("L3MON4D3/LuaSnip")
-	use("nvim-telescope/telescope.nvim")
-	use("nvim-telescope/telescope-file-browser.nvim")
-	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
-	use("windwp/nvim-autopairs")
-	use("windwp/nvim-ts-autotag")
-	use("norcalli/nvim-colorizer.lua")
-	use("akinsho/nvim-bufferline.lua")
-	use("kyazdani42/nvim-web-devicons")
-	use("winston0410/commented.nvim")
-	use("ggandor/leap.nvim")
+    -- Tresitter for syntax highlighting.
+    use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 
-	-- git related features!
-	-- For git blame & browse
-	use("lewis6991/gitsigns.nvim")
-	use("dinhhuy258/git.nvim")
+    -- mason is used for managing external tools
+    -- this includes all the language servers we are planning on using
+    use("williamboman/mason.nvim")
+    use("williamboman/mason-lspconfig.nvim")
 
-	use("akinsho/flutter-tools.nvim")
-	use("jose-elias-alvarez/typescript.nvim")
+    -- Language server related plugins
+    use("neovim/nvim-lspconfig")
+    use("jose-elias-alvarez/null-ls.nvim")
 
-	-- themes and more!
-	use("sainnhe/everforest")
+    -- Snippet engine
+    use("L3MON4D3/LuaSnip")
 
-	use({
-		"nvim-treesitter/nvim-treesitter",
-		run = function()
-			require("nvim-treesitter.install").update({ with_sync = true })
-		end,
-	})
+    -- Completion and Snippets related plugins
+    use("hrsh7th/nvim-cmp")
+    use("hrsh7th/cmp-buffer") -- nvim-cmp source for buffer words
+    use("hrsh7th/cmp-nvim-lsp") -- nvim-cmp source for neovim's built-in LSP
+    use("tzachar/cmp-tabnine") -- nvim-cmp source for TabNine completions
+    use("saadparwaiz1/cmp_luasnip") -- nvim-cmp source for Snippets powered by lua snip
 
-	-- Packer
-	use({
-		"folke/noice.nvim",
-		requires = {
-			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
-		},
-	})
+    -- Telescope
+    use("nvim-telescope/telescope.nvim")
+    use("nvim-telescope/telescope-file-browser.nvim")
 
-	use({
-		"tzachar/cmp-tabnine",
-		run = "./install.sh",
-		requires = "hrsh7th/nvim-cmp",
-	})
+    -- UI enhancements
+    use("glepnir/lspsaga.nvim") -- LSP UIs
+    use("onsails/lspkind-nvim") -- vscode-like pictograms
+    use("nvim-lualine/lualine.nvim") -- Lualine
+    use("akinsho/nvim-bufferline.lua") -- Bufferline for the tabs on top
+
+    -- general enhancements!
+    use("norcalli/nvim-colorizer.lua")
+    use("kyazdani42/nvim-web-devicons")
+    use("winston0410/commented.nvim")
+    use("ggandor/leap.nvim")
+    use("windwp/nvim-autopairs")
+    use("windwp/nvim-ts-autotag")
+
+    -- Git related plugins
+    use("lewis6991/gitsigns.nvim")
+    use("dinhhuy258/git.nvim")
+
+    -- Language/Framework specific tooling
+    use({ "jose-elias-alvarez/typescript.nvim", opt = true })
+
+    -- themes and more!
+    use("sainnhe/everforest")
 end)
