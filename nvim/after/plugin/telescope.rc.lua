@@ -50,7 +50,7 @@ telescope.setup({
 })
 
 telescope.load_extension("file_browser")
---  telescope.load_extension("fzf")
+telescope.load_extension("ui-select")
 
 vim.keymap.set("n", ";f", function()
     builtin.find_files({

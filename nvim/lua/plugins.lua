@@ -39,12 +39,14 @@ packer.startup(function(use)
     -- Telescope
     use("nvim-telescope/telescope.nvim")
     use("nvim-telescope/telescope-file-browser.nvim")
+    use("nvim-telescope/telescope-ui-select.nvim")
 
     -- UI enhancements
     use("glepnir/lspsaga.nvim") -- LSP UIs
     use("onsails/lspkind-nvim") -- vscode-like pictograms
     use("nvim-lualine/lualine.nvim") -- Lualine
     use("akinsho/nvim-bufferline.lua") -- Bufferline for the tabs on top
+    use("folke/which-key.nvim")
 
     -- general enhancements!
     use("norcalli/nvim-colorizer.lua")
@@ -59,7 +61,8 @@ packer.startup(function(use)
     use("dinhhuy258/git.nvim")
 
     -- Language/Framework specific tooling
-    use({ "jose-elias-alvarez/typescript.nvim", opt = true })
+    use("jose-elias-alvarez/typescript.nvim")
+    use("mrjones2014/legendary.nvim")
 
     -- themes and more!
     use("sainnhe/everforest")
