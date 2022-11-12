@@ -1,4 +1,6 @@
-vim.lsp.set_log_level("debug")
+vim.lsp.set_log_level("off")
+vim.o.updatetime = 250
+vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
 local status, nvim_lsp = pcall(require, "lspconfig")
 if not status then
