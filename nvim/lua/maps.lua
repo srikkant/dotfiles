@@ -31,6 +31,3 @@ keymap.set("n", "SH", "<C-w><")
 keymap.set("n", "SL", "<C-w>>")
 keymap.set("n", "SJ", "<C-w>+")
 keymap.set("n", "SK", "<C-w>-")
-
-keymap.set("n", "<Leader>b", ":bnext<Return>")
-keymap.set("n", "<Leader>B", ":bprevious<Return>")
