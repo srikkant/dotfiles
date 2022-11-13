@@ -8,8 +8,8 @@ return {
 	},
 	color_scheme = "Everforest Medium Dark",
 	enable_tab_bar = true,
-	font = wezterm.font_with_fallback({ "SF Mono" }),
+	font = wezterm.font_with_fallback({ "Iosevka Extended" }),
 	keys = keys,
-	line_height = 1.4,
+	line_height = 1.2,
 	ssh_domains = ssh_domains,
 }
