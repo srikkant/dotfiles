@@ -10,6 +10,6 @@ return {
 	enable_tab_bar = true,
 	font = wezterm.font_with_fallback({ "Iosevka Extended" }),
 	keys = keys,
-	line_height = 1.2,
+	line_height = 1.1,
 	ssh_domains = ssh_domains,
 }
