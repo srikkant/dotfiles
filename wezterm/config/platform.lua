@@ -9,7 +9,7 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	}
 else
 	config = {
-		font_size = 14,
+		font_size = 15,
 	}
 end
 
