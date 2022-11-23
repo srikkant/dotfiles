@@ -3,13 +3,17 @@ if not status then
 	return
 end
 
-local augroup_format = vim.api.nvim_create_augroup("Format", { clear = true })
+local augroup_format = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
 
 null_ls.setup({
+	debug = true,
 	sources = {
 		null_ls.builtins.formatting.eslint_d,
 		null_ls.builtins.formatting.prettierd,
 		null_ls.builtins.formatting.stylelint,
+
+		null_ls.builtins.diagnostics.eslint_d,
+		null_ls.builtins.code_actions.eslint_d,
 
 		-- Lua
 		null_ls.builtins.formatting.stylua,
@@ -34,14 +38,19 @@ null_ls.setup({
 		null_ls.builtins.formatting.dart_format,
 	},
 
-	on_attach = function(client)
+	on_attach = function(client, bufnr)
 		if client.server_capabilities.documentFormattingProvider then
-			vim.api.nvim_clear_autocmds({ buffer = 0, group = augroup_format })
+			vim.api.nvim_clear_autocmds({ buffer = bufnr, group = augroup_format })
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				group = augroup_format,
-				buffer = 0,
+				buffer = bufnr,
 				callback = function()
-					vim.lsp.buf.format()
+					vim.lsp.buf.format({
+						bufnr = bufnr,
+						filter = function(format_client)
+							return format_client.name == "null-ls"
+						end,
+					})
 				end,
 			})
 		end
