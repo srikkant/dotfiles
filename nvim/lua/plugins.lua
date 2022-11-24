@@ -13,6 +13,7 @@ packer.startup(function(use)
 
 	-- Common utilities
 	use("nvim-lua/plenary.nvim")
+	use("lewis6991/impatient.nvim")
 
 	-- Tresitter for syntax highlighting.
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })

@@ -1,3 +1,4 @@
+require("impatient")
 require("base")
 require("maps")
 require("os")
