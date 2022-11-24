@@ -67,5 +67,5 @@ packer.startup(function(use)
 	use("mrjones2014/legendary.nvim")
 
 	-- themes and more!
-	use("sainnhe/everforest")
+	use("EdenEast/nightfox.nvim")
 end)

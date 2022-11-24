@@ -1,4 +1,5 @@
 local keymap = vim.keymap
+local opts = { noremap = true, silent = true }
 
 keymap.set("i", "kj", "<Esc>")
 keymap.set("i", "jk", "<Esc>")
@@ -21,13 +22,13 @@ keymap.set("n", "sv", ":vsplit<Return><C-w>w")
 
 -- Move window
 keymap.set("n", "<Space>", "<C-w>w")
-keymap.set("", "sh", "<C-w>h")
-keymap.set("", "sk", "<C-w>k")
-keymap.set("", "sj", "<C-w>j")
-keymap.set("", "sl", "<C-w>l")
+keymap.set("n", "sh", "<C-w>h", opts)
+keymap.set("n", "sj", "<C-w>j", opts)
+keymap.set("n", "sk", "<C-w>k", opts)
+keymap.set("n", "sl", "<C-w>l", opts)
 
 -- Resize window
-keymap.set("n", "SH", "<C-w><")
-keymap.set("n", "SL", "<C-w>>")
-keymap.set("n", "SJ", "<C-w>+")
-keymap.set("n", "SK", "<C-w>-")
+keymap.set("n", "<C-k>", ":resize +2<CR>", opts)
+keymap.set("n", "<C-j>", ":resize -2<CR>", opts)
+keymap.set("n", "<C-h>", ":vertical resize -2<CR>", opts)
+keymap.set("n", "<C-l>", ":vertical resize +2<CR>", opts)

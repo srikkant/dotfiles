@@ -4,9 +4,9 @@ local ssh_domains = require("config.ssh").ssh_domains
 
 function scheme_for_appearance(appearance)
 	if appearance:find("Dark") then
-		return "Everforest Medium Dark"
+		return "carbonfox"
 	else
-		return "Everforest Medium Dark"
+		return "carbonfox"
 	end
 end
 
