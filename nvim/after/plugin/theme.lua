@@ -1,9 +1,12 @@
-local status, nightfox = pcall(require, "nightfox")
+local status, catppuccin = pcall(require, "catppuccin")
 
 if not status then
 	return
 end
+catppuccin.setup({
+	flavour = vim.env.CATPPUCCIN_FLAVOUR, -- latte, frappe, macchiato, mocha
+	term_colors = true,
+	transparent_background = true,
+})
 
-nightfox.setup({})
-
-vim.cmd("colorscheme carbonfox")
+vim.cmd.colorscheme("catppuccin")

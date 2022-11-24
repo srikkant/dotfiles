@@ -68,5 +68,5 @@ packer.startup(function(use)
 	use("mrjones2014/legendary.nvim")
 
 	-- themes and more!
-	use("EdenEast/nightfox.nvim")
+	use({ "catppuccin/nvim", as = "catppuccin" })
 end)
