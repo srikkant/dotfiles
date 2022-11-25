@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 local keys = require("config.keys").keys
 local ssh_domains = require("config.ssh").ssh_domains
 
-function scheme_for_appearance(appearance)
+local function scheme_for_appearance(appearance)
 	if appearance:find("Dark") then
 		return "Catppuccin Frappe"
 	else
@@ -16,9 +16,10 @@ return {
 		wezterm.home_dir .. "/.config/wezterm/color_schemes",
 	},
 	enable_tab_bar = true,
-	font = wezterm.font_with_fallback({ "Iosevka Extended" }),
 	keys = keys,
-	line_height = 1.4,
+	set_environment_variables = {
+		appearance = wezterm.gui.get_appearance(),
+	},
 	show_new_tab_button_in_tab_bar = false,
 	ssh_domains = ssh_domains,
 	tab_max_width = 30,

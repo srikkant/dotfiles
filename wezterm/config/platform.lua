@@ -4,12 +4,18 @@ local config = {}
 
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	config = {
-		font_size = 11,
 		default_prog = { "pwsh-preview" },
+		font = wezterm.font_with_fallback({
+			{ family = "Iosevka Extended", weight = "Medium" },
+		}),
+		font_size = 11,
+		line_height = 1.2,
 	}
 else
 	config = {
+		font = wezterm.font_with_fallback({ "Iosevka Extended" }),
 		font_size = 14,
+		line_height = 1.4,
 	}
 end
 
