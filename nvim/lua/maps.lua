@@ -32,3 +32,7 @@ keymap.set("n", "<C-k>", ":resize +2<CR>", opts)
 keymap.set("n", "<C-j>", ":resize -2<CR>", opts)
 keymap.set("n", "<C-l>", ":vertical resize -2<CR>", opts)
 keymap.set("n", "<C-h>", ":vertical resize +2<CR>", opts)
+
+-- Improvements to paste/delete.
+keymap.set("n", "<leader>d", '"_d', opts)
+keymap.set("n", "<leader>p", '"_dP', opts)

@@ -58,6 +58,7 @@ packer.startup(function(use)
 	use("ggandor/leap.nvim")
 	use("windwp/nvim-autopairs")
 	use("windwp/nvim-ts-autotag")
+    use("chentoast/marks.nvim")
 
 	-- Git related plugins
 	use("lewis6991/gitsigns.nvim")

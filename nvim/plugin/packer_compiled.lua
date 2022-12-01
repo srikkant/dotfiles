@@ -79,6 +79,11 @@ _G.packer_plugins = {
     path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  catppuccin = {
+    loaded = true,
+    path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/catppuccin",
+    url = "https://github.com/catppuccin/nvim"
+  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -94,20 +99,15 @@ _G.packer_plugins = {
     path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/cmp-tabnine",
     url = "https://github.com/tzachar/cmp-tabnine"
   },
+  cmp_luasnip = {
+    loaded = true,
+    path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
+    url = "https://github.com/saadparwaiz1/cmp_luasnip"
+  },
   ["commented.nvim"] = {
     loaded = true,
     path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/commented.nvim",
     url = "https://github.com/winston0410/commented.nvim"
-  },
-  everforest = {
-    loaded = true,
-    path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/everforest",
-    url = "https://github.com/sainnhe/everforest"
-  },
-  ["flutter-tools.nvim"] = {
-    loaded = true,
-    path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/flutter-tools.nvim",
-    url = "https://github.com/akinsho/flutter-tools.nvim"
   },
   ["git.nvim"] = {
     loaded = true,
@@ -119,10 +119,20 @@ _G.packer_plugins = {
     path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
+  ["impatient.nvim"] = {
+    loaded = true,
+    path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/impatient.nvim",
+    url = "https://github.com/lewis6991/impatient.nvim"
+  },
   ["leap.nvim"] = {
     loaded = true,
     path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/leap.nvim",
     url = "https://github.com/ggandor/leap.nvim"
+  },
+  ["legendary.nvim"] = {
+    loaded = true,
+    path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/legendary.nvim",
+    url = "https://github.com/mrjones2014/legendary.nvim"
   },
   ["lspkind-nvim"] = {
     loaded = true,
@@ -148,16 +158,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
-  },
-  ["noice.nvim"] = {
-    loaded = true,
-    path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/noice.nvim",
-    url = "https://github.com/folke/noice.nvim"
-  },
-  ["nui.nvim"] = {
-    loaded = true,
-    path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/nui.nvim",
-    url = "https://github.com/MunifTanjim/nui.nvim"
   },
   ["null-ls.nvim"] = {
     loaded = true,
@@ -189,10 +189,10 @@ _G.packer_plugins = {
     path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
-  ["nvim-notify"] = {
+  ["nvim-tree.lua"] = {
     loaded = true,
-    path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/nvim-notify",
-    url = "https://github.com/rcarriga/nvim-notify"
+    path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
+    url = "https://github.com/nvim-tree/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
     loaded = true,
@@ -219,11 +219,6 @@ _G.packer_plugins = {
     path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
-  ["prettier.nvim"] = {
-    loaded = true,
-    path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/prettier.nvim",
-    url = "https://github.com/MunifTanjim/prettier.nvim"
-  },
   ["telescope-file-browser.nvim"] = {
     loaded = true,
     path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/telescope-file-browser.nvim",
@@ -234,6 +229,11 @@ _G.packer_plugins = {
     path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
     url = "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
   },
+  ["telescope-ui-select.nvim"] = {
+    loaded = true,
+    path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/telescope-ui-select.nvim",
+    url = "https://github.com/nvim-telescope/telescope-ui-select.nvim"
+  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/telescope.nvim",
@@ -243,6 +243,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/typescript.nvim",
     url = "https://github.com/jose-elias-alvarez/typescript.nvim"
+  },
+  ["which-key.nvim"] = {
+    loaded = true,
+    path = "/home/srikkant/.local/share/nvim/site/pack/packer/start/which-key.nvim",
+    url = "https://github.com/folke/which-key.nvim"
   }
 }
 
