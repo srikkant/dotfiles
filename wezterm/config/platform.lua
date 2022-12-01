@@ -8,8 +8,8 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 		font = wezterm.font_with_fallback({
 			{ family = "Iosevka Extended", weight = "Medium" },
 		}),
-		font_size = 11,
-		line_height = 1.2,
+		font_size = 10,
+		line_height = 1.1,
 	}
 else
 	config = {

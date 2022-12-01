@@ -6,7 +6,7 @@ end
 
 local function get_theme()
 	if vim.env.appearance:find("dark") then
-		return "frappe"
+		return "mocha"
 	else
 		return "latte"
 	end

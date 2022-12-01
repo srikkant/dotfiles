@@ -4,7 +4,7 @@ local ssh_domains = require("config.ssh").ssh_domains
 
 local function scheme_for_appearance(appearance)
 	if appearance:find("Dark") then
-		return "Catppuccin Frappe"
+		return "Catppuccin Mocha"
 	else
 		return "Catppuccin Latte"
 	end
