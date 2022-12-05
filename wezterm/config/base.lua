@@ -23,7 +23,6 @@ return {
 	show_new_tab_button_in_tab_bar = false,
 	ssh_domains = ssh_domains,
 	tab_max_width = 30,
-	use_fancy_tab_bar = false,
 	window_padding = {
 		top = 0,
 		bottom = 0,
