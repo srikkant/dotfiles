@@ -25,7 +25,7 @@ local config = {
 	font = wezterm.font_with_fallback({
 		{ family = "Iosevka Extended", weight = "Medium" },
 	}),
-	window_decorations = "NONE",
+	window_decorations = "RESIZE",
 	colors = {
 		tab_bar = {
 			active_tab = {
