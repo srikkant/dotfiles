@@ -44,7 +44,8 @@ packer.startup(function(use)
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 
 	-- UI enhancements
-	use({ "nvim-tree/nvim-tree.lua", requires = { "nvim-tree/nvim-web-devicons" } })
+	use("goolord/alpha-nvim")
+	use("nvim-tree/nvim-tree.lua")
 	use("glepnir/lspsaga.nvim") -- LSP UIs
 	use("onsails/lspkind-nvim") -- vscode-like pictograms
 	use("nvim-lualine/lualine.nvim") -- Lualine
@@ -58,7 +59,7 @@ packer.startup(function(use)
 	use("ggandor/leap.nvim")
 	use("windwp/nvim-autopairs")
 	use("windwp/nvim-ts-autotag")
-    use("chentoast/marks.nvim")
+	use("chentoast/marks.nvim")
 
 	-- Git related plugins
 	use("lewis6991/gitsigns.nvim")
