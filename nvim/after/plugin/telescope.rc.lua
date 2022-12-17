@@ -67,6 +67,7 @@ telescope.setup({
 telescope.load_extension("file_browser")
 telescope.load_extension("ui-select")
 telescope.load_extension("fzf")
+telescope.load_extension("zoxide")
 
 vim.keymap.set("n", ";f", function()
 	builtin.find_files({
@@ -102,6 +103,7 @@ vim.keymap.set("n", "sf", function()
 	})
 end)
 
+vim.keymap.set("n", "<leader>cd", require("telescope").extensions.zoxide.list, { noremap = true })
 vim.keymap.set("n", "<Leader>fb", ":Telescope file_browser path=%:p:h:<Enter>", { noremap = true })
 vim.keymap.set("n", "<Leader>ff", ":Telescope find_files path=%:p:h:<Enter>", { noremap = true })
 vim.keymap.set("n", "<Leader>fv", ":Telescope buffers<Enter>", { noremap = true })
