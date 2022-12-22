@@ -11,7 +11,8 @@ local function scheme_for_appearance(appearance)
 end
 
 return {
-	color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
+	color_scheme = "ayu", -- scheme_for_appearance(wezterm.gui.get_appearance()),
+	--  color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
 	color_scheme_dirs = {
 		wezterm.home_dir .. "/.config/wezterm/color_schemes",
 	},

@@ -71,5 +71,5 @@ packer.startup(function(use)
 	use("mrjones2014/legendary.nvim")
 
 	-- themes and more!
-	use({ "catppuccin/nvim", as = "catppuccin" })
+	use("Shatur/neovim-ayu")
 end)
