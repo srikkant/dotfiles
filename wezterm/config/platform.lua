@@ -1,25 +1,11 @@
 local wezterm = require("wezterm")
 
-local function is_dark()
-	return wezterm.gui.get_appearance():find("Dark")
-end
-
-local dark = is_dark()
-local bg = "#eff1f5"
-local active_bg = "#dce0e8"
-local fg = "#6c6f85"
-local active_fg = "#4c4f69"
-local tab_bg = "#e6e9ef"
-local active_tab_bg = "#eff1f5"
-
-if dark then
-	bg = "#1e1e2e"
-	active_bg = "#11111b"
-	fg = "#a6adc8"
-	active_fg = "#cdd6f4"
-	tab_bg = "#1e1e2e"
-	active_tab_bg = "#11111b"
-end
+local bg = "#0b0e14"
+local active_bg = "#0d1017"
+local fg = "#565b66"
+local active_fg = "#bfbdb6"
+local tab_bg = "#0b0e14"
+local active_tab_bg = "#0b0e14"
 
 local config = {
 	window_decorations = "RESIZE",
@@ -49,9 +35,9 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	config.default_prog = { "nu" }
 	config.font_size = 10
 	config.line_height = 1.1
-	config.font = wezterm.font_with_fallback({
-		{ family = "Iosevka Extended", weight = "Medium" },
-	})
+	--  config.font = wezterm.font_with_fallback({
+	--  { family = "Iosevka Extended", weight = "Medium" },
+	--  })
 else
 	config.font_size = 14
 	config.line_height = 1.1
