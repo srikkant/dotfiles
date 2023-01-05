@@ -103,7 +103,7 @@ vim.keymap.set("n", "sf", function()
 	})
 end)
 
-vim.keymap.set("n", "<leader>cd", require("telescope").extensions.zoxide.list, { noremap = true })
+vim.keymap.set("n", "<leader>zd", require("telescope").extensions.zoxide.list, { noremap = true })
 vim.keymap.set("n", "<Leader>fb", ":Telescope file_browser path=%:p:h:<Enter>", { noremap = true })
 vim.keymap.set("n", "<Leader>ff", ":Telescope find_files path=%:p:h:<Enter>", { noremap = true })
 vim.keymap.set("n", "<Leader>fv", ":Telescope buffers<Enter>", { noremap = true })
