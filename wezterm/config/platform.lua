@@ -1,11 +1,11 @@
 local wezterm = require("wezterm")
 
-local bg = "#0b0e14"
-local active_bg = "#0d1017"
-local fg = "#565b66"
-local active_fg = "#bfbdb6"
-local tab_bg = "#0b0e14"
-local active_tab_bg = "#0b0e14"
+local bg = "#282828"
+local active_bg = "#282828"
+local fg = "#bfbdb6"
+local active_fg = "#ebdbb2"
+local tab_bg = "#282828"
+local active_tab_bg = "#1d2021"
 
 local config = {
 	window_decorations = "RESIZE",

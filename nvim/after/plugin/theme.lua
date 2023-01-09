@@ -1,8 +1,11 @@
-local status, ayu = pcall(require, "ayu")
+local status, theme = pcall(require, "gruvbox")
 
 if not status then
 	return
 end
 
-ayu.setup({})
-ayu.colorscheme()
+theme.setup({
+	contrast = "hard",
+})
+
+vim.cmd("colorscheme gruvbox")

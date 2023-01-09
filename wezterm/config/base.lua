@@ -2,17 +2,8 @@ local wezterm = require("wezterm")
 local keys = require("config.keys").keys
 local ssh_domains = require("config.ssh").ssh_domains
 
-local function scheme_for_appearance(appearance)
-	if appearance:find("Dark") then
-		return "Catppuccin Mocha"
-	else
-		return "Catppuccin Latte"
-	end
-end
-
 return {
-	color_scheme = "ayu", -- scheme_for_appearance(wezterm.gui.get_appearance()),
-	--  color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
+	color_scheme = "Gruvbox dark, hard (base16)",
 	color_scheme_dirs = {
 		wezterm.home_dir .. "/.config/wezterm/color_schemes",
 	},
