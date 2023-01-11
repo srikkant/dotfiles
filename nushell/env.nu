@@ -1,6 +1,6 @@
 # Starship
 mkdir ~/.cache/starship
-starship init nu | save ~/.cache/starship/init.nu
+starship init nu | save -f ~/.cache/starship/init.nu
 
 # zoxide
-zoxide init --cmd j nushell | save ~/.zoxide.nu
+zoxide init --cmd j nushell | save -f ~/.zoxide.nu
