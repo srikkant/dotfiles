@@ -71,5 +71,6 @@ packer.startup(function(use)
 	use("mrjones2014/legendary.nvim")
 
 	-- themes and more!
+	use("gpanders/editorconfig.nvim")
 	use("ellisonleao/gruvbox.nvim")
 end)
