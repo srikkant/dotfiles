@@ -7,6 +7,9 @@ local keymap = vim.keymap.set
 
 saga.init_lsp_saga()
 
+-- Uses the default float window, used rarely in case the error is too big and not showing up anywhere.
+keymap("n", "<leader>gt", vim.diagnostic.open_float, {silent=true})
+
 -- Lsp finder find the symbol definition implement reference
 -- if there is no implement it will hide
 -- when you use action in finder like open vsplit then you can
@@ -26,10 +29,10 @@ keymap("n", "gr", "<cmd>Lspsaga rename<CR>", { silent = true })
 keymap("n", "gd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
 
 -- Show line diagnostics
-keymap("n", "<leader>gl", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
+keymap("n", "gl", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
 
 -- Show cursor diagnostic
-keymap("n", "<leader>gc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
+keymap("n", "gc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
 
 -- Diagnsotic jump can use `<c-o>` to jump back
 keymap("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
