@@ -1,11 +1,11 @@
 local wezterm = require("wezterm")
 
-local bg = "#282828"
-local active_bg = "#282828"
-local fg = "#bfbdb6"
-local active_fg = "#ebdbb2"
-local tab_bg = "#282828"
-local active_tab_bg = "#1d2021"
+local bg = "#181818" -- Background of the window when it is not in focus.
+local active_bg = "#101010" -- Background of the window when it is in focus.
+local fg = "#bbbbbb" -- Text color for inactive tabs.
+local active_fg = "#bbbbbb" -- Text color for currently selected tab.
+local tab_bg = "#181818" -- Background for tabs not selected.
+local active_tab_bg = "#000000" -- Background for the currently selected tab.
 
 local config = {
 	window_decorations = "RESIZE",
@@ -43,10 +43,7 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	})
 else
 	config.font_size = 14
-	config.line_height = 1.1
-	config.font = wezterm.font_with_fallback({
-		{ family = "Hasklig" },
-	})
+	config.line_height = 1.2
 end
 
 return config

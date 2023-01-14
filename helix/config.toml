@@ -1,4 +1,4 @@
-theme = "gruvbox_dark_hard"
+theme = "autumn_night"
 
 [editor]
 bufferline = "always"
@@ -12,10 +12,6 @@ select = "underline"
 
 [editor.file-picker]
 hidden = false
-
-[keys.normal]
-C-x = ":append-output xplr -C ~/.config/xplr/config.lua"
-
 
 [keys.insert]
 j = { k = "normal_mode" }
