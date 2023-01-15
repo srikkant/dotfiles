@@ -5,7 +5,7 @@ local active_bg = "#101010" -- Background of the window when it is in focus.
 local fg = "#bbbbbb" -- Text color for inactive tabs.
 local active_fg = "#bbbbbb" -- Text color for currently selected tab.
 local tab_bg = "#101010" -- Background for tabs not selected.
-local active_tab_bg = "#181818" -- Background for the currently selected tab.
+local active_tab_bg = "#242424" -- Background for the currently selected tab.
 
 local config = {
 	window_decorations = "RESIZE",
