@@ -4,9 +4,9 @@ if not status then
 	return
 end
 
-local status, dashboard = pcall(require, "alpha.themes.dashboard")
+local dashboard_status, dashboard = pcall(require, "alpha.themes.dashboard")
 
-if not status then
+if not dashboard_status then
 	return
 end
 

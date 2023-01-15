@@ -23,5 +23,3 @@ nvim_tree.setup({
 		},
 	},
 })
-
-vim.keymap.set("n", "<Leader>b", ":NvimTreeToggle<CR>", { noremap = true })
