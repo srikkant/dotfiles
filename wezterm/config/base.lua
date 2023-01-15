@@ -3,10 +3,12 @@ local keys = require("config.keys").keys
 local ssh_domains = require("config.ssh").ssh_domains
 
 return {
-	color_scheme = "Adventure",
+	color_scheme = "Gruvbox dark, hard (base16)",
 	color_scheme_dirs = {
 		wezterm.home_dir .. "/.config/wezterm/color_schemes",
 	},
+	front_end = "WebGpu",
+	webgpu_force_fallback_adapater = true,
 	enable_tab_bar = true,
 	keys = keys,
 	set_environment_variables = {

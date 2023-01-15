@@ -1,0 +1,36 @@
+[[language]]
+name = "html"
+formatter = { command = 'eslint', args = ["--parser", "html"] }
+auto-format = true
+
+[[language]]
+name = "json"
+formatter = { command = 'eslint', args = ["--parser", "json"] }
+auto-format = true
+
+[[language]]
+name = "css"
+formatter = { command = 'eslint', args = ["--parser", "css"] }
+auto-format = true
+
+[[language]]
+name = "javascript"
+formatter = { command = 'eslint', args = ["--parser", "typescript"] }
+auto-format = true
+
+[[language]]
+name = "typescript"
+formatter = { command = 'eslint', args = ["--parser", "typescript"] }
+auto-format = true
+
+[[language]]
+name = "tsx"
+formatter = { command = 'eslint_d', args = ["--stdin", "--fix-to-stdout"] }
+auto-format = true
+
+[[language]]
+name = "jsx"
+formatter = { command = 'eslint', args = ["--parser", "typescript"] }
+auto-format = true
+
+

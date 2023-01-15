@@ -49,7 +49,7 @@ packer.startup(function(use)
 	use("nvim-tree/nvim-tree.lua")
 	use("glepnir/lspsaga.nvim") -- LSP UIs
 	use("onsails/lspkind-nvim") -- vscode-like pictograms
-    use({"folke/trouble.nvim", requires = "kyazdani42/nvim-web-devicons"})
+	use({ "folke/trouble.nvim", requires = "kyazdani42/nvim-web-devicons" })
 	use("nvim-lualine/lualine.nvim") -- Lualine
 	use("akinsho/nvim-bufferline.lua") -- Bufferline for the tabs on top
 	use("folke/which-key.nvim")
@@ -74,4 +74,5 @@ packer.startup(function(use)
 	-- themes and more!
 	use("gpanders/editorconfig.nvim")
 	use("ellisonleao/gruvbox.nvim")
+	use("folke/tokyonight.nvim")
 end)
