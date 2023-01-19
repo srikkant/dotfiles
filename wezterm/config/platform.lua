@@ -32,19 +32,14 @@ local config = {
 }
 
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-	config.default_prog = { "fish" }
+	config.default_prog = { "pwsh-preview" }
 	config.font_size = 10
 	config.line_height = 1.1
-	config.font = wezterm.font_with_fallback({
-		{ family = "Iosevka Extended", italic = false },
-	})
+	config.font = wezterm.font("SF Mono")
 else
 	config.font_size = 14
 	config.line_height = 1.2
-	config.font = wezterm.font("Iosevka Extended")
-	--  config.font = wezterm.font_with_fallback({
-	--  { family = "Iosevka Extended", italic = false },
-	--  })
+	config.font = wezterm.font("SF Mono")
 end
 
 return config
