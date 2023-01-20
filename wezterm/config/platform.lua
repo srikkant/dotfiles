@@ -7,6 +7,8 @@ local active_fg = "#bbbbbb" -- Text color for currently selected tab.
 local tab_bg = "#101010" -- Background for tabs not selected.
 local active_tab_bg = "#242424" -- Background for the currently selected tab.
 
+local font = wezterm.font("SF Mono")
+
 local config = {
 	window_decorations = "RESIZE",
 	colors = {
@@ -29,17 +31,33 @@ local config = {
 		inactive_titlebar_bg = bg,
 		active_titlebar_bg = active_bg,
 	},
+	font = wezterm.font("SF Mono"),
+	font_rules = {
+		{
+			intensity = "Bold",
+			italic = true,
+			font = font,
+		},
+		{
+			intensity = "Normal",
+			italic = true,
+			font = font,
+		},
+		{
+			intensity = "Half",
+			italic = true,
+			font = font,
+		},
+	},
 }
 
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	config.default_prog = { "pwsh-preview" }
 	config.font_size = 10
-	config.line_height = 1.1
-	config.font = wezterm.font("SF Mono")
+	config.line_height = 1.6
 else
 	config.font_size = 14
 	config.line_height = 1.2
-	config.font = wezterm.font("SF Mono")
 end
 
 return config
