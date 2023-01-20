@@ -27,6 +27,10 @@ packer.startup(function(use)
 	use("neovim/nvim-lspconfig")
 	use("jose-elias-alvarez/null-ls.nvim")
 
+    -- Debugging
+    use ("mfussenegger/nvim-dap")
+    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+
 	-- Snippet engine
 	use("L3MON4D3/LuaSnip")
 
@@ -76,4 +80,8 @@ packer.startup(function(use)
 	use("gpanders/editorconfig.nvim")
 	use("ellisonleao/gruvbox.nvim")
 	use("folke/tokyonight.nvim")
+
+    -- Special plugins.
+    use({"phaazon/mind.nvim", branch = "v2.2"})
+
 end)

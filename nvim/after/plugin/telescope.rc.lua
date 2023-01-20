@@ -110,3 +110,4 @@ vim.keymap.set("n", "<Leader>fv", ":Telescope buffers<Enter>", { noremap = true 
 vim.keymap.set("n", "<Leader>fh", ":Telescope help_tags<Enter>", { noremap = true })
 vim.keymap.set("n", "<Leader>fg", ":Telescope live_grep<Enter>", { noremap = true })
 vim.keymap.set("n", "<Leader>fd", ":Telescope grep_string<Enter>", { noremap = true })
+vim.keymap.set("n", "<Leader>fc", ":Telescope colorscheme<Enter>", { noremap = true })

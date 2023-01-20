@@ -33,4 +33,9 @@ name = "jsx"
 formatter = { command = 'eslint_d', args = ["--stdin", "--fix-to-stdout"] }
 auto-format = true
 
+[[language]]
+name = "go"
+formatter = { command = 'goimports' }
+auto-format = true
+
 

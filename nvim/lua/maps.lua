@@ -101,3 +101,21 @@ keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", opts)
 -- Nvim tree toggle
 --
 keymap.set("n", "<Leader>b", ":NvimTreeToggle<CR>", opts)
+
+--
+-- Debugger
+-- 
+
+keymap.set("n", "<leader>db", "<cmd>DapToggleBreakpoint<cr>", opts)
+keymap.set("n", "<leader>dc", "<cmd>DapContinue<cr>", opts)
+keymap.set("n", "<leader>ds", "<cmd>DapStepOver<cr>", opts)
+keymap.set("n", "<leader>di", "<cmd>DapStepInto<cr>", opts)
+keymap.set("n", "<leader>do", "<cmd>DapStepOut<cr>", opts)
+keymap.set("n", "<leader>db", "<cmd>DapContinue<cr>", opts)
+keymap.set("n", "<leader>dt", "<cmd>DapTerminate<cr>", opts)
+keymap.set("n", "<leader>ds", "<cmd>DapLoadLaunchJSON<cr>", opts)
+keymap.set("n", "<leader>dll", "<cmd>DapShowLog<cr>", opts)
+
+--
+-- 
+--
