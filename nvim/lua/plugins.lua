@@ -53,6 +53,7 @@ packer.startup(function(use)
 	use("nvim-lualine/lualine.nvim") -- Lualine
 	use("akinsho/nvim-bufferline.lua") -- Bufferline for the tabs on top
 	use("folke/which-key.nvim")
+	use({ "ghillb/cybu.nvim", branch = "main" })
 
 	-- general enhancements!
 	use("norcalli/nvim-colorizer.lua")

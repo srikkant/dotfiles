@@ -3,7 +3,7 @@ local keys = require("config.keys").keys
 local ssh_domains = require("config.ssh").ssh_domains
 
 return {
-	color_scheme = "Gruvbox dark, hard (base16)",
+	color_scheme = "tokyonight",
 	color_scheme_dirs = {
 		wezterm.home_dir .. "/.config/wezterm/color_schemes",
 	},
@@ -18,9 +18,9 @@ return {
 	ssh_domains = ssh_domains,
 	tab_max_width = 30,
 	window_padding = {
-		top = 0,
-		bottom = 0,
-		left = 0,
-		right = 0,
+		top = 2,
+		bottom = 2,
+		left = 2,
+		right = 2,
 	},
 }

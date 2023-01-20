@@ -4,6 +4,7 @@ if not status then
 end
 
 lualine.setup({
+	theme = "tokyonight-night",
 	options = {
 		icons_enabled = true,
 		disabled_filetypes = {},
