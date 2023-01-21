@@ -36,28 +36,6 @@ protocol.CompletionItemKind = {
 -- Set up completion using nvim_cmp with LSP source
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-nvim_lsp.rust_analyzer.setup({
-	capabilities = capabilities,
-	settings = {
-		["rust-analyzer"] = {
-			imports = {
-				granularity = {
-					group = "module",
-				},
-				prefix = "self",
-			},
-			cargo = {
-				buildScripts = {
-					enable = true,
-				},
-			},
-			procMacro = {
-				enable = true,
-			},
-		},
-	},
-})
-
 nvim_lsp.gopls.setup({
 	capabilities = capabilities,
 })
@@ -82,7 +60,7 @@ nvim_lsp.sumneko_lua.setup({
 })
 
 nvim_lsp.graphql.setup({
-    capabilities = capabilities
+	capabilities = capabilities,
 })
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {

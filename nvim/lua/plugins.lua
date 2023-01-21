@@ -27,9 +27,9 @@ packer.startup(function(use)
 	use("neovim/nvim-lspconfig")
 	use("jose-elias-alvarez/null-ls.nvim")
 
-    -- Debugging
-    use ("mfussenegger/nvim-dap")
-    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+	-- Debugging
+	use("mfussenegger/nvim-dap")
+	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
 
 	-- Snippet engine
 	use("L3MON4D3/LuaSnip")
@@ -74,6 +74,7 @@ packer.startup(function(use)
 
 	-- Language/Framework specific tooling
 	use("jose-elias-alvarez/typescript.nvim")
+	use("simrat39/rust-tools.nvim")
 	use("mrjones2014/legendary.nvim")
 
 	-- themes and more!
@@ -81,7 +82,6 @@ packer.startup(function(use)
 	use("ellisonleao/gruvbox.nvim")
 	use("folke/tokyonight.nvim")
 
-    -- Special plugins.
-    use({"phaazon/mind.nvim", branch = "v2.2"})
-
+	-- Special plugins.
+	use({ "phaazon/mind.nvim", branch = "v2.2" })
 end)
