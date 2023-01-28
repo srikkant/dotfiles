@@ -57,7 +57,7 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	config.line_height = 1.5
 else
 	config.font_size = 14
-	config.line_height = 1.2
+	config.line_height = 1.5
 end
 
 return config
