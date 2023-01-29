@@ -1,11 +1,13 @@
-local status, theme = pcall(require, "tokyonight")
+local status, theme = pcall(require, "gruvbox")
 
 if not status then
 	return
 end
 
 theme.setup({
-	style = "night",
+	contrast = "soft", -- can be "hard", "soft" or empty string
+	italic = false,
+	transparent_mode = true,
 })
 
-vim.cmd("colorscheme tokyonight-night")
+vim.cmd("colorscheme gruvbox")
