@@ -32,6 +32,9 @@ keymap.set("n", "<C-h>", ":vertical resize +2<CR>", opts)
 keymap.set("n", "<leader>d", '"_d', opts)
 keymap.set("n", "<leader>p", '"_dP', opts)
 
+-- Buffer utilities
+keymap.set("n", "<C-w>", ":bd<CR>", opts)
+
 --
 -- Lspsaga related keymaps.
 --
@@ -104,7 +107,7 @@ keymap.set("n", "<Leader>b", ":NvimTreeToggle<CR>", opts)
 
 --
 -- Debugger
--- 
+--
 
 keymap.set("n", "<leader>db", "<cmd>DapToggleBreakpoint<cr>", opts)
 keymap.set("n", "<leader>dc", "<cmd>DapContinue<cr>", opts)
@@ -117,5 +120,5 @@ keymap.set("n", "<leader>ds", "<cmd>DapLoadLaunchJSON<cr>", opts)
 keymap.set("n", "<leader>dll", "<cmd>DapShowLog<cr>", opts)
 
 --
--- 
+--
 --
