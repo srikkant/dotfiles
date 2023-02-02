@@ -54,12 +54,17 @@ nvim_lsp.sumneko_lua.setup({
 			},
 			telemetry = {
 				enable = false,
+				thirdPartyCheck = false,
 			},
 		},
 	},
 })
 
 nvim_lsp.graphql.setup({
+	capabilities = capabilities,
+})
+
+nvim_lsp.svelte.setup({
 	capabilities = capabilities,
 })
 

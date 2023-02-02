@@ -7,7 +7,6 @@ return {
 	color_scheme_dirs = {
 		wezterm.home_dir .. "/.config/wezterm/color_schemes",
 	},
-	--  front_end = "WebGpu",
 	webgpu_force_fallback_adapater = true,
 	enable_tab_bar = true,
 	keys = keys,
