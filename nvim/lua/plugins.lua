@@ -38,8 +38,9 @@ packer.startup(function(use)
 	use("hrsh7th/nvim-cmp")
 	use("hrsh7th/cmp-buffer") -- nvim-cmp source for buffer words
 	use("hrsh7th/cmp-nvim-lsp") -- nvim-cmp source for neovim's built-in LSP
-	use("tzachar/cmp-tabnine") -- nvim-cmp source for TabNine completions
 	use("saadparwaiz1/cmp_luasnip") -- nvim-cmp source for Snippets powered by lua snip
+
+	use("Exafunction/codeium.vim")
 
 	-- Telescope
 	use("nvim-telescope/telescope.nvim")
