@@ -33,6 +33,8 @@ vim.opt.cursorline = true
 vim.opt.termguicolors = true
 vim.opt.guicursor = "n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor"
 
+vim.g.codeium_disable_bindings = 1
+
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
 vim.cmd([[let &t_Ce = "\e[4:0m"]])

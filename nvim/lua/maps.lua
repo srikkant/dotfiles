@@ -36,8 +36,20 @@ keymap.set("n", "<leader>p", '"_dP', opts)
 keymap.set("n", "<C-w>", ":bd<CR>", opts)
 
 --
--- Lspsaga related keymaps.
+-- Codeium related keymaps.
 --
+keymap.set("i", "<C-g>", function()
+	return vim.fn["codeium#Accept"]()
+end, { expr = true })
+keymap.set("i", "<c-;>", function()
+	return vim.fn["codeium#CycleCompletions"](1)
+end, { expr = true })
+keymap.set("i", "<c-,>", function()
+	return vim.fn["codeium#CycleCompletions"](-1)
+end, { expr = true })
+keymap.set("i", "<c-x>", function()
+	return vim.fn["codeium#Clear"]()
+end, { expr = true })
 
 -- Uses the default float window, used rarely in case the error is too big and not showing up anywhere.
 keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
