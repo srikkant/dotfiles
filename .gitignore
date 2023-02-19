@@ -1,6 +1,8 @@
 .*.yml
 .luarc.json
 
+temp/
+
 tmux/plugins
 !./tmux/plugins/tpm
 

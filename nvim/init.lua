@@ -1,5 +1,1 @@
-require("impatient")
-require("base")
-require("maps")
-require("os")
-require("plugins")
+require("config.lazy")
