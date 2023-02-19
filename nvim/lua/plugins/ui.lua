@@ -15,7 +15,6 @@ return {
 ╚███╔███╔╝███████╗    ██║  ██║██║  ██║███████╗    ██║██║  ██╗██║  ██╗██║  ██║██╗
  ╚══╝╚══╝ ╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝    ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝
             ]]
-
             dashboard.section.header.val = vim.split(logo, "\n")
             dashboard.section.buttons.val = {
                 dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
@@ -36,4 +35,15 @@ return {
         end,
     },
 
+    {
+        "akinsho/bufferline.nvim",
+        opts = {
+            options = {
+                diagnostics = "nvim_lsp",
+                always_show_bufferline = true,
+                show_close_icon = false,
+                show_buffer_close_icons = false,
+            },
+        },
+    },
 }
