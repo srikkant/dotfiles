@@ -1,12 +1,28 @@
 return {
     {
         {
+            "neovim/nvim-lspconfig",
+            ---@class PluginLspOpts
+            opts = {
+                ---@type lspconfig.options
+                servers = {
+                    svelte = {},
+                },
+                setup = {
+                    tailwindcss = function()
+                        return true
+                    end,
+                },
+            },
+        },
+        {
             "jose-elias-alvarez/null-ls.nvim",
             event = { "BufReadPre", "BufNewFile" },
             dependencies = { "mason.nvim" },
             opts = function()
                 local null_ls = require("null-ls")
                 return {
+                    root_dir = require("null-ls.utils").root_pattern(".git", "package.json"),
                     sources = {
                         debug = true,
                         sources = {
@@ -42,5 +58,5 @@ return {
                 }
             end,
         },
-    }
+    },
 }
