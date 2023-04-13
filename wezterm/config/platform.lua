@@ -1,11 +1,11 @@
 local wezterm = require("wezterm")
 
-local bg = "#000" -- Background of the window when it is not in focus.
-local active_bg = "#000" -- Background of the window when it is in focus.
+local bg = "#585b70" -- Background of the window when it is not in focus.
+local active_bg = "#11111b" -- Background of the window when it is in focus.
 local fg = "#777" -- Text color for inactive tabs.
 local active_fg = "#eee" -- Text color for currently selected tab.
-local tab_bg = "#000" -- Background for tabs not selected.
-local active_tab_bg = "#111" -- Background for the currently selected tab.
+local tab_bg = "#11111b" -- Background for tabs not selected.
+local active_tab_bg = "#1e1e2e" -- Background for the currently selected tab.
 
 local font = wezterm.font("JetBrains Mono")
 

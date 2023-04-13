@@ -1,11 +1,10 @@
 return {
-    -- add oxocarbon
-    { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = true, priority = 1000 },
-    -- Configure LazyVim to load gruvbox
+    { "catppuccin/nvim", name = "catppuccin", lazy = true, priority = 1000 },
+
     {
         "LazyVim/LazyVim",
         opts = {
-            colorscheme = "moonfly",
+            colorscheme = "catppuccin-mocha",
         },
     },
 }
