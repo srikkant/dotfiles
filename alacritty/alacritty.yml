@@ -1,18 +1,12 @@
+import:
+  - C:\Users\srsriniv\AppData\Roaming\alacritty\.os.yml
+  - C:\Users\srsriniv\AppData\Roaming\alacritty\.theme.yml
+  - ~/.config/alacritty/.os.yml
+  - ~/.config/alacritty/.theme.yml
+
 window:
   startup_mode: Maximized
   option_as_alt: Both
   padding:
     x: 4
     y: 4
-
-font:
-  size: 14
-  offset:
-    y: 8
-    x: 1
-  glyph_offset:
-    y: 4
-    x: 0
-  normal:
-    family: JetBrainsMono Nerd Font
-    style: Light

@@ -1,0 +1,27 @@
+shell:
+  program: wsl.exe
+  args:
+    - --cd ~
+
+window:
+  padding:
+    x: 4
+    y: 4
+
+font:
+  size: 10
+  offset:
+    y: 8
+  glyph_offset:
+    y: 4
+    x: 0
+  normal:
+    family: JetBrainsMono Nerd Font
+
+  bold_italic:
+    style: Bold
+
+  italic:
+    style: Regular
+
+working_directory: ~

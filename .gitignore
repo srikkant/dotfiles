@@ -14,3 +14,6 @@ fish/functions
 fish/conf.d
 
 zellij/layouts/*.local.kdl
+
+alacritty/.os.yml
+alacritty/.theme.yml
