@@ -12,3 +12,5 @@ fish/themes
 fish/completions
 fish/functions
 fish/conf.d
+
+zellij/layouts/*.local.kdl
