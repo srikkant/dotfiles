@@ -1,9 +1,4 @@
-shell:
-  program: fish
-  args: 
-   - --command zellij
-
-font: 
+font:
   size: 14
   offset:
     y: 8
@@ -14,12 +9,11 @@ font:
   normal:
     family: JetBrainsMono Nerd Font
     style: Light
-   
+
   bold_italic:
     style: Bold
 
   italic:
     style: Light
-
 
 working_directory: ~
