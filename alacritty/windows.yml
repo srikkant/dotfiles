@@ -10,18 +10,17 @@ window:
 
 font:
   size: 10
-  offset:
-    y: 8
-  glyph_offset:
-    y: 4
-    x: 0
   normal:
-    family: JetBrainsMono Nerd Font Mono
+    family: FiraCode Nerd Font Mono
+    style: Regular
+
+  bold:
+    style: Medium
 
   bold_italic:
-    style: Bold
+    style: MediumItalic
 
   italic:
-    style: Regular
+    style: Italic
 
 working_directory: ~
