@@ -1,19 +1,17 @@
 font:
   size: 14
   offset:
-    y: 8
+    y: 16
     x: 1
   glyph_offset:
-    y: 4
+    y: 8
     x: 0
   normal:
-    family: JetBrainsMono Nerd Font Mono
+    family: BlexMono Nerd Font Mono
     style: Light
-
+  bold:
+    style: Text
   bold_italic:
-    style: Bold
-
-  italic:
-    style: Light
+    style: Text Italic
 
 working_directory: ~
