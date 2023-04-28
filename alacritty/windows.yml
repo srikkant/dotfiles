@@ -9,6 +9,10 @@ window:
     y: 4
 
 font:
+  offset:
+    y: 8
+  glyph_offset:
+    y: 4
   size: 10
   normal:
     family: FiraCode Nerd Font Mono
