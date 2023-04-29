@@ -22,3 +22,19 @@ vim.api.nvim_create_autocmd("BufWritePost", {
         end
     end,
 })
+
+-- Before save of dart file.
+-- For now, this just works on Dart files, but we could in theory all possible quick fix solutions.
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = { "*.dart" },
+    callback = function()
+        if vim.lsp.buf_is_attached then
+            vim.lsp.buf.code_action({
+                filter = function(a)
+                    return a.kind == "source.fixAll"
+                end,
+                apply = true,
+            })
+        end
+    end,
+})
