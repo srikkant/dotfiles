@@ -8,10 +8,10 @@ font:
     x: 0
   normal:
     family: BlexMono Nerd Font Mono
-    style: Light
-  bold:
     style: Text
+  bold:
+    style: Medium
   bold_italic:
-    style: Text Italic
+    style: Medium Italic
 
 working_directory: ~

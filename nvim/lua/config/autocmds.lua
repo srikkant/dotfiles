@@ -11,3 +11,14 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         typescript.actions.fixAll({ sync = true })
     end,
 })
+
+-- On save of dart file.
+vim.api.nvim_create_autocmd("BufWritePost", {
+    pattern = { "*.dart" },
+    callback = function()
+        local flutter = require("flutter-tools.commands")
+        if flutter.is_running() then
+            flutter.reload(true) -- Queitly, send a flutter hot reload command when dart files are saved.
+        end
+    end,
+})

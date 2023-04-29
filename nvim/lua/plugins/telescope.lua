@@ -16,12 +16,22 @@ return { -- add telescope-fzf-native
                 end,
             },
         },
+        init = function()
+            require("telescope").load_extension("flutter")
+        end,
         keys = {
             {
                 "<leader><leader>",
                 function()
                     require("telescope.builtin").resume()
                 end,
+            },
+            {
+                "<leader>fd",
+                function()
+                    require("telescope").extensions.flutter.commands()
+                end,
+                desc = "Flutter Tools (Flutter projects)",
             },
             {
                 "<leader>fb",
