@@ -28,13 +28,11 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = { "*.dart" },
     callback = function()
-        if vim.lsp.buf_is_attached then
-            vim.lsp.buf.code_action({
-                filter = function(a)
-                    return a.kind == "source.fixAll"
-                end,
-                apply = true,
-            })
-        end
+        vim.lsp.buf.code_action({
+            filter = function(a)
+                return a.kind == "source.fixAll"
+            end,
+            apply = true,
+        })
     end,
 })

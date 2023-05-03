@@ -32,6 +32,7 @@ return {
                 },
                 servers = {
                     svelte = {},
+                    denols = {},
                 },
                 setup = {
                     tailwindcss = function()
@@ -46,19 +47,35 @@ return {
             dependencies = { "mason.nvim" },
             opts = function()
                 local null_ls = require("null-ls")
+                local ts_condition = function(utils)
+                    return utils.root_has_file({ "package.json" })
+                end
+
                 return {
                     root_dir = require("null-ls.utils").root_pattern(".git", "package.json"),
                     sources = {
                         debug = true,
                         sources = {
-                            null_ls.builtins.formatting.eslint_d,
+                            null_ls.builtins.formatting.eslint_d.with({
+                                condition = ts_condition,
+                            }),
+
+                            null_ls.builtins.formatting.deno_fmt,
+
                             null_ls.builtins.formatting.prettierd.with({
                                 extra_filetypes = { "svelte" },
+                                condition = ts_condition,
                             }),
+
                             null_ls.builtins.formatting.stylelint,
 
-                            null_ls.builtins.diagnostics.eslint_d,
-                            null_ls.builtins.code_actions.eslint_d,
+                            null_ls.builtins.diagnostics.eslint_d.with({
+                                condition = ts_condition,
+                            }),
+
+                            null_ls.builtins.code_actions.eslint_d.with({
+                                condition = ts_condition,
+                            }),
 
                             -- Lua
                             null_ls.builtins.formatting.stylua,
