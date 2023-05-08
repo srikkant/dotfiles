@@ -1,17 +1,13 @@
 font:
-  size: 14
+  size: 16
   offset:
     y: 16
-    x: 1
+    x: 0
   glyph_offset:
     y: 8
     x: 0
   normal:
-    family: BlexMono Nerd Font Mono
-    style: Text
-  bold:
-    style: Medium
-  bold_italic:
-    style: Medium Italic
+    family: Inconsolata Nerd Font Mono
+    style: Regular
 
 working_directory: ~
