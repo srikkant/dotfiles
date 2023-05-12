@@ -1,18 +1,11 @@
 return {
     {
-        "navarasu/onedark.nvim",
-        lazy = true,
-        priority = 1000,
-        config = function()
-            require("onedark").load({
-                style = "darker",
-            })
-        end,
+        "sainnhe/everforest",
     },
     {
         "LazyVim/LazyVim",
         opts = {
-            colorscheme = "onedark",
+            colorscheme = "everforest",
         },
     },
 }

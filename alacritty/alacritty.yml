@@ -1,8 +1,7 @@
 import:
   - C:\Users\srsriniv\AppData\Roaming\alacritty\.os.yml
-  - C:\Users\srsriniv\AppData\Roaming\alacritty\.theme.yml
   - ~/.config/alacritty/.os.yml
-  - ~/.config/alacritty/.theme.yml
+  - ~/.config/alacritty/themes/themes/everforest_dark.yaml
 
 window:
   startup_mode: Maximized
