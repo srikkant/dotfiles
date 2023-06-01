@@ -1,7 +1,7 @@
 import:
   - C:\Users\srsriniv\AppData\Roaming\alacritty\.os.yml
   - ~/.config/alacritty/.os.yml
-  - ~/.config/alacritty/themes/themes/everforest_dark.yaml
+  - ~/.config/alacritty/themes/themes/tokyo-night.yaml
 
 window:
   startup_mode: Maximized

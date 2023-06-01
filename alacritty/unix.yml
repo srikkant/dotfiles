@@ -1,13 +1,15 @@
 font:
-  size: 16
+  size: 14
   offset:
     y: 16
-    x: 0
+    x: 1
   glyph_offset:
     y: 8
     x: 0
   normal:
-    family: Inconsolata Nerd Font Mono
+    family: FiraMono Nerd Font Mono
+    style: Regular
+  bold:
     style: Regular
 
 working_directory: ~
