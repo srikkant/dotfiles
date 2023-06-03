@@ -34,7 +34,12 @@ return {
             return dashboard
         end,
     },
-
+    {
+        "rcarriga/nvim-notify",
+        opts = {
+            background_colour = "#414868",
+        },
+    },
     {
         "akinsho/bufferline.nvim",
         opts = {
