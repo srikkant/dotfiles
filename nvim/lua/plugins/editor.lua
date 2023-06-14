@@ -33,7 +33,7 @@ return {
 
             require("tabby.tabline").set(function(line)
                 local left_enclosure = {
-                    { " ", hl = theme.head },
+                    { "", hl = theme.head },
                     line.sep("", theme.head, theme.fill),
                 }
 

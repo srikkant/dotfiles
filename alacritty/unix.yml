@@ -7,11 +7,9 @@ font:
     y: 8
     x: 0
   normal:
-    family: BlexMono Nerd Font Mono
-    style: Light
+    family: FiraMono Nerd Font Mono
+    style: Regular
   bold:
-    style: Text
-  bold_italic:
-    style: Text Italic
+    style: Regular
 
 working_directory: ~

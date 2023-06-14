@@ -1,12 +1,12 @@
 import:
   - C:\Users\srsriniv\AppData\Roaming\alacritty\.os.yml
-  - C:\Users\srsriniv\AppData\Roaming\alacritty\.theme.yml
   - ~/.config/alacritty/.os.yml
-  - ~/.config/alacritty/.theme.yml
+  - ~/.config/alacritty/themes/themes/tokyo-night.yaml
 
 window:
+  opacity: 0.925
   startup_mode: Maximized
   option_as_alt: Both
   padding:
     x: 4
-    y: 4
+    y: 0
