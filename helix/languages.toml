@@ -1,41 +1,26 @@
-[[language]]
-name = "html"
-formatter = { command = 'eslint_d', args = ["--stdin", "--fix-to-stdout", "--parser", "html"] }
-auto-format = true
+use-grammars = { only = [ "rust", "go", "typescript", "tsx", "javascript", "jsx", "json", "jsonnet", "yaml" ] }
 
-[[language]]
-name = "json"
-formatter = { command = 'eslint_d', args = ["--stdin", "--fix-to-stdout", "--parser", "json"] }
-auto-format = true
 
-[[language]]
-name = "css"
-formatter = { command = 'eslint_d', args = ["--stdin", "--fix-to-stdout", "--parser", "css"] }
-auto-format = true
+[language-server.efm-lsp-js]
+command = "efm-langserver"
 
-[[language]]
-name = "javascript"
-formatter = { command = 'eslint_d', args = ["--stdin", "--fix-to-stdout"] }
-auto-format = true
+[language-server.efm-lsp-js.config]
+documentFormatting = true
+
 
 [[language]]
 name = "typescript"
-formatter = { command = 'eslint_d', args = ["--stdin", "--fix-to-stdout"] }
-auto-format = true
+language-servers = [ { name = "efm-lsp-js", only-features = [ "format" ] }, "typescript-language-server" ]
 
 [[language]]
 name = "tsx"
-formatter = { command = 'eslint_d', args = ["--stdin", "--fix-to-stdout"] }
-auto-format = true
+language-servers = [ { name = "efm-lsp-js", only-features = [ "format" ] }, "typescript-language-server" ]
+
+[[language]]
+name = "javascript"
+language-servers = [ { name = "efm-lsp-js", only-features = [ "format" ] }, "typescript-language-server" ]
 
 [[language]]
 name = "jsx"
-formatter = { command = 'eslint_d', args = ["--stdin", "--fix-to-stdout"] }
-auto-format = true
-
-[[language]]
-name = "go"
-formatter = { command = 'goimports' }
-auto-format = true
-
+language-servers = [ { name = "efm-lsp-js", only-features = [ "format" ] }, "typescript-language-server" ]
 
