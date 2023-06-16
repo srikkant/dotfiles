@@ -10,17 +10,25 @@ documentFormatting = true
 
 [[language]]
 name = "typescript"
-language-servers = [ { name = "efm-lsp-js", only-features = [ "format" ] }, "typescript-language-server" ]
+indent = { tab-width = 4, unit = "    " }
+language-servers = ["efm-lsp-js", "typescript-language-server"]
+auto-format = true
 
 [[language]]
 name = "tsx"
-language-servers = [ { name = "efm-lsp-js", only-features = [ "format" ] }, "typescript-language-server" ]
+indent = { tab-width = 4, unit = "    " }
+language-servers = ["efm-lsp-js", "typescript-language-server"]
+auto-format = true
 
 [[language]]
 name = "javascript"
-language-servers = [ { name = "efm-lsp-js", only-features = [ "format" ] }, "typescript-language-server" ]
+indent = { tab-width = 4, unit = "    " }
+language-servers = ["efm-lsp-js", "typescript-language-server"]
+auto-format = true
 
 [[language]]
 name = "jsx"
-language-servers = [ { name = "efm-lsp-js", only-features = [ "format" ] }, "typescript-language-server" ]
+indent = { tab-width = 4, unit = "    " }
+language-servers = ["efm-lsp-js", "typescript-language-server"]
+auto-format = true
 

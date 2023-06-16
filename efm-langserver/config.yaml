@@ -43,3 +43,11 @@ languages:
   typescriptreact:
     - <<: *eslint_d
     - <<: *prettier_d
+    
+  javascript.tsx:
+    - <<: *eslint_d
+    - <<: *prettier_d
+
+  typescript.tsx:
+    - <<: *eslint_d
+    - <<: *prettier_d
