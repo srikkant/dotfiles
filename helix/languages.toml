@@ -1,4 +1,4 @@
-use-grammars = { only = [ "rust", "go", "typescript", "tsx", "javascript", "jsx", "json", "jsonnet", "yaml" ] }
+use-grammars = { only = [ "dart", "go", "rust", "javascript", "jsx", "json", "jsonnet", "typescript", "tsx","yaml" ] }
 
 
 [language-server.efm-lsp-js]
