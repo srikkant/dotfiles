@@ -1,4 +1,4 @@
-theme = "base16_transparent"
+theme = "mellow_transparent"
 
 [editor]
 bufferline = "always"
