@@ -5,3 +5,9 @@ disabled = false
 format = '[\[$time\]]($style) '
 time_format = "%R"
 
+[gcloud]
+disabled = true
+
+[hostname]
+ssh_only = true
+ssh_symbol = ''
