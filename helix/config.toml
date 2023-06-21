@@ -4,6 +4,7 @@ theme = "mellow_transparent"
 bufferline = "always"
 line-number = "relative"
 mouse = false
+true-color = true
 
 [editor.cursor-shape]
 insert = "bar"
