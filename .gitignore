@@ -7,7 +7,6 @@ tmux/plugins
 !./tmux/plugins/tpm
 
 fish/fish_variables*
-fish/config.fish
 fish/themes
 fish/completions
 fish/functions
