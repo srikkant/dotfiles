@@ -5,10 +5,10 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
-config.color_scheme = 'Builtin Pastel Dark'
+config.color_scheme = 'Rouge 2'
 config.default_cursor_style = 'BlinkingUnderline'
 config.font = wezterm.font 'Cascadia Code PL'
-config.font_size = 10.5
+config.font_size = 10
 config.line_height = 1.4
 config.cell_width = 1.1
 config.tab_bar_at_bottom = true
@@ -20,21 +20,21 @@ config.window_frame = {
 }
 
 config.window_padding = {
-  left = 16,
-  right = 16,
-  top = 16,
-  bottom = 16,
+  left = 24,
+  right = 24,
+  top = 24,
+  bottom = 24,
 }
 
 config.background = {
   {
-    source = { Color = "#111111" },
+    source = { Color = "#161616" },
     opacity = 1,
     height = "100%",
     width = "100%"
   },
   {
-    source = { File = './wallpaper.jpg' },
+    source = { File = '/home/srikkant/.config/wezterm/wallpaper.jpg' },
     opacity = 0.075,
   },
 }
