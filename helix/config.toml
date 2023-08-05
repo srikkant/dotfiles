@@ -1,4 +1,4 @@
-theme = "mellow_transparent"
+theme = ".auto" # ".auto" is a special theme.
 
 [editor]
 bufferline = "always"

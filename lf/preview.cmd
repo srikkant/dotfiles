@@ -1,2 +1,2 @@
 @echo off
-bat --color=always --theme=zenburn %1
+bat --color=always %1

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# sets the helix theme.
+cp ~/.config/helix/runtime/themes/$APPEARANCE.toml  ~/.config/helix/runtime/themes/.auto.toml

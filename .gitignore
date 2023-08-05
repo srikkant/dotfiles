@@ -1,7 +1,4 @@
-.*.yml
 .luarc.json
-
-temp/
 
 tmux/plugins
 !./tmux/plugins/tpm
@@ -11,8 +8,3 @@ fish/themes
 fish/completions
 fish/functions
 fish/conf.d
-
-zellij/layouts/*.local.kdl
-
-alacritty/.os.yml
-alacritty/.theme.yml
