@@ -1,2 +1,1 @@
-inherits = "catppuccin_mocha"
-"ui.bufferline.active" = { fg = "mauve", bg = "base", underline = {} }
+inherits = "gruvbox_dark_hard"
