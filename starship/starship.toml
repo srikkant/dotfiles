@@ -1,9 +1,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 [time]
-disabled = false
-format = '[\[$time\]]($style) '
-time_format = "%R"
+disabled = true
 
 [gcloud]
 disabled = true
