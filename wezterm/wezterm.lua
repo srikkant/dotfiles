@@ -2,12 +2,12 @@ local wezterm = require "wezterm"
 local config = wezterm.config_builder()
 
 local appearance = wezterm.gui.get_appearance()
-local font_size = os.getenv("TERMINAL_FONT_SIZE") or 13;
+local font_size = os.getenv("TERMINAL_FONT_SIZE") or "13";
 
 config.default_cursor_style = "BlinkingUnderline"
 config.color_scheme = "Gruvbox Light"
 config.font = wezterm.font ("Cascadia Code PL", { weight  = "DemiBold" })
-config.font_size = font_size
+config.font_size = tonumber(font_size)
 config.line_height = 1.6
 config.cell_width = 1.05
 config.enable_tab_bar = false
