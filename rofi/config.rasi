@@ -1,0 +1,25 @@
+configuration {
+    modi: "window,run,drun,combi";
+    font: "Cascadia Code PL 12";
+    show-icons: true;
+/*	icon-theme: ;*/
+	drun-show-actions: true;
+	hover-select: true;
+	combi-modi: "window,run,drun";
+	steal-focus: true;
+	display-run: "run";
+	display-drun: "apps";
+	display-combi: "";
+    
+    timeout {
+        action: "kb-cancel";
+        delay:  0;
+    }
+    
+    filebrowser {
+        directories-first: true;
+        sorting-method:    "name";
+    }
+}
+
+@theme "theme.rasi"
