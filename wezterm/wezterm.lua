@@ -18,7 +18,7 @@ config.set_environment_variables = { APPEARANCE = "light" }
 if env["appearance"]:find "Dark" then
   config.font = wezterm.font("Cascadia Code PL")
   config.set_environment_variables["APPEARANCE"] = "dark"
-  config.color_scheme = "Gruvbox Dark (Gogh)"
+  config.color_scheme = "Everforest Dark (Gogh)"
 end
 
 return config
