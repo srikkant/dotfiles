@@ -1,4 +1,5 @@
-export P4PORT=perforce:1666
+# Load bash aliases if present.
+[ -s "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 
 export EDITOR=hx
 export APPEARANCE=dark
@@ -18,5 +19,6 @@ source "$ZSH_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
 # Aliases.
 alias -g reload="source ~/.zshrc"
-alias -g pwsh="/mnt/c/Program\ Files/PowerShell/7-preview/pwsh.exe -WorkingDirectory C:"
 alias -g ls="lsd"
+alias -g zd="$ZSH_DIR/scripts/zellij-default-session.zsh"
+alias -g zhelp="zellij -l help"
