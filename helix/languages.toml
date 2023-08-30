@@ -1,6 +1,3 @@
-use-grammars = { only = [ "bash", "dart", "env", "go", "rust", "lua", "javascript", "jsx", "json", "jsonnet", "typescript", "tsx","yaml" ] }
-
-
 [language-server.efm-lsp-js]
 command = "efm-langserver"
 
@@ -32,3 +29,7 @@ indent = { tab-width = 4, unit = "    " }
 language-servers = ["efm-lsp-js", "typescript-language-server"]
 auto-format = true
 
+[[language]]
+name = "go"
+auto-format = true
+formatter = { command = "goimports" }

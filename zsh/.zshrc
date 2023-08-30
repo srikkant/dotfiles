@@ -16,8 +16,10 @@ source "$HOME/.cargo/env"
 source "$NVM_DIR/nvm.sh"  
 source "$NVM_DIR/bash_completion"  
 source "$ZSH_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$ZSH_DIR/auto-ls/auto-ls.zsh"
 
 # Aliases.
+alias -g c="clear"
 alias -g reload="source ~/.zshrc"
 alias -g ls="lsd"
 alias -g zd="$ZSH_DIR/scripts/zellij-default-session.zsh"

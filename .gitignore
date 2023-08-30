@@ -8,3 +8,5 @@ fish/themes
 fish/completions
 fish/functions
 fish/conf.d
+
+helix/runtime/grammars
