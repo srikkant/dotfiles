@@ -16,7 +16,7 @@ source "$HOME/.cargo/env"
 source "$NVM_DIR/nvm.sh"  
 source "$NVM_DIR/bash_completion"  
 source "$ZSH_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$ZSH_DIR/auto-ls/auto-ls.zsh"
+source "$ZSH_DIR/scripts/autols.zsh"
 
 # Aliases.
 alias -g c="clear"
