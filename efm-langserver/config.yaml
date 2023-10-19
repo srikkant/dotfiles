@@ -28,6 +28,9 @@ tools:
 
 languages:
 
+  css:
+    - <<: *prettier_d
+
   javascript:
     - <<: *eslint_d
     - <<: *prettier_d
