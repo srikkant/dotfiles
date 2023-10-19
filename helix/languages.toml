@@ -30,6 +30,12 @@ language-servers = ["efm-lsp-js", "typescript-language-server"]
 auto-format = true
 
 [[language]]
+name = "svelte"
+indent = { tab-width = 4, unit = "    " }
+language-servers = ["efm-lsp-js", "svelteserver"]
+auto-format = true
+
+[[language]]
 name = "go"
 auto-format = true
 formatter = { command = "goimports" }

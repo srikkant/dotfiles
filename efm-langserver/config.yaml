@@ -51,3 +51,7 @@ languages:
   typescript.tsx:
     - <<: *eslint_d
     - <<: *prettier_d
+
+  svelte:
+    - <<: *eslint_d
+    - <<: *prettier_d
