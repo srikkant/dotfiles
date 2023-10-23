@@ -1,2 +1,2 @@
 #!/bin/sh
-bat --color=always "$1"
+bat --theme DarkNeon --color=always "$1"
