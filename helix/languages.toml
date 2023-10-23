@@ -1,32 +1,44 @@
-[language-server.efm-lsp-js]
+[language-server.efm-lsp]
 command = "efm-langserver"
 
-[language-server.efm-lsp-js.config]
+[language-server.efm-lsp.config]
 documentFormatting = true
 
 
 [[language]]
 name = "typescript"
 indent = { tab-width = 4, unit = "    " }
-language-servers = ["efm-lsp-js", "typescript-language-server"]
+language-servers = ["efm-lsp", "typescript-language-server"]
 auto-format = true
 
 [[language]]
 name = "tsx"
 indent = { tab-width = 4, unit = "    " }
-language-servers = ["efm-lsp-js", "typescript-language-server"]
+language-servers = ["efm-lsp", "typescript-language-server"]
 auto-format = true
 
 [[language]]
 name = "javascript"
 indent = { tab-width = 4, unit = "    " }
-language-servers = ["efm-lsp-js", "typescript-language-server"]
+language-servers = ["efm-lsp", "typescript-language-server"]
 auto-format = true
 
 [[language]]
 name = "jsx"
 indent = { tab-width = 4, unit = "    " }
-language-servers = ["efm-lsp-js", "typescript-language-server"]
+language-servers = ["efm-lsp", "typescript-language-server"]
+auto-format = true
+
+[[language]]
+name = "svelte"
+indent = { tab-width = 4, unit = "    " }
+language-servers = ["efm-lsp", "svelteserver"]
+auto-format = true
+
+[[language]]
+name = "css"
+indent = { tab-width = 4, unit = "    " }
+language-servers = ["efm-lsp", "vscode-css-language-server"]
 auto-format = true
 
 [[language]]

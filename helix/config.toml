@@ -5,6 +5,11 @@ bufferline = "always"
 line-number = "relative"
 mouse = false
 true-color = true
+cursorline = true
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = true
 
 [editor.cursor-shape]
 insert = "bar"

@@ -28,6 +28,9 @@ tools:
 
 languages:
 
+  css:
+    - <<: *prettier_d
+
   javascript:
     - <<: *eslint_d
     - <<: *prettier_d
@@ -49,5 +52,9 @@ languages:
     - <<: *prettier_d
 
   typescript.tsx:
+    - <<: *eslint_d
+    - <<: *prettier_d
+
+  svelte:
     - <<: *eslint_d
     - <<: *prettier_d
