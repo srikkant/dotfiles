@@ -25,6 +25,8 @@ alias -g c="clear"
 alias -g reload="source ~/.zshrc"
 alias -g ls="lsd"
 alias -g zd="$ZSH_DIR/scripts/zellij-default-session.zsh"
-alias -g zhelp="zellij -l help"
+alias -g zide='zellij -l ide'
 
 alias -g ffzf="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
+
+source /Users/srikkant/.config/broot/launcher/bash/br

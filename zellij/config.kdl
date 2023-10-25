@@ -1,5 +1,4 @@
 theme "tokyonight"
-simplified_ui true
 pane_frames false
 
 ui {
@@ -120,9 +119,9 @@ keybinds {
         bind "Ctrl o" { SwitchToMode "Normal"; }
         bind "Ctrl s" { SwitchToMode "Scroll"; }
         bind "d" { Detach; }
+        bind "x" { Quit; }
     }
     tmux {
-        bind "`" { WriteChars "`"; SwitchToMode "Normal"; }
         bind "[" { SwitchToMode "Scroll"; }
         bind "Ctrl b" { Write 2; SwitchToMode "Normal"; }
         bind "\"" { NewPane "Down"; SwitchToMode "Normal"; }
@@ -160,8 +159,8 @@ keybinds {
         bind "Alt Up" { MoveFocus "Up"; }
         bind "Alt =" "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
-        bind "Alt [" { PreviousSwapLayout; }
-        bind "Alt ]" { NextSwapLayout; }
+        bind "Alt [" { GoToPreviousTab; }
+        bind "Alt ]" { GoToNextTab; }
         unbind "Alt h" "Alt j" "Alt k" "Alt l"
     }
     shared_except "normal" "locked" {
@@ -184,9 +183,6 @@ keybinds {
     }
     shared_except "move" "locked" {
         bind "Ctrl h" { SwitchToMode "Move"; }
-    }
-    shared_except "tmux" "locked" {
-        bind "`" { SwitchToMode "Tmux"; }
     }
 }
 

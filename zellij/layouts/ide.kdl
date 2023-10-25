@@ -1,0 +1,24 @@
+layout {
+
+    default_tab_template {
+        children
+        pane size=1 borderless=true {
+            plugin location="zellij:compact-bar"
+        }
+    }
+
+    tab name="explorer" focus=true {
+        pane command="lf" {
+            args "-config" "/Users/srikkant/.config/lf/lfrc-ide"
+        }
+    }
+
+    tab name="editor" {
+        pane command="hx"
+    }
+
+    tab name="workspace" {
+        pane
+    }
+
+}
