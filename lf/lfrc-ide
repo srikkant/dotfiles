@@ -2,6 +2,8 @@ set ifs "\n"
 set scrolloff 10
 set icons
 set previewer ~/.config/lf/preview
+set statfmt ""
+set promptfmt ""
 
 map ` !true
 
