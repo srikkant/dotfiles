@@ -10,7 +10,14 @@ layout {
 
                 border_enabled  "false"
 
-                mode_normal  "#[bg=blue] "
+                mode_normal  "#[bg=#b8bb26] "
+                mode_locked  "#[bg=#fb4934] "
+                mode_resize  "#[bg=#fabd2f] "
+                mode_pane    "#[bg=#d3869b] "
+                mode_tab     "#[bg=#83a598] "
+                mode_scroll  "#[bg=#8ec07c] "
+                mode_session "#[bg=#fe8019] "
+                mode_move    "#[bg=#a89984] "
                 mode_tmux    "#[bg=#ffc387] "
 
                 tab_normal   "#[fg=#6C7086] {name} "
