@@ -31,6 +31,12 @@ languages:
   css:
     - <<: *prettier_d
 
+  yaml:
+    - <<: *prettier_d
+
+  json:
+    - <<: *prettier_d
+
   javascript:
     - <<: *eslint_d
     - <<: *prettier_d

@@ -3,30 +3,7 @@ layout {
     default_tab_template {
         children
         pane size=1 borderless=true {
-            plugin location="file:/Users/srikkant/.bin/zjstatus.wasm" {
-                format_left  "{mode} {command_git_branch} {tabs}"
-                format_right ""
-                format_space ""
-
-                border_enabled  "false"
-
-                mode_normal  "#[bg=#b8bb26] "
-                mode_locked  "#[bg=#fb4934] "
-                mode_resize  "#[bg=#fabd2f] "
-                mode_pane    "#[bg=#d3869b] "
-                mode_tab     "#[bg=#83a598] "
-                mode_scroll  "#[bg=#8ec07c] "
-                mode_session "#[bg=#fe8019] "
-                mode_move    "#[bg=#a89984] "
-                mode_tmux    "#[bg=#ffc387] "
-
-                tab_normal   "#[fg=#6C7086] {name} "
-                tab_active   "#[fg=blue,bold] {name} "
-
-                command_git_branch_command   "git rev-parse --abbrev-ref HEAD"
-                command_git_branch_format    "#[fg=red]  {stdout} "
-                command_git_branch_interval  "10"
-            }
+            plugin location="zellij:compact-bar"
         }
     }
 

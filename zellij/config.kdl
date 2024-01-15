@@ -1,5 +1,6 @@
 theme "tokyonight"
 pane_frames false
+simplified_ui true
 
 ui {
     pane_frames {

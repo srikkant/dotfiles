@@ -4,41 +4,58 @@ command = "efm-langserver"
 [language-server.efm-lsp.config]
 documentFormatting = true
 
+[language-server.rust-analyzer.config.check]
+command = "clippy"
+
+[language-server.yaml-language-server]
+command = "yaml-language-server"
+
+[[language]]
+name = "yaml"
+indent = { tab-width = 4, unit = "    " }
+language-servers = [{ name = "efm-lsp", except-features = ["goto-definition", "goto-declaration", "goto-type-definition", "goto-reference", "goto-implementation" ] }, "yaml-language-server", "ansible-language-server"]
+auto-format = true
 
 [[language]]
 name = "typescript"
 indent = { tab-width = 4, unit = "    " }
-language-servers = ["efm-lsp", "typescript-language-server"]
+language-servers = ["efm-lsp", "vscode-json-language-server"]
+auto-format = true
+
+[[language]]
+name = "typescript"
+indent = { tab-width = 4, unit = "    " }
+language-servers = [{ name = "efm-lsp", except-features = ["goto-definition", "goto-declaration", "goto-type-definition", "goto-reference", "goto-implementation" ] }, "typescript-language-server"]
 auto-format = true
 
 [[language]]
 name = "tsx"
 indent = { tab-width = 4, unit = "    " }
-language-servers = ["efm-lsp", "typescript-language-server"]
+language-servers = [{ name = "efm-lsp", except-features = ["goto-definition", "goto-declaration", "goto-type-definition", "goto-reference", "goto-implementation" ] }, "typescript-language-server"]
 auto-format = true
 
 [[language]]
 name = "javascript"
 indent = { tab-width = 4, unit = "    " }
-language-servers = ["efm-lsp", "typescript-language-server"]
+language-servers = [{ name = "efm-lsp", except-features = ["goto-definition", "goto-declaration", "goto-type-definition", "goto-reference", "goto-implementation" ] }, "typescript-language-server"]
 auto-format = true
 
 [[language]]
 name = "jsx"
 indent = { tab-width = 4, unit = "    " }
-language-servers = ["efm-lsp", "typescript-language-server"]
+language-servers = [{ name = "efm-lsp", except-features = ["goto-definition", "goto-declaration", "goto-type-definition", "goto-reference", "goto-implementation" ] }, "typescript-language-server"]
 auto-format = true
 
 [[language]]
 name = "svelte"
 indent = { tab-width = 4, unit = "    " }
-language-servers = ["efm-lsp", "svelteserver"]
+language-servers = [{ name = "efm-lsp", except-features = ["goto-definition", "goto-declaration", "goto-type-definition", "goto-reference", "goto-implementation" ] }, "svelteserver"]
 auto-format = true
 
 [[language]]
 name = "css"
 indent = { tab-width = 4, unit = "    " }
-language-servers = ["efm-lsp", "vscode-css-language-server"]
+language-servers = [{ name = "efm-lsp", except-features = ["goto-definition", "goto-declaration", "goto-type-definition", "goto-reference", "goto-implementation" ] }, "vscode-css-language-server"]
 auto-format = true
 
 [[language]]
