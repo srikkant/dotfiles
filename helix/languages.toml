@@ -61,4 +61,5 @@ auto-format = true
 [[language]]
 name = "go"
 auto-format = true
+language-servers = [{ name = "gopls" }]
 formatter = { command = "goimports" }
