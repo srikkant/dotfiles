@@ -9,3 +9,9 @@ disabled = true
 [hostname]
 ssh_only = true
 ssh_symbol = ''
+
+[package]
+disabled = true
+
+[os]
+disabled = false
