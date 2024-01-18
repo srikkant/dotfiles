@@ -1,24 +1,17 @@
 local wezterm = require "wezterm"
-local env = require "env"
-
 local config = wezterm.config_builder()
 
 config.default_cursor_style = "BlinkingUnderline"
-config.color_scheme = "Gruvbox Light"
-config.font = wezterm.font("Cascadia Code PL")
-config.font_size = env["font_size"]
-config.line_height = env["line_height"]
-config.cell_width = env["cell_width"]
-config.enable_tab_bar = false
+config.font_size = 14
+config.line_height = 1.3
+config.cell_width = 1.0
 config.window_decorations = "RESIZE"
 config.window_padding = { left = 16, right = 16, top = 0, bottom = 0 }
-config.set_environment_variables = { APPEARANCE = "light" }
-
--- Dark mode overrides.
-if env["appearance"]:find "Dark" then
-  config.font = wezterm.font("Cascadia Code PL")
-  config.set_environment_variables["APPEARANCE"] = "dark"
-  config.color_scheme = "Everforest Dark (Gogh)"
-end
+config.font = wezterm.font("IBM Plex Mono")
+config.color_scheme = "Tokyo Night"
+config.window_background_image = 'wallpaper.png'
+config.window_background_image_hsb = {
+  brightness = 0.3,
+}
 
 return config
