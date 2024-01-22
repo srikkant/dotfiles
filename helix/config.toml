@@ -1,4 +1,4 @@
-theme = "tokyonight" # ".auto" is a special theme.
+theme = "tokyonight_transparent"
 
 [editor]
 bufferline = "always"
