@@ -17,7 +17,7 @@ language-servers = [{ name = "efm-lsp", except-features = ["goto-definition", "g
 auto-format = true
 
 [[language]]
-name = "typescript"
+name = "json"
 indent = { tab-width = 4, unit = "    " }
 language-servers = ["efm-lsp", "vscode-json-language-server"]
 auto-format = true
@@ -25,37 +25,56 @@ auto-format = true
 [[language]]
 name = "typescript"
 indent = { tab-width = 4, unit = "    " }
-language-servers = [{ name = "efm-lsp", except-features = ["goto-definition", "goto-declaration", "goto-type-definition", "goto-reference", "goto-implementation" ] }, "typescript-language-server"]
+language-servers = [
+  { name = "efm-lsp", only-features = [ "diagnostics", "format" ] },
+  { name = "typescript-language-server", except-features = [ "format" ] },
+  "tailwindcss-ls"
+]
 auto-format = true
 
 [[language]]
 name = "tsx"
 indent = { tab-width = 4, unit = "    " }
-language-servers = [{ name = "efm-lsp", except-features = ["goto-definition", "goto-declaration", "goto-type-definition", "goto-reference", "goto-implementation" ] }, "typescript-language-server"]
+language-servers = [
+  { name = "efm-lsp", only-features = [ "diagnostics", "format" ] },
+  { name = "typescript-language-server", except-features = [ "format" ] },
+  "tailwindcss-ls"
+]
 auto-format = true
 
 [[language]]
 name = "javascript"
 indent = { tab-width = 4, unit = "    " }
-language-servers = [{ name = "efm-lsp", except-features = ["goto-definition", "goto-declaration", "goto-type-definition", "goto-reference", "goto-implementation" ] }, "typescript-language-server"]
+language-servers = [
+  { name = "efm-lsp", only-features = [ "diagnostics", "format" ] },
+  { name = "typescript-language-server", except-features = [ "format" ] },
+  "tailwindcss-ls"
+]
 auto-format = true
 
 [[language]]
 name = "jsx"
 indent = { tab-width = 4, unit = "    " }
-language-servers = [{ name = "efm-lsp", except-features = ["goto-definition", "goto-declaration", "goto-type-definition", "goto-reference", "goto-implementation" ] }, "typescript-language-server"]
+language-servers = [
+  { name = "efm-lsp", only-features = [ "diagnostics", "format" ] },
+  { name = "typescript-language-server", except-features = [ "format" ] },
+  "tailwindcss-ls"
+]
 auto-format = true
 
 [[language]]
 name = "svelte"
 indent = { tab-width = 4, unit = "    " }
-language-servers = [{ name = "efm-lsp", except-features = ["goto-definition", "goto-declaration", "goto-type-definition", "goto-reference", "goto-implementation" ] }, "svelteserver"]
+language-servers = [
+  { name = "efm-lsp", only-features = [ "diagnostics", "format" ] },
+  { name = "svelteserver", except-features = [ "format" ] },
+]
 auto-format = true
 
 [[language]]
 name = "css"
 indent = { tab-width = 4, unit = "    " }
-language-servers = [{ name = "efm-lsp", except-features = ["goto-definition", "goto-declaration", "goto-type-definition", "goto-reference", "goto-implementation" ] }, "vscode-css-language-server"]
+language-servers = [{ name = "vscode-css-language-server", except-features = ["format"] }, "efm-lsp"]
 auto-format = true
 
 [[language]]
