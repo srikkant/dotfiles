@@ -1,8 +1,15 @@
 return {
     "nvim-telescope/telescope.nvim",
     branch = "0.1.x",
+    lazy = false,
     dependencies = {
         "nvim-lua/plenary.nvim",
+        {
+            "nvim-telescope/telescope-file-browser.nvim",
+            config = function()
+                require("telescope").load_extension("file_browser")
+            end,
+        },
         {
             "nvim-telescope/telescope-fzf-native.nvim",
             build = "make",
@@ -11,7 +18,30 @@ return {
             end,
         },
     },
+    opts = {
+        extensions = {
+            file_browser = {
+                theme = "ivy",
+                -- disables netrw and use telescope-file-browser in its place
+                hijack_netrw = false,
+                mappings = {
+                    ["i"] = {
+                        -- your custom insert mode mappings
+                    },
+                    ["n"] = {
+                        -- your custom normal mode mappings
+                    },
+                },
+            },
+        },
+    },
     keys = {
+        {
+            "<leader>v",
+            "<cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>",
+            desc = "Open file browser",
+        },
+
         {
             "<leader>b",
             function()
