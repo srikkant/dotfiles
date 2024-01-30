@@ -1,7 +1,7 @@
 # Load bash aliases if present.
 [ -s "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 
-export EDITOR=hx
+export EDITOR=nvim
 export APPEARANCE=dark
 export COLORTERM=truecolor
 export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix"
