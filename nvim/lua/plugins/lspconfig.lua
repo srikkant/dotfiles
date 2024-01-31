@@ -2,15 +2,11 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
-            { "williamboman/mason.nvim", config = true },
+            "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
-            "folke/neodev.nvim",
             "pmizio/typescript-tools.nvim",
         },
         config = function()
-            require("neodev").setup({})
-
             require("mason").setup()
             require("mason-lspconfig").setup()
             require("lspconfig").lua_ls.setup({})
