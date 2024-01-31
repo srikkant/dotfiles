@@ -9,6 +9,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.completeopt = "menuone,noselect"
 vim.o.termguicolors = true
+vim.o.tabstop = 4
 
 vim.wo.number = true
 vim.wo.signcolumn = "yes"
