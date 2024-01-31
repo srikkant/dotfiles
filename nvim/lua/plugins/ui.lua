@@ -1,9 +1,12 @@
 return {
     "nvim-tree/nvim-web-devicons",
     {
-        "lukas-reineke/indent-blankline.nvim",
-        main = "ibl",
-        opts = {},
+        "nvimdev/indentmini.nvim",
+        event = "BufEnter",
+        config = function()
+            require("indentmini").setup({ char = "│" })
+            vim.cmd.highlight("default link IndentLine Comment")
+        end,
     },
     {
         "folke/which-key.nvim",

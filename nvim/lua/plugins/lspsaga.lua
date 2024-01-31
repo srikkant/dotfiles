@@ -3,14 +3,26 @@ return {
         "nvimdev/lspsaga.nvim",
         event = "LspAttach",
         after = "nvim-lspconfig",
-        opts = {},
+        opts = {
+            symbol_in_winbar = {
+                enable = false,
+                show_file = false,
+            },
+            ui = {
+                sign = false,
+            },
+        },
         keys = {
-            { "<leader>r", "<cmd>Lspsaga rename<cr>", desc = "Rename symbol" },
-            { "<leader>a", "<cmd>Lspsaga code_action<cr>", desc = "Show code actions" },
-            { "gd", "<cmd>Lspsaga goto_definition<cr>", desc = "Go to definitions" },
-            { "gD", "<cmd>Lspsaga goto_type_definition<cr>", desc = "Go to type definition" },
-            { "gr", "<cmd>Lspsaga finder<cr>", desc = "Open references" },
-            { "K", "<cmd>Lspsaga hover_doc<cr>", desc = "Show Hover doc" },
+            { "<leader>r", "<cmd>Lspsaga rename<cr>",               desc = "Rename symbol" },
+            { "<leader>a", "<cmd>Lspsaga code_action<cr>",          desc = "Show code actions" },
+            { "gp",        "<cmd>Lspsaga peek_definition<cr>",      desc = "Peek definition" },
+            { "gP",        "<cmd>Lspsaga peek_type_definition<cr>", desc = "Peek type definition" },
+            { "gd",        "<cmd>Lspsaga goto_definition<cr>",      desc = "Go to definition" },
+            { "gD",        "<cmd>Lspsaga goto_type_definition<cr>", desc = "Go to type definition" },
+            { "gi",        "<cmd>Lspsaga incoming_calls<cr>",       desc = "Incoming calls" },
+            { "go",        "<cmd>Lspsaga outgoing_calls<cr>",       desc = "Outgoing calls" },
+            { "gr",        "<cmd>Lspsaga finder<cr>",               desc = "Open references" },
+            { "K",         "<cmd>Lspsaga hover_doc<cr>",            desc = "Show Hover doc" },
             {
                 "[E",
                 function()
