@@ -8,6 +8,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.completeopt = "menuone,noselect"
 vim.opt.termguicolors = true
+vim.opt.showtabline = 0
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
