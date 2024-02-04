@@ -10,13 +10,39 @@ right now, it is a very simple set of defaults for my two devices - windows (wsl
 - **kitty**: terminal specifically for wsl
 - **nvim**: editor
 - **lf**: file explorer
+- **starship**: shell prompt
 
-### steps to be followed
+### steps to be followed after cloning the repo
 
-- clone the repo
-- install homebrew - `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-- install stow - `brew install stow`
-- run stow to create the required symlinks to your home directory (`~`) from the current directory - `stow ~ .`
+```
+# install homebrew -
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# install zsh (incase it is not)
+brew install zsh
+
+# install starship
+brew install starship
+
+# install stow
+brew install stow
+
+# run stow to create the required symlinks to your home directory (`~`) from the current directory
+stow ~ .
+
+```
+
+on running this and then trying to open a shell, there might be some errors due to missing tools. 
+run the command below to install some useful and frequently used stuff.
+
+```
+# install whatever is available through homebrew
+brew install pnpm rustup fzf lsd zsh-autosuggestions`
+
+# install nvm 
+# once this is done, install some node versions as needed and then install pnpm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+```
 
 ### assets folder
 
