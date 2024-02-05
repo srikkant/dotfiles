@@ -1,12 +1,2 @@
 .luarc.json
-
-tmux/plugins
-!./tmux/plugins/tpm
-
-fish/fish_variables*
-fish/themes
-fish/completions
-fish/functions
-fish/conf.d
-
-helix/runtime/grammars
+.DS_Store
