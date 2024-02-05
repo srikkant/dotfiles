@@ -12,6 +12,8 @@ return {
                     javascriptreact = { "prettierd" },
                     typescript = { "prettierd" },
                     typescriptreact = { "prettierd" },
+                    json = { "prettierd" },
+                    yaml = { "prettierd" },
                 },
                 format_on_save = {
                     lsp_fallback = true,

@@ -5,9 +5,7 @@ right now, it is a very simple set of defaults for my two devices - windows (wsl
 
 ### tools used
 
-- **terminal emulator**:
-- **wezterm**: main terminal
-- **kitty**: terminal specifically for wsl
+- **wezterm**: terminal
 - **nvim**: editor
 - **lf**: file explorer
 - **starship**: shell prompt
