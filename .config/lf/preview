@@ -1,2 +1,2 @@
 #!/bin/sh
-bat --color always --style plain "$1"
+bat --color always --tabs 4 --style plain "$1"
