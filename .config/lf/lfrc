@@ -3,7 +3,7 @@ set previewer ~/.config/lf/preview
 set ifs "\n"
 set scrolloff 10
 
-set icons
+set promptfmt ""
 
 # Use the `dim` attribute instead of underline for the cursor in the preview pane
 set cursorpreviewfmt "\033[7;2m"

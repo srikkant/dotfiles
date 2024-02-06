@@ -22,5 +22,4 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Aliases.
 alias -g c="clear"
 alias -g reload="source ~/.zshrc"
-alias -g ls="lsd"
 alias -g ffzf="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
