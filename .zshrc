@@ -18,6 +18,7 @@ source "$NVM_DIR/nvm.sh"
 source "$NVM_DIR/bash_completion"  
 
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Aliases.
 alias -g c="clear"
