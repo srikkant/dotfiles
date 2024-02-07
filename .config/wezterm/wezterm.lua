@@ -2,6 +2,9 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local config_dir = os.getenv("HOME") .. "/.config"
 
+local color_scheme = "Tokyo Night"
+local colors = wezterm.color.get_builtin_schemes()[color_scheme]
+
 config.default_cursor_style = "BlinkingUnderline"
 config.font = wezterm.font({ family = "Liga DM Mono" })
 
@@ -16,30 +19,29 @@ config.tab_bar_at_bottom = true
 config.webgpu_power_preference = "HighPerformance"
 config.front_end = "WebGpu"
 
-config.color_scheme = "tokyonight_night"
+config.color_scheme = color_scheme
 config.background = {
     {
-        -- tokyonight's backgrounc color.
-        source = { Color = "#1a1b26" },
+        source = { Color = colors.background },
         height = "100%",
         width = "100%",
     },
     {
         source = { File = config_dir .. "/assets/wallpapers/starfield.png" },
-        hsb = { brightness = 0.25 },
-        opacity = 0.1,
+        hsb = { brightness = 0.1 },
+        opacity = 0.05,
     },
 }
 
 config.window_frame = {
-    active_titlebar_bg = "#1a1b26",
+    active_titlebar_bg = colors.background,
 }
 
 config.colors = {
     tab_bar = {
         active_tab = {
             bg_color = "#24283b",
-            fg_color = "#c0c0c0",
+            fg_color = colors.foreground,
         },
         inactive_tab = {
             bg_color = "#1a1b26",
