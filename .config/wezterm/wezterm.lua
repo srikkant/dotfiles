@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local config_dir = os.getenv("HOME") .. "/.config"
 
-local color_scheme = "Tokyo Night"
+local color_scheme = "rose-pine"
 local colors = wezterm.color.get_builtin_schemes()[color_scheme]
 
 config.default_cursor_style = "BlinkingUnderline"
@@ -19,7 +19,7 @@ config.tab_bar_at_bottom = true
 config.webgpu_power_preference = "HighPerformance"
 config.front_end = "WebGpu"
 
-config.color_scheme = color_scheme
+config.color_scheme = "rose-pine"
 config.background = {
     {
         source = { Color = colors.background },

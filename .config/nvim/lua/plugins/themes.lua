@@ -1,9 +1,10 @@
 return {
-	"folke/tokyonight.nvim",
-	lazy = false,
-	priority = 1000,
-	opts = {
-		style = "night",
-		transparent = true,
-	},
+    {
+        "aktersnurra/no-clown-fiesta.nvim",
+        lazy = false,
+        priority = 1000,
+        opts = {
+            transparent = true,
+        },
+    },
 }
