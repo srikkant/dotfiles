@@ -12,7 +12,7 @@ return {
                 desc = "Open mini.files (directory of current file)",
             },
             {
-                "_",
+                "<leader>-",
                 function()
                     require("mini.files").open(vim.loop.cwd(), true)
                 end,

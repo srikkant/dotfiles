@@ -9,7 +9,7 @@ config.default_cursor_style = "BlinkingUnderline"
 config.font = wezterm.font({ family = "Liga DM Mono" })
 
 config.font_size = 14
-config.line_height = 1.3
+config.line_height = 1.1
 config.cell_width = 1.0
 
 config.window_decorations = "RESIZE"
