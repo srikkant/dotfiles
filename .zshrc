@@ -17,10 +17,13 @@ source "$HOME/.cargo/env"
 source "$NVM_DIR/nvm.sh"  
 source "$NVM_DIR/bash_completion"  
 
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 # Aliases.
 alias -g c="clear"
 alias -g reload="source ~/.zshrc"
 alias -g ffzf="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
+
+# plugins!
+if [ -z "${DISABLE_ZSH_PLUGINS}" ]; then
+    source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
