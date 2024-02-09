@@ -1,21 +1,29 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+
+# Which is equivalent to
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$sudo\
+$character"""
+
+[git_branch]
+format = '[$branch]($style) '
+style = "bright-black"
+symbol = ""
+
 [character]
-success_symbol = '[λ](bold cyan)'
+success_symbol = '[λ](bold green)'
 error_symbol = '[λ](bold red)'
-
-[time]
-disabled = true
-
-[gcloud]
-disabled = true
 
 [hostname]
 ssh_only = true
 ssh_symbol = ''
 
 [package]
-disabled = true
-
-[os]
 disabled = true
