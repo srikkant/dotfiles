@@ -12,6 +12,8 @@ config.font_size = 14
 config.line_height = 1.1
 config.cell_width = 1.0
 
+config.enable_tab_bar = false
+
 config.window_decorations = "RESIZE"
 config.window_padding = { left = 16, right = 0, top = 0, bottom = 0 }
 config.tab_bar_at_bottom = true

@@ -5,8 +5,7 @@ return {
         after = "nvim-lspconfig",
         opts = {
             symbol_in_winbar = {
-                enable = true,
-                show_file = false,
+                enable = false,
             },
             ui = {
                 sign = false,

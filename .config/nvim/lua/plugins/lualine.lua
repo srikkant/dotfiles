@@ -25,7 +25,7 @@ return {
                 lualine_c = {
                     {
                         "diagnostics",
-                        symbols = { error = "󰅚 ", warn = "󰀪 ", hint = "󰌶 ", info = " " },
+                        symbols = { error = "• ", warn = "• ", info = "• ", hint = "• " },
                     },
                 },
                 lualine_x = { "filetype" },
