@@ -60,20 +60,6 @@ return {
             desc = "Reopen last picker",
         },
         {
-            "<leader>e",
-            function()
-                require("telescope.builtin").diagnostics({ bufnr = 0 })
-            end,
-            desc = "Open diagnostics",
-        },
-        {
-            "<leader>E",
-            function()
-                require("telescope.builtin").diagnostics()
-            end,
-            desc = "Open workspace diagnostics",
-        },
-        {
             "<leader>S",
             function()
                 require("telescope.builtin").lsp_workspace_symbols()
