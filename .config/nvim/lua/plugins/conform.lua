@@ -8,6 +8,8 @@ return {
                 formatters_by_ft = {
                     go = { "goimports" },
                     lua = { "stylua" },
+                    css = { "prettierd" },
+                    scss = { "prettierd" },
                     javascript = { "prettierd" },
                     javascriptreact = { "prettierd" },
                     typescript = { "prettierd" },

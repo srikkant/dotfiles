@@ -17,7 +17,6 @@ eval "$(zoxide init --cmd j zsh)"
 
 source "$HOME/.cargo/env"
 source "$NVM_DIR/nvm.sh"  
-source "$NVM_DIR/bash_completion"  
 
 # Aliases.
 alias -g c="clear"

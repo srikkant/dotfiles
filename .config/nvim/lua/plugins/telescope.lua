@@ -11,39 +11,24 @@ return {
         },
     },
     config = function()
-        local trouble = require("trouble.providers.telescope")
         local telescope = require("telescope")
         telescope.setup({
             defaults = {
-                mappings = {
-                    i = { ["<c-t>"] = trouble.open_with_trouble },
-                    n = { ["<c-t>"] = trouble.open_with_trouble },
+                layout_strategy = "vertical",
+                layout_config = {
+                    vertical = { width = 0.85 },
                 },
             },
         })
         require("telescope").load_extension("fzf")
     end,
     keys = {
-
-        {
-            "<leader>v",
-            "<cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>",
-            desc = "Open file browser",
-        },
-
         {
             "<leader>b",
             function()
                 require("telescope.builtin").buffers()
             end,
             desc = "List buffers",
-        },
-        {
-            "<leader>g",
-            function()
-                require("telescope.builtin").live_grep()
-            end,
-            desc = "Live grep",
         },
         {
             "<leader>f",

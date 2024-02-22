@@ -1,19 +1,28 @@
+local colors = {
+    bg = "#00000000",
+    fg = "#D0D0D0",
+}
+
+local custom_theme = {
+    normal = {
+        a = { fg = colors.fg, bg = colors.bg, gui = "bold" },
+        b = { fg = colors.fg, bg = colors.bg },
+        c = { fg = colors.fg, bg = colors.bg },
+    },
+    insert = { a = { fg = colors.fg, bg = colors.bg, gui = "bold" } },
+    visual = { a = { fg = colors.fg, bg = colors.bg, gui = "bold" } },
+    command = { a = { fg = colors.fg, bg = colors.bg, gui = "bold" } },
+    replace = { a = { fg = colors.fg, bg = colors.bg, gui = "bold" } },
+    inactive = {
+        a = { fg = colors.fg, bg = colors.bg },
+        b = { fg = colors.fg, bg = colors.bg },
+        c = { fg = colors.fg, bg = colors.bg },
+    },
+}
+
 return {
     "nvim-lualine/lualine.nvim",
-    after = "nvimdev/lspsaga.nvim",
     config = function()
-        local custom_theme = require("lualine.themes.no-clown-fiesta")
-        custom_theme.normal.a.bg = "#00000000"
-        custom_theme.normal.b.bg = "#00000000"
-        custom_theme.normal.c.bg = "#00000000"
-        custom_theme.insert.a.bg = "#00000000"
-        custom_theme.visual.a.bg = "#00000000"
-        custom_theme.command.a.bg = "#00000000"
-        custom_theme.replace.a.bg = "#00000000"
-        custom_theme.inactive.a.bg = "#00000000"
-        custom_theme.inactive.b.bg = "#00000000"
-        custom_theme.inactive.c.bg = "#00000000"
-
         require("lualine").setup({
             options = {
                 icons_enabled = false,
