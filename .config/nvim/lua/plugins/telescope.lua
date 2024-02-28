@@ -3,7 +3,6 @@ return {
     branch = "0.1.x",
     lazy = false,
     dependencies = {
-        "folke/trouble.nvim",
         "nvim-lua/plenary.nvim",
         {
             "nvim-telescope/telescope-fzf-native.nvim",
@@ -17,6 +16,15 @@ return {
                 layout_strategy = "vertical",
                 layout_config = {
                     vertical = { width = 0.85 },
+                },
+            },
+            pickers = {
+                buffers = {
+                    layout_strategy = "bottom_pane",
+                    layout_config = {
+                        height = 0.3,
+                        preview_cutoff = 10000,
+                    },
                 },
             },
         })

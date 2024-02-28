@@ -81,9 +81,10 @@ return {
                     prefix = function() end,
                 },
                 windows = {
+                    max_number = 3,
                     width_focus = 50,
-                    width_nofocus = 10,
-                    width_preview = 40,
+                    width_nofocus = 25,
+                    width_preview = 80,
                     preview = true,
                 },
             })
