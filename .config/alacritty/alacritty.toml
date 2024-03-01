@@ -10,7 +10,7 @@ padding = { x = 2, y = 4 }
 startup_mode = "Maximized"
 
 [font]
-normal = { family = "Liga DM Mono" }
+normal = { family = "DMMono Nerd Font" }
 size = 14.5
 
 [cursor]
@@ -19,7 +19,7 @@ style = { shape = "Underline", blinking = "Always" }
 # TokyoNight Alacritty Colors
 # Default colors
 [colors.primary]
-background = '#000000'
+background = '#1a1b26'
 foreground = '#c0caf5'
 
 # Normal colors

@@ -9,14 +9,48 @@ return {
                 function()
                     require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
                 end,
-                desc = "Open mini.files (directory of current file)",
             },
             {
                 "<leader>-",
                 function()
                     require("mini.files").open(vim.loop.cwd(), true)
                 end,
-                desc = "Open mini.files (cwd)",
+            },
+            {
+                "<leader>b",
+                function()
+                    require("mini.pick").builtin.buffers()
+                end,
+            },
+            {
+                "<leader>f",
+                function()
+                    require("mini.pick").builtin.files()
+                end,
+            },
+            {
+                "<leader>'",
+                function()
+                    require("mini.pick").builtin.resume()
+                end,
+            },
+            {
+                "<leader>S",
+                function()
+                    require("mini.extra").pickers.lsp({ scope = "workspace_symbol" })
+                end,
+            },
+            {
+                "<leader>s",
+                function()
+                    require("mini.extra").pickers.lsp({ scope = "document_symbol" })
+                end,
+            },
+            {
+                "<leader>/",
+                function()
+                    require("mini.pick").builtin.grep_live()
+                end,
             },
         },
         config = function()
@@ -53,29 +87,6 @@ return {
                 },
             })
 
-            local show_dotfiles = true
-            local filter_show = function(_)
-                return true
-            end
-            local filter_hide = function(fs_entry)
-                return not vim.startswith(fs_entry.name, ".")
-            end
-
-            local toggle_dotfiles = function()
-                show_dotfiles = not show_dotfiles
-                local new_filter = show_dotfiles and filter_show or filter_hide
-                require("mini.files").refresh({ content = { filter = new_filter } })
-            end
-
-            vim.api.nvim_create_autocmd("User", {
-                pattern = "MiniFilesBufferCreate",
-                callback = function(args)
-                    local buf_id = args.data.buf_id
-                    -- Tweak left-hand side of mapping to your liking
-                    vim.keymap.set("n", "g.", toggle_dotfiles, { buffer = buf_id })
-                end,
-            })
-
             require("mini.files").setup({
                 content = {
                     prefix = function() end,
@@ -83,11 +94,15 @@ return {
                 windows = {
                     max_number = 3,
                     width_focus = 50,
-                    width_nofocus = 25,
+                    width_nofocus = 40,
                     width_preview = 80,
                     preview = true,
                 },
             })
+
+            require("mini.pick").setup({})
+
+            require("mini.extra").setup({})
         end,
     },
 }
