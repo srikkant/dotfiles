@@ -100,7 +100,9 @@ return {
                 },
             })
 
-            require("mini.pick").setup({})
+            require("mini.pick").setup({
+                source = { show = require("mini.pick").default_show },
+            })
 
             require("mini.extra").setup({})
         end,
