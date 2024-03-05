@@ -7,4 +7,12 @@ return {
             vim.cmd.highlight("default link IndentLine Comment")
         end,
     },
+    {
+        "folke/tokyonight.nvim",
+        lazy = false,
+        priority = 1000,
+        opts = {
+            transparent = true,
+        },
+    },
 }
