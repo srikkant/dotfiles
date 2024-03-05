@@ -26,6 +26,8 @@ return {
                     require("lint").try_lint()
                 end,
             })
+
+            vim.api.nvim_create_user_command("AutofixEslint", "!eslint_d % --fix", { bang = true })
         end,
     },
 }

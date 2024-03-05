@@ -25,7 +25,6 @@ return {
     },
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
-        after = "nvim-treesitter",
         config = function()
             require("nvim-treesitter.configs").setup({
                 textobjects = {

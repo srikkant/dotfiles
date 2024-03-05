@@ -5,7 +5,6 @@ return {
         dependencies = {
             "kevinhwang91/promise-async",
         },
-        after = "nvim-lspconfig",
         keys = {
             {
                 "zR",
