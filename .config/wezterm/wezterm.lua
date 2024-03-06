@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local config_dir = os.getenv("HOME") .. "/.config"
 
-local color_scheme = "tokyonight_night"
+local color_scheme = "Kanagawa (Gogh)"
 local colors = wezterm.color.get_builtin_schemes()[color_scheme]
 
 config.default_cursor_style = "BlinkingUnderline"

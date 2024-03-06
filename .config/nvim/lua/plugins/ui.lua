@@ -8,11 +8,12 @@ return {
         end,
     },
     {
-        "folke/tokyonight.nvim",
-        lazy = false,
-        priority = 1000,
-        opts = {
-            transparent = true,
-        },
+        "rebelot/kanagawa.nvim",
+        config = function()
+            require("kanagawa").setup({
+                transparent = true,
+                theme = "wave",
+            })
+        end,
     },
 }
