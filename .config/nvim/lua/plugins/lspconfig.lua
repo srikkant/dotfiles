@@ -13,6 +13,7 @@ return {
             { "gl", "<cmd>lua vim.diagnostic.open_float()<cr>" },
             { "<leader>r", "<cmd>lua vim.lsp.buf.rename()<cr>" },
             { "<leader>a", "<cmd>lua vim.lsp.buf.code_action()<cr>", mode = { "n", "v" } },
+            { "<leader>x", "<cmd>TroubleToggle<cr>" },
             { "<leader>e", "<cmd>TroubleToggle document_diagnostics<cr>" },
             { "<leader>E", "<cmd>TroubleToggle workspace_diagnostics<cr>" },
             { "<leader>L", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },

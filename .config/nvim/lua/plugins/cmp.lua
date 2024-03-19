@@ -21,6 +21,7 @@ return {
                 sources = {
                     { name = "nvim_lsp" },
                     { name = "path" },
+                    { name = "codeium" },
                 },
             })
         end,

@@ -1,3 +1,10 @@
+local minifiles_toggle = function(...)
+    local MiniFiles = require("mini.files")
+    if not MiniFiles.close() then
+        MiniFiles.open(...)
+    end
+end
+
 return {
     {
         "echasnovski/mini.nvim",
@@ -7,13 +14,13 @@ return {
             {
                 "-",
                 function()
-                    require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
+                    minifiles_toggle(vim.api.nvim_buf_get_name(0), true)
                 end,
             },
             {
                 "<leader>-",
                 function()
-                    require("mini.files").open(vim.loop.cwd(), true)
+                    minifiles_toggle(vim.loop.cwd(), true)
                 end,
             },
             {

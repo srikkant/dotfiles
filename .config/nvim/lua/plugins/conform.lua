@@ -16,6 +16,7 @@ return {
                     typescriptreact = { "prettierd" },
                     json = { "prettierd" },
                     yaml = { "prettierd" },
+                    markdown = { "prettierd" },
                 },
                 format_on_save = {
                     lsp_fallback = true,
