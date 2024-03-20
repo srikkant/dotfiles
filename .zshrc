@@ -1,3 +1,5 @@
+# CodeWhisperer pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.pre.zsh"
 # Load bash aliases if present.
 [ -s "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 
@@ -25,3 +27,6 @@ alias -g ffzf="fzf --preview 'bat --style=numbers --color=always --line-range :5
 if [ -z "${DISABLE_ZSH_PLUGINS}" ]; then
     source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
+
+# CodeWhisperer post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/codewhisperer/shell/zshrc.post.zsh"
