@@ -111,6 +111,12 @@ return {
                 source = { show = require("mini.pick").default_show },
             })
 
+            require("mini.indentscope").setup({
+                draw = {
+                    animation = require("mini.indentscope").gen_animation.none(),
+                },
+            })
+
             require("mini.extra").setup({})
         end,
     },
