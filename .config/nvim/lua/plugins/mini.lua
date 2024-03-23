@@ -5,11 +5,85 @@ local minifiles_toggle = function(...)
     end
 end
 
+local get_diagnostics = function()
+    local t = {}
+    local levels = { "Error", "Warn", "Info", "Hint" }
+    local counts = {}
+    local severity = vim.diagnostic.severity
+
+    for _, d in ipairs(vim.diagnostic.get(0)) do
+        counts[d.severity] = (counts[d.severity] or 0) + 1
+    end
+
+    for _, level in ipairs(levels) do
+        local n = counts[severity[string.upper(level)]] or 0
+        if n > 0 then
+            table.insert(t, { hl = "StatuslineDiagnostic" .. level, strings = { string.format("• %s", n) } })
+        end
+    end
+
+    return t
+end
+
 return {
     {
         "echasnovski/mini.nvim",
         lazy = false,
         version = "*",
+        config = function()
+            local basics = require("mini.basics")
+            local comment = require("mini.comment")
+            local extra = require("mini.extra")
+            local files = require("mini.files")
+            local indentscope = require("mini.indentscope")
+            local pairs = require("mini.pairs")
+            local pick = require("mini.pick")
+            local statusline = require("mini.statusline")
+            local surround = require("mini.surround")
+
+            basics.setup({})
+            comment.setup({})
+            extra.setup({})
+            pairs.setup({})
+            surround.setup({})
+            pick.setup({ source = { show = pick.default_show } })
+            indentscope.setup({ draw = { animation = indentscope.gen_animation.none() } })
+
+            files.setup({
+                content = { prefix = function() end },
+                windows = { max_number = 3, width_focus = 50, width_nofocus = 40, width_preview = 80, preview = true },
+            })
+
+            statusline.setup({
+                use_icons = false,
+                content = {
+                    active = function()
+                        local groups = {}
+                        local mode = statusline.section_mode({ trunc_width = 120 })
+                        local filename = statusline.section_filename({ trunc_width = 140 })
+                        local diagnostics = get_diagnostics()
+
+                        table.insert(groups, { strings = { mode }, hl = "StatuslineMode" })
+                        for _, d in ipairs(diagnostics) do
+                            table.insert(groups, d)
+                        end
+
+                        -- Add file name & position
+                        table.insert(groups, { strings = { filename }, hl = "StatuslineFile" })
+                        table.insert(groups, "%=")
+                        table.insert(groups, { strings = { "%2v:%l" } })
+
+                        return statusline.combine_groups(groups)
+                    end,
+                    inactive = function()
+                        local filename = statusline.section_filename({ trunc_width = 140 })
+                        return statusline.combine_groups({
+                            { hl = "StatuslineFile", strings = { filename } },
+                        })
+                    end,
+                },
+            })
+        end,
         keys = {
             {
                 "'",
@@ -60,64 +134,5 @@ return {
                 end,
             },
         },
-        config = function()
-            require("mini.pairs").setup({})
-            require("mini.comment").setup({})
-
-            require("mini.surround").setup({
-                mappings = {
-                    add = "gsa", -- Add surrounding in Normal and Visual modes
-                    delete = "gsd", -- Delete surrounding
-                    find = "gsf", -- Find surrounding (to the right)
-                    find_left = "gsF", -- Find surrounding (to the left)
-                    highlight = "gsh", -- Highlight surrounding
-                    replace = "gsr", -- Replace surrounding
-                    update_n_lines = "gsn", -- Update `n_lines`
-                },
-            })
-
-            require("mini.basics").setup({
-                {
-                    options = {
-                        basic = true,
-                        extra_ui = false,
-                        win_borders = "default",
-                    },
-                    mappings = {
-                        basic = false,
-                        windows = false,
-                        move_with_alt = false,
-                    },
-                    autocommands = {
-                        basic = true,
-                    },
-                },
-            })
-
-            require("mini.files").setup({
-                content = {
-                    prefix = function() end,
-                },
-                windows = {
-                    max_number = 3,
-                    width_focus = 50,
-                    width_nofocus = 40,
-                    width_preview = 80,
-                    preview = true,
-                },
-            })
-
-            require("mini.pick").setup({
-                source = { show = require("mini.pick").default_show },
-            })
-
-            require("mini.indentscope").setup({
-                draw = {
-                    animation = require("mini.indentscope").gen_animation.none(),
-                },
-            })
-
-            require("mini.extra").setup({})
-        end,
     },
 }

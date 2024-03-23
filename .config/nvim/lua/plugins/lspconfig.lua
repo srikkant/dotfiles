@@ -24,12 +24,6 @@ return {
             { "gr", "<cmd>TroubleToggle lsp_references<cr>", desc = "Open references (Trouble)" },
         },
         config = function()
-            local signs = { Error = " •", Warn = " •", Hint = " •", Info = " •" }
-            for type, icon in pairs(signs) do
-                local hl = "DiagnosticSign" .. type
-                vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-            end
-
             local lsp_zero = require("lsp-zero")
 
             lsp_zero.set_server_config({
@@ -46,8 +40,12 @@ return {
             require("trouble").setup({
                 icons = false,
                 use_diagnostic_signs = true,
+                cycle_results = false,
                 fold_open = "-",
                 fold_closed = "+",
+                signs = {
+                    other = "•",
+                },
             })
 
             require("mason").setup()

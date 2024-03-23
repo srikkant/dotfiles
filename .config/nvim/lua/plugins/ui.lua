@@ -1,5 +1,4 @@
 return {
-    { "tpope/vim-sleuth" },
     {
         "rebelot/kanagawa.nvim",
         config = function()

@@ -1,5 +1,4 @@
 require("opts")
-require("lazyvim")
 require("keymaps")
-
-vim.cmd([[colorscheme kanagawa]])
+require("lazyvim")
+require("colors")

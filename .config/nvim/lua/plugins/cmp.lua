@@ -4,7 +4,6 @@ return {
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-path",
-            "L3MON4D3/LuaSnip",
         },
         config = function()
             local cmp = require("cmp")
@@ -14,13 +13,13 @@ return {
                 },
                 snippet = {
                     expand = function(args)
-                        require("luasnip").lsp_expand(args.body)
+                        vim.snippet.expand(args.body)
                     end,
                 },
-                ["<CR>"] = cmp.mapping.confirm({ select = true }),
                 sources = {
                     { name = "nvim_lsp" },
                     { name = "path" },
+                    { name = "buffer" },
                     { name = "codeium" },
                 },
             })
