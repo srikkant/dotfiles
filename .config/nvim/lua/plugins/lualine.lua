@@ -30,13 +30,10 @@ return {
             },
             sections = {
                 lualine_a = { "mode" },
-                lualine_b = { "filename" },
-                lualine_c = {
-                    {
-                        "diagnostics",
-                        symbols = { error = "• ", warn = "• ", info = "• ", hint = "• " },
-                    },
+                lualine_b = {
+                    { "diagnostics", symbols = { error = "• ", warn = "• ", info = "• ", hint = "• " } },
                 },
+                lualine_c = { "filename" },
                 lualine_x = { "filetype" },
                 lualine_y = { "location" },
                 lualine_z = { "tabs" },

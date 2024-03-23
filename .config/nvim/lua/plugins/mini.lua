@@ -12,13 +12,13 @@ return {
         version = "*",
         keys = {
             {
-                "-",
+                "'",
                 function()
                     minifiles_toggle(vim.api.nvim_buf_get_name(0), true)
                 end,
             },
             {
-                "<leader>-",
+                "<leader>'",
                 function()
                     minifiles_toggle(vim.loop.cwd(), true)
                 end,
