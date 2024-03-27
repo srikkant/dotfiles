@@ -1,0 +1,58 @@
+default_layout "compact"
+default_mode "locked"
+mouse_mode true
+pane_frames false
+session_serialization false
+simplified_ui true
+theme "kanagawa"
+
+keybinds {
+    shared {
+        bind "Alt d" { NewPane "Down"; }
+        bind "Alt r" { NewPane "Right"; }
+        bind "Alt p" { GoToPreviousTab; }
+        bind "Alt n" { GoToNextTab; }
+        bind "Alt i" { MoveTab "Left"; }
+        bind "Alt o" { MoveTab "Right"; }
+        bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
+        bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
+        bind "Alt j" "Alt Down" { MoveFocus "Down"; }
+        bind "Alt k" "Alt Up" { MoveFocus "Up"; }
+        bind "Alt =" { Resize "Increase"; }
+        bind "Alt -" { Resize "Decrease"; }
+        bind "Alt 1" { GoToTab 1; }
+        bind "Alt 2" { GoToTab 2; }
+        bind "Alt 3" { GoToTab 3; }
+        bind "Alt 4" { GoToTab 4; }
+        bind "Alt 5" { GoToTab 5; }
+    }
+}
+
+plugins {
+    tab-bar { path "tab-bar"; }
+    status-bar { path "status-bar"; }
+    compact-bar { path "compact-bar"; }
+    session-manager { path "session-manager"; }
+}
+
+themes {
+    kanagawa {
+        bg "#1f1f28"
+        fg  "#dcd7ba"
+        black "#090618"
+        red "#c34043"
+        green "#76946a"
+        yellow "#c0a36e"
+        blue "#7e9cd8"
+        magenta "#957fb8"
+        orange "#ffb86c"
+        cyan "#6a9589"
+        white "#c8c093"
+    }
+}
+
+ui {
+    pane_frames {
+        rounded_corners true
+    }
+}

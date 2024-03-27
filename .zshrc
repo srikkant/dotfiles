@@ -20,6 +20,7 @@ source "$NVM_DIR/nvm.sh"
 
 # Aliases.
 alias -g c="clear"
+alias -g z="zellij"
 alias -g reload="source ~/.zshrc"
 alias -g ffzf="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 

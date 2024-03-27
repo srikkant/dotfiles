@@ -7,29 +7,10 @@ return {
         },
         keys = {
             {
-                "zR",
-                function()
-                    require("ufo").openAllFolds()
-                end,
-                desc = "Open all folds",
-            },
-            {
-                "zM",
-                function()
-                    require("ufo").closeAllFolds()
-                end,
-                desc = "Close all folds",
-            },
-            {
-
                 "zK",
                 function()
-                    local winid = require("ufo").peekFoldedLinesUnderCursor()
-                    if not winid then
-                        vim.lsp.buf.hover()
-                    end
+                    require("ufo").peekFoldedLinesUnderCursor()
                 end,
-                desc = "Peek fold",
             },
         },
     },
