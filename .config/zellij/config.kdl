@@ -8,6 +8,7 @@ theme "kanagawa"
 
 keybinds {
     shared {
+        bind "Alt t" { NewTab; }
         bind "Alt d" { NewPane "Down"; }
         bind "Alt r" { NewPane "Right"; }
         bind "Alt p" { GoToPreviousTab; }
@@ -25,6 +26,11 @@ keybinds {
         bind "Alt 3" { GoToTab 3; }
         bind "Alt 4" { GoToTab 4; }
         bind "Alt 5" { GoToTab 5; }
+        bind "Alt y" {
+            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/zellij_forgot.wasm" {
+                floating true
+            }
+        }
     }
 }
 
