@@ -31,6 +31,13 @@ keybinds {
                 floating true
             }
         }
+        bind "Alt `" {
+            LaunchOrFocusPlugin "zellij:session-manager" {
+                floating true
+                move_to_focused_tab true
+            };
+            SwitchToMode "Normal"
+        }
     }
 }
 
