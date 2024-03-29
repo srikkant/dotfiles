@@ -39,7 +39,6 @@ local trouble = require("trouble")
 local mason = require("mason")
 local mason_lspconfig = require("mason-lspconfig")
 local lint = require("lint")
-local treesitter_configs = require("nvim-treesitter.configs")
 local cmp = require("cmp")
 local codeium = require("codeium")
 local conform = require("conform")
@@ -53,20 +52,24 @@ local pick = require("mini.pick")
 local statusline = require("mini.statusline")
 local surround = require("mini.surround")
 local neodev = require("neodev")
+local treesitter_configs = require("nvim-treesitter.configs")
 
+--
+-- Autocomplete for neovim APIs.
+-- This is just used for configuration here.
+--
 neodev.setup()
-kanagawa.setup()
+
+--
+-- Some essential pure UI plugins
+--
 gitsigns.setup()
 ufo.setup()
-mason.setup()
-codeium.setup()
-basics.setup({})
-comment.setup({})
-extra.setup({})
-pairs.setup({})
-surround.setup({})
-pick.setup({ source = { show = pick.default_show } })
-indentscope.setup({ draw = { animation = indentscope.gen_animation.none() } })
+
+--
+-- Kanagawa theme
+--
+kanagawa.setup()
 
 treesitter_configs.setup({
     auto_install = true,
@@ -98,6 +101,10 @@ lsp_zero.set_server_config({
     },
 })
 
+mason.setup()
+
+codeium.setup()
+
 mason_lspconfig.setup({
     handlers = { lsp_zero.default_setup },
 })
@@ -110,15 +117,6 @@ trouble.setup({
     fold_closed = "+",
     signs = { other = "•" },
 })
-
-lint.linters_by_ft = {
-    javascript = { "eslint_d" },
-    javascriptreact = { "eslint_d" },
-    typescript = { "eslint_d" },
-    typescriptreact = { "eslint_d" },
-    md = { "markdownlint" },
-    mdx = { "markdownlint" },
-}
 
 cmp.setup({
     completion = {
@@ -137,6 +135,14 @@ cmp.setup({
     },
 })
 
+lint.linters_by_ft = {
+    javascript = { "eslint_d" },
+    javascriptreact = { "eslint_d" },
+    typescript = { "eslint_d" },
+    typescriptreact = { "eslint_d" },
+    md = { "markdownlint" },
+    mdx = { "markdownlint" },
+}
 conform.setup({
     formatters_by_ft = {
         go = { "goimports" },
@@ -155,6 +161,29 @@ conform.setup({
         lsp_fallback = true,
     },
     notify_on_error = true,
+})
+
+--
+--
+-- Mini.nvim stack of plugins
+--
+--
+basics.setup({})
+comment.setup({})
+extra.setup({})
+pairs.setup({})
+surround.setup({})
+
+pick.setup({
+    source = {
+        show = pick.default_show,
+    },
+})
+
+indentscope.setup({
+    draw = {
+        animation = indentscope.gen_animation.none(),
+    },
 })
 
 files.setup({
