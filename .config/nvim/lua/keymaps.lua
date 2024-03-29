@@ -45,6 +45,10 @@ vim.keymap.set("n", "<leader>/", "<cmd>Pick grep_live<cr>")
 vim.keymap.set("n", "'", utils.toggle_files_explorer)
 vim.keymap.set("n", "<leader>'", utils.toggle_files_explorer_cwd)
 
+vim.keymap.set("n", "<leader>h", function()
+    require("mini.extra").pickers.keymaps()
+end)
+
 vim.keymap.set("n", "<leader>S", function()
     require("mini.extra").pickers.lsp({ scope = "workspace_symbol" })
 end)
