@@ -11,10 +11,12 @@ local deps = require("mini.deps")
 deps.setup()
 
 deps.add("rebelot/kanagawa.nvim")
+deps.add("nvim-tree/nvim-web-devicons")
 deps.add("lewis6991/gitsigns.nvim")
 deps.add("kevinhwang91/nvim-ufo")
 deps.add("kevinhwang91/promise-async")
 deps.add("neovim/nvim-lspconfig")
+deps.add("L3MON4D3/LuaSnip")
 deps.add("williamboman/mason.nvim")
 deps.add("williamboman/mason-lspconfig.nvim")
 deps.add("VonHeikemen/lsp-zero.nvim")
@@ -28,10 +30,9 @@ deps.add("nvim-lua/plenary.nvim")
 deps.add("stevearc/conform.nvim")
 deps.add("folke/neodev.nvim")
 deps.add("nvim-treesitter/nvim-treesitter")
+deps.add("rose-pine/neovim")
 
-local utils = require("utils")
-
-local kanagawa = require("kanagawa")
+local colorscheme = require("rose-pine")
 local gitsigns = require("gitsigns")
 local ufo = require("ufo")
 local lsp_zero = require("lsp-zero")
@@ -53,6 +54,13 @@ local statusline = require("mini.statusline")
 local surround = require("mini.surround")
 local neodev = require("neodev")
 local treesitter_configs = require("nvim-treesitter.configs")
+local web_devicons = require("nvim-web-devicons")
+
+--
+-- set up theme
+--
+colorscheme.setup()
+vim.cmd([[colorscheme rose-pine]])
 
 --
 -- Autocomplete for neovim APIs.
@@ -63,14 +71,26 @@ neodev.setup()
 --
 -- Some essential pure UI plugins
 --
-gitsigns.setup()
 ufo.setup()
+gitsigns.setup()
+web_devicons.setup()
 
 --
--- Kanagawa theme
+-- Mini.nvim stack of plugins
 --
-kanagawa.setup()
+basics.setup({})
+comment.setup({})
+extra.setup({})
+pairs.setup({})
+surround.setup({})
+pick.setup({})
+statusline.setup({})
+indentscope.setup({ draw = { animation = indentscope.gen_animation.none() } })
+files.setup({ windows = { max_number = 3, width_focus = 50, width_nofocus = 40, width_preview = 80, preview = true } })
 
+--
+-- Treesitter configurations
+--
 treesitter_configs.setup({
     auto_install = true,
     sync_install = false,
@@ -90,43 +110,22 @@ treesitter_configs.setup({
     },
 })
 
-lsp_zero.set_server_config({
-    capabilities = {
-        textDocument = {
-            foldingRange = {
-                dynamicRegistration = false,
-                lineFoldingOnly = true,
-            },
-        },
-    },
-})
-
-mason.setup()
-
+--
+-- LSP, completions, linting, formatting & other IDE stuff.
+--
+trouble.setup()
 codeium.setup()
+mason.setup()
+mason_lspconfig.setup({ handlers = { lsp_zero.default_setup } })
 
-mason_lspconfig.setup({
-    handlers = { lsp_zero.default_setup },
-})
-
-trouble.setup({
-    icons = false,
-    use_diagnostic_signs = true,
-    cycle_results = false,
-    fold_open = "-",
-    fold_closed = "+",
-    signs = { other = "•" },
+lsp_zero.preset({}).set_sign_icons({
+    error = "",
+    warn = "",
+    hint = "",
+    info = "",
 })
 
 cmp.setup({
-    completion = {
-        completeopt = "menu,menuone,noinsert",
-    },
-    snippet = {
-        expand = function(args)
-            vim.snippet.expand(args.body)
-        end,
-    },
     sources = {
         { name = "nvim_lsp" },
         { name = "path" },
@@ -143,6 +142,7 @@ lint.linters_by_ft = {
     md = { "markdownlint" },
     mdx = { "markdownlint" },
 }
+
 conform.setup({
     formatters_by_ft = {
         go = { "goimports" },
@@ -156,67 +156,5 @@ conform.setup({
         json = { "prettierd" },
         yaml = { "prettierd" },
         markdown = { "prettierd" },
-    },
-    format_on_save = {
-        lsp_fallback = true,
-    },
-    notify_on_error = true,
-})
-
---
---
--- Mini.nvim stack of plugins
---
---
-basics.setup({})
-comment.setup({})
-extra.setup({})
-pairs.setup({})
-surround.setup({})
-
-pick.setup({
-    source = {
-        show = pick.default_show,
-    },
-})
-
-indentscope.setup({
-    draw = {
-        animation = indentscope.gen_animation.none(),
-    },
-})
-
-files.setup({
-    content = { prefix = function() end },
-    windows = { max_number = 3, width_focus = 50, width_nofocus = 40, width_preview = 80, preview = true },
-})
-
-statusline.setup({
-    use_icons = false,
-    content = {
-        active = function()
-            local groups = {}
-            local mode = statusline.section_mode({ trunc_width = 120 })
-            local filename = statusline.section_filename({ trunc_width = 140 })
-            local diagnostics = utils.get_diagnostics()
-
-            table.insert(groups, { strings = { mode }, hl = "StatuslineMode" })
-            for _, d in ipairs(diagnostics) do
-                table.insert(groups, d)
-            end
-
-            -- Add file name & position
-            table.insert(groups, { strings = { filename }, hl = "StatuslineFile" })
-            table.insert(groups, "%=")
-            table.insert(groups, { strings = { "%2v:%l" } })
-
-            return statusline.combine_groups(groups)
-        end,
-        inactive = function()
-            local filename = statusline.section_filename({ trunc_width = 140 })
-            return statusline.combine_groups({
-                { hl = "StatuslineFile", strings = { filename } },
-            })
-        end,
     },
 })

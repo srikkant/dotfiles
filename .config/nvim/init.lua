@@ -23,5 +23,4 @@ vim.wo.relativenumber = true
 
 require("plugins")
 require("cmds")
-require("colors")
 require("keymaps")
