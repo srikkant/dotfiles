@@ -4,7 +4,7 @@ mouse_mode true
 pane_frames false
 session_serialization false
 simplified_ui true
-theme "kanagawa"
+theme "rose-pine"
 
 keybinds {
     shared {
@@ -49,19 +49,19 @@ plugins {
 }
 
 themes {
-    kanagawa {
-        bg "#1f1f28"
-        fg  "#dcd7ba"
-        black "#090618"
-        red "#c34043"
-        green "#76946a"
-        yellow "#c0a36e"
-        blue "#7e9cd8"
-        magenta "#957fb8"
-        orange "#ffb86c"
-        cyan "#6a9589"
-        white "#c8c093"
-    }
+	rose-pine {
+		bg "#403d52"
+		fg "#e0def4"
+		red "#eb6f92"
+		green "#31748f"
+		blue "#9ccfd8"
+		yellow "#f6c177"
+		magenta "#c4a7e7"
+		orange "#fe640b"
+		cyan "#ebbcba"
+		black "#26233a"
+		white "#e0def4"
+	}
 }
 
 ui {

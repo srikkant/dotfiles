@@ -1,9 +1,6 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
-local config_dir = os.getenv("HOME") .. "/.config"
-
-local color_scheme = "Kanagawa (Gogh)"
-local colors = wezterm.color.get_builtin_schemes()[color_scheme]
+local color_scheme = "rose-pine"
 
 config.term = "wezterm"
 
@@ -24,46 +21,5 @@ config.webgpu_power_preference = "HighPerformance"
 config.front_end = "WebGpu"
 
 config.color_scheme = color_scheme
-config.background = {
-    {
-        source = { Color = colors.background },
-        height = "100%",
-        width = "100%",
-    },
-    {
-        source = { File = config_dir .. "/assets/wallpapers/starfield.png" },
-        hsb = { brightness = 0.1 },
-        opacity = 0.05,
-    },
-}
-
-config.window_frame = {
-    active_titlebar_bg = colors.background,
-}
-
-config.colors = {
-    tab_bar = {
-        active_tab = {
-            bg_color = "#24283b",
-            fg_color = colors.foreground,
-        },
-        inactive_tab = {
-            bg_color = "#1a1b26",
-            fg_color = "#808080",
-        },
-        inactive_tab_hover = {
-            bg_color = "#1a1b26",
-            fg_color = "#c0c0c0",
-        },
-        new_tab = {
-            bg_color = "#1a1b26",
-            fg_color = "#808080",
-        },
-        new_tab_hover = {
-            bg_color = "#1a1b26",
-            fg_color = "#c0c0c0",
-        },
-    },
-}
 
 return config
