@@ -10,7 +10,6 @@ local deps = require("mini.deps")
 
 deps.setup()
 
-deps.add("rebelot/kanagawa.nvim")
 deps.add("nvim-tree/nvim-web-devicons")
 deps.add("lewis6991/gitsigns.nvim")
 deps.add("kevinhwang91/nvim-ufo")
@@ -59,7 +58,7 @@ local web_devicons = require("nvim-web-devicons")
 --
 -- set up theme
 --
-colorscheme.setup()
+colorscheme.setup({})
 vim.cmd([[colorscheme rose-pine]])
 
 --
