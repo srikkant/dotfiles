@@ -1,5 +1,5 @@
 local opts = { noremap = true, silent = true }
-local utils = require("utils")
+local utils = require("srikkant.utils")
 
 vim.keymap.set("n", "U", "<cmd>redo<cr>", opts)
 
