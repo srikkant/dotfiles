@@ -150,6 +150,13 @@ lint.linters_by_ft = {
 }
 
 conform.setup({
+    format_on_save = {
+        lsp_fallback = true,
+        timeout_ms = 500,
+    },
+    format_after_save = {
+        lsp_fallback = true,
+    },
     formatters_by_ft = {
         go = { "goimports" },
         lua = { "stylua" },
