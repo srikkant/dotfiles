@@ -6,11 +6,10 @@ padding = { x = 2, y = 4 }
 startup_mode = "Maximized"
 
 [font]
-normal = { family = "LigaDMMono Nerd Font Mono" }
+normal = { family = "OverpassM Nerd Font Mono" }
 size = 14.5
-
-[cursor]
-style = { shape = "Underline", blinking = "Always" }
+offset = { x = 0, y = 0 }
+glyph_offset = { x = 0, y = 0 }
 
 [colors.primary]
 foreground = "#e0def4"
