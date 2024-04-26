@@ -37,6 +37,11 @@ deps.add("stevearc/conform.nvim")
 deps.add("folke/neodev.nvim")
 deps.add("nvim-treesitter/nvim-treesitter")
 deps.add("rose-pine/neovim")
+deps.add("nvim-neotest/nvim-nio")
+deps.add("mfussenegger/nvim-dap")
+deps.add("rcarriga/nvim-dap-ui")
+deps.add("theHamsta/nvim-dap-virtual-text")
+deps.add("leoluz/nvim-dap-go")
 
 local colorscheme = require("rose-pine")
 local gitsigns = require("gitsigns")
@@ -61,6 +66,10 @@ local surround = require("mini.surround")
 local neodev = require("neodev")
 local treesitter_configs = require("nvim-treesitter.configs")
 local web_devicons = require("nvim-web-devicons")
+local dap = require("dap")
+local dapvirtualtext = require("nvim-dap-virtual-text")
+local dapui = require("dapui")
+local dapgo = require("dap-go")
 
 --
 -- set up theme
@@ -170,5 +179,24 @@ conform.setup({
         yaml = { "prettierd" },
         markdown = { "prettierd" },
         html = { "prettierd" },
+    },
+})
+
+--
+-- DAP
+-- Add more languages as needed.
+--
+dapui.setup()
+dapvirtualtext.setup({})
+
+-- for golang.
+dapgo.setup({
+    dap_configurations = {
+        {
+            type = "go",
+            name = "Attach remote",
+            mode = "remote",
+            request = "attach",
+        },
     },
 })

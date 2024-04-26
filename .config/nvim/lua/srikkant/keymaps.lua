@@ -56,3 +56,43 @@ end)
 vim.keymap.set("n", "<leader>s", function()
     require("mini.extra").pickers.lsp({ scope = "document_symbol" })
 end)
+
+vim.keymap.set("n", "<leader>1", function()
+    require("dap").continue()
+end)
+
+vim.keymap.set("n", "<leader>2", function()
+    require("dap").step_over()
+end)
+
+vim.keymap.set("n", "<leader>3", function()
+    require("dap").step_into()
+end)
+
+vim.keymap.set("n", "<leader>4", function()
+    require("dap").step_out()
+end)
+
+vim.keymap.set("n", "<Leader>qb", function()
+    require("dap").toggle_breakpoint()
+end)
+
+vim.keymap.set("n", "<Leader>qB", function()
+    require("dap").set_breakpoint()
+end)
+
+vim.keymap.set("n", "<Leader>qr", function()
+    require("dap").repl.open()
+end)
+
+vim.keymap.set("n", "<Leader>ql", function()
+    require("dap").run_last()
+end)
+
+vim.keymap.set({ "n", "v" }, "<Leader>qK", function()
+    require("dapui").eval()
+end)
+
+vim.keymap.set({ "n", "v" }, "<Leader>qo", function()
+    require("dapui").toggle()
+end)
