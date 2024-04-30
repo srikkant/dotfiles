@@ -42,6 +42,7 @@ deps.add("mfussenegger/nvim-dap")
 deps.add("rcarriga/nvim-dap-ui")
 deps.add("theHamsta/nvim-dap-virtual-text")
 deps.add("leoluz/nvim-dap-go")
+deps.add({ source = "ThePrimeagen/harpoon", checkout = "harpoon2" })
 
 local colorscheme = require("rose-pine")
 local gitsigns = require("gitsigns")
@@ -70,6 +71,7 @@ local dap = require("dap")
 local dapvirtualtext = require("nvim-dap-virtual-text")
 local dapui = require("dapui")
 local dapgo = require("dap-go")
+local harpoon = require("harpoon")
 
 --
 -- set up theme
@@ -89,6 +91,7 @@ neodev.setup()
 ufo.setup()
 gitsigns.setup()
 web_devicons.setup()
+harpoon.setup()
 
 --
 -- Mini.nvim stack of plugins
