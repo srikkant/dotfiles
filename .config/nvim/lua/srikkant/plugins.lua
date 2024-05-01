@@ -67,7 +67,6 @@ local surround = require("mini.surround")
 local neodev = require("neodev")
 local treesitter_configs = require("nvim-treesitter.configs")
 local web_devicons = require("nvim-web-devicons")
-local dap = require("dap")
 local dapvirtualtext = require("nvim-dap-virtual-text")
 local dapui = require("dapui")
 local dapgo = require("dap-go")
@@ -91,7 +90,7 @@ neodev.setup()
 ufo.setup()
 gitsigns.setup()
 web_devicons.setup()
-harpoon.setup()
+harpoon:setup()
 
 --
 -- Mini.nvim stack of plugins
