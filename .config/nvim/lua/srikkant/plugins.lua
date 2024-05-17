@@ -17,10 +17,17 @@ local deps = require("mini.deps")
 
 deps.setup()
 
+-- indirect dependencies
 deps.add("nvim-tree/nvim-web-devicons")
+deps.add("kevinhwang91/promise-async")
+deps.add("nvim-lua/plenary.nvim")
+deps.add("nvim-neotest/nvim-nio")
+
+-- dev dependencies
+deps.add("folke/neodev.nvim")
+
 deps.add("lewis6991/gitsigns.nvim")
 deps.add("kevinhwang91/nvim-ufo")
-deps.add("kevinhwang91/promise-async")
 deps.add("neovim/nvim-lspconfig")
 deps.add("L3MON4D3/LuaSnip")
 deps.add("williamboman/mason.nvim")
@@ -32,15 +39,11 @@ deps.add("hrsh7th/nvim-cmp")
 deps.add("hrsh7th/cmp-nvim-lsp")
 deps.add("hrsh7th/cmp-path")
 deps.add("Exafunction/codeium.nvim")
-deps.add("nvim-lua/plenary.nvim")
 deps.add("stevearc/conform.nvim")
-deps.add("folke/neodev.nvim")
 deps.add("nvim-treesitter/nvim-treesitter")
 deps.add("rose-pine/neovim")
-deps.add("nvim-neotest/nvim-nio")
 deps.add("mfussenegger/nvim-dap")
 deps.add("rcarriga/nvim-dap-ui")
-deps.add("theHamsta/nvim-dap-virtual-text")
 deps.add("leoluz/nvim-dap-go")
 deps.add({ source = "ThePrimeagen/harpoon", checkout = "harpoon2" })
 
@@ -56,6 +59,7 @@ local cmp = require("cmp")
 local codeium = require("codeium")
 local conform = require("conform")
 local basics = require("mini.basics")
+local bracketed = require("mini.bracketed")
 local comment = require("mini.comment")
 local extra = require("mini.extra")
 local files = require("mini.files")
@@ -67,7 +71,6 @@ local surround = require("mini.surround")
 local neodev = require("neodev")
 local treesitter_configs = require("nvim-treesitter.configs")
 local web_devicons = require("nvim-web-devicons")
-local dapvirtualtext = require("nvim-dap-virtual-text")
 local dapui = require("dapui")
 local dapgo = require("dap-go")
 local harpoon = require("harpoon")
@@ -75,7 +78,12 @@ local harpoon = require("harpoon")
 --
 -- set up theme
 --
-colorscheme.setup({})
+colorscheme.setup({
+    styles = {
+        italic = false,
+        transparency = true,
+    },
+})
 vim.cmd([[colorscheme rose-pine]])
 
 --
@@ -102,6 +110,7 @@ pairs.setup({})
 surround.setup({})
 pick.setup({})
 statusline.setup({})
+bracketed.setup({})
 indentscope.setup({ draw = { animation = indentscope.gen_animation.none() } })
 files.setup({ windows = { max_number = 3, width_focus = 50, width_nofocus = 40, width_preview = 80, preview = true } })
 
@@ -119,10 +128,10 @@ treesitter_configs.setup({
     incremental_selection = {
         enable = true,
         keymaps = {
-            init_selection = "gnn",
-            scope_incremental = "gnn",
-            node_incremental = "gni",
-            node_decremental = "gnd",
+            init_selection = "<C-a>",
+            scope_incremental = "<C-A>",
+            node_incremental = "<C-a>",
+            node_decremental = "<C-q>",
         },
     },
 })
@@ -181,6 +190,7 @@ conform.setup({
         yaml = { "prettierd" },
         markdown = { "prettierd" },
         html = { "prettierd" },
+        sql = { "sql_formatter" },
     },
 })
 
@@ -189,7 +199,6 @@ conform.setup({
 -- Add more languages as needed.
 --
 dapui.setup()
-dapvirtualtext.setup({})
 
 -- for golang.
 dapgo.setup({
