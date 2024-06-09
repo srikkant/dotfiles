@@ -19,8 +19,6 @@ vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]], utils.opts("Horizont
 vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]], utils.opts("Horizontal Resize -")) -- make the window smaller horizontally by pressing shift and
 
 vim.keymap.set({ "n", "v" }, "<leader>a", "<cmd>lua vim.lsp.buf.code_action()<cr>", utils.opts("Code action"))
-vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", utils.opts("Hover doc"))
-vim.keymap.set("n", "gl", "<cmd>lua vim.diagnostic.open_float()<cr>", utils.opts("Open float diagnostic"))
 
 vim.keymap.set("n", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<cr>", utils.opts("Rename symbol"))
 vim.keymap.set("n", "<leader>x", "<cmd>TroubleToggle<cr>", utils.opts("Toggle trouble"))
