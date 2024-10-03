@@ -21,16 +21,17 @@ vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]], utils.opts("Horizont
 vim.keymap.set({ "n", "v" }, "<leader>a", "<cmd>lua vim.lsp.buf.code_action()<cr>", utils.opts("Code action"))
 
 vim.keymap.set("n", "<leader>r", "<cmd>lua vim.lsp.buf.rename()<cr>", utils.opts("Rename symbol"))
-vim.keymap.set("n", "<leader>x", "<cmd>TroubleToggle<cr>", utils.opts("Toggle trouble"))
-vim.keymap.set("n", "<leader>e", "<cmd>TroubleToggle document_diagnostics<cr>", utils.opts("Document diagnostics"))
-vim.keymap.set("n", "<leader>E", "<cmd>TroubleToggle workspace_diagnostics<cr>", utils.opts("Workspace diagnostics"))
-vim.keymap.set("n", "<leader>L", "<cmd>TroubleToggle loclist<cr>", utils.opts("Toggle loclist"))
-vim.keymap.set("n", "<leader>Q", "<cmd>TroubleToggle quickfix<cr>", utils.opts("Toggle quickfix"))
 
-vim.keymap.set("n", "gd", "<cmd>TroubleToggle lsp_definitions<cr>", utils.opts("Show LSP definitions"))
-vim.keymap.set("n", "gD", "<cmd>TroubleToggle lsp_type_definitions<cr>", utils.opts("Show LSP type definitions"))
-vim.keymap.set("n", "gi", "<cmd>TroubleToggle lsp_implementations<cr>", utils.opts("Show LSP Implementations"))
-vim.keymap.set("n", "gr", "<cmd>TroubleToggle lsp_references<cr>", utils.opts("Show LSP references"))
+vim.keymap.set("n", "<leader>e", "<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>", utils.opts("Doc diags"))
+vim.keymap.set("n", "<leader>E", "<cmd>Trouble diagnostics toggle focus=true<cr>", utils.opts("Workspace diags"))
+vim.keymap.set("n", "<leader>L", "<cmd>Trouble loclist toggle focus=true<cr>", utils.opts("Toggle loclist"))
+vim.keymap.set("n", "<leader>Q", "<cmd>Trouble qflist toggle focus=true<cr>", utils.opts("Toggle quickfix"))
+vim.keymap.set("n", "<leader>c", "<cmd>Trouble lsp toggle focus=true<cr>", utils.opts("LSP definitions"))
+
+vim.keymap.set("n", "gd", "<cmd>Trouble lsp_definitions toggle focus=true<cr>", utils.opts("LSP definitions"))
+vim.keymap.set("n", "gD", "<cmd>Trouble lsp_type_definitions toggle focus=true<cr>", utils.opts("LSP type definitions"))
+vim.keymap.set("n", "gi", "<cmd>Trouble lsp_implementations toggle focus=true<cr>", utils.opts("LSP Implementations"))
+vim.keymap.set("n", "gr", "<cmd>Trouble lsp_references toggle focus=true<cr>", utils.opts("Show LSP references"))
 
 vim.keymap.set("n", "<leader>b", "<cmd>Pick buffers<cr>", utils.opts("Pick buffers"))
 vim.keymap.set("n", "<leader>f", "<cmd>Pick files<cr>", utils.opts("Pick files"))

@@ -7,7 +7,7 @@ config.term = "wezterm"
 config.default_cursor_style = "BlinkingUnderline"
 
 config.font_size = 14
-config.line_height = 1.1
+config.line_height = 1.2
 config.cell_width = 1.0
 
 config.enable_tab_bar = false
