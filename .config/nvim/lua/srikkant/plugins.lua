@@ -32,13 +32,12 @@ deps.add("neovim/nvim-lspconfig")
 deps.add("L3MON4D3/LuaSnip")
 deps.add("williamboman/mason.nvim")
 deps.add("williamboman/mason-lspconfig.nvim")
-deps.add("VonHeikemen/lsp-zero.nvim")
+deps.add({ source = "VonHeikemen/lsp-zero.nvim", checkout = "v4.x" })
 deps.add("folke/trouble.nvim")
 deps.add("mfussenegger/nvim-lint")
 deps.add("hrsh7th/nvim-cmp")
 deps.add("hrsh7th/cmp-nvim-lsp")
 deps.add("hrsh7th/cmp-path")
-deps.add("Exafunction/codeium.nvim")
 deps.add("stevearc/conform.nvim")
 deps.add("nvim-treesitter/nvim-treesitter")
 deps.add("rose-pine/neovim")
@@ -56,7 +55,6 @@ local mason = require("mason")
 local mason_lspconfig = require("mason-lspconfig")
 local lint = require("lint")
 local cmp = require("cmp")
-local codeium = require("codeium")
 local conform = require("conform")
 local basics = require("mini.basics")
 local bracketed = require("mini.bracketed")
@@ -139,25 +137,30 @@ treesitter_configs.setup({
 --
 -- LSP, completions, linting, formatting & other IDE stuff.
 --
+lsp_zero.extend_lspconfig({
+    capabilities = require("cmp_nvim_lsp").default_capabilities(),
+    sign_text = {
+        error = "",
+        warn = "",
+        hint = "",
+        info = "",
+    },
+})
+
 trouble.setup()
-codeium.setup()
 mason.setup()
 mason_lspconfig.setup({ handlers = { lsp_zero.default_setup } })
-
-lsp_zero.preset({}).set_sign_icons({
-    error = "",
-    warn = "",
-    hint = "",
-    info = "",
-})
 
 cmp.setup({
     sources = {
         { name = "nvim_lsp" },
         { name = "path" },
         { name = "buffer" },
-        { name = "codeium" },
     },
+    snippet = {
+        expand = function(args) vim.snippet.expand(args.body) end,
+    },
+    mapping = cmp.mapping.preset.insert({}),
 })
 
 lint.linters_by_ft = {
@@ -191,6 +194,7 @@ conform.setup({
         markdown = { "prettierd" },
         html = { "prettierd" },
         sql = { "sql_formatter" },
+        templ = { "templ", lsp_format = "never" },
     },
 })
 
