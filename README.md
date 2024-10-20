@@ -8,8 +8,6 @@ right now, it is a very simple set of defaults for my two devices - linux & osx.
 - **zsh**: shell
 - **stow**: config management
 - **wezterm**: terminal
-- **alacritty**: another terminal (depends on my mood)
-- **zellij**: multiplexer
 - **nvim**: editor
 - **lf**: file explorer
 - **starship**: shell prompt

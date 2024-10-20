@@ -18,6 +18,7 @@ config.use_fancy_tab_bar = true
 config.window_decorations = "RESIZE"
 config.window_padding = { left = 16, right = 0, top = 0, bottom = 0 }
 config.window_frame = { font_size = 11 }
+config.font = wezterm.font("Geist Mono")
 
 config.webgpu_power_preference = "HighPerformance"
 config.front_end = "WebGpu"
@@ -50,9 +51,6 @@ config.keys = {
     },
 }
 
-wezterm.on(
-    "update-right-status",
-    function(window, pane) window:set_right_status(window:active_workspace() .. "    ") end
-)
+wezterm.on("update-right-status", function(window) window:set_right_status(window:active_workspace() .. "    ") end)
 
 return config

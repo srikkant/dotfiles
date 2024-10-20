@@ -33,7 +33,6 @@ eval "$(fzf --zsh)"
 # Aliases.
 alias -g ls="ls --color"
 alias -g c="clear"
-alias -g z="zellij"
 alias -g ffzf="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
