@@ -185,18 +185,29 @@ conform.setup({
         lua = { "stylua" },
         css = { "prettierd" },
         scss = { "prettierd" },
-        javascript = { "prettierd" },
+        javascript = { "injected", "prettierd" },
         javascriptreact = { "prettierd" },
         typescript = { "prettierd" },
         typescriptreact = { "prettierd" },
         json = { "prettierd" },
         yaml = { "prettierd" },
         markdown = { "prettierd" },
-        html = { "prettierd" },
+        html = { "injected", "prettierd" },
         sql = { "sql_formatter" },
-        templ = { "templ", lsp_format = "never" },
+        templ = { "injected", "templ", lsp_format = "never" },
     },
 })
+
+conform.formatters.injected = {
+    options = {
+        ignore_errors = true,
+        lang_to_formatters = {
+            javascript = { "prettierd" },
+            html = { "prettierd" },
+            templ = { "templ" },
+        },
+    },
+}
 
 --
 -- DAP
