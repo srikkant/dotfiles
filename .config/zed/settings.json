@@ -1,0 +1,63 @@
+{
+    "assistant": {
+        "version": "2",
+        "default_model": {
+            "provider": "copilot_chat",
+            "model": "gpt-4o"
+        }
+    },
+    "buffer_font_family": "Geist Mono",
+    "buffer_font_size": 14,
+    "collaboration_panel": {
+        "dock": "right"
+    },
+    "languages": {
+        "CSS": {
+            "formatter": "prettier"
+        },
+        "HTML": {
+            "formatter": "prettier"
+        },
+        "JavaScript": {
+            "formatter": "prettier",
+            "code_actions_on_format": {
+                "source.fixAll.eslint": true,
+                "source.organizeImports": true
+            }
+        },
+        "TypeScript": {
+            "formatter": "prettier",
+            "code_actions_on_format": {
+                "source.fixAll.eslint": true,
+                "source.organizeImports": true
+            }
+        },
+        "TSX": {
+            "formatter": "prettier",
+            "code_actions_on_format": {
+                "source.fixAll.eslint": true,
+                "source.organizeImports": true
+            }
+        }
+    },
+    "outline_panel": {
+        "dock": "right"
+    },
+    "relative_line_numbers": true,
+    "tab_bar": {
+        "show": false
+    },
+    "tab_size": 4,
+    "terminal": {
+        "font_size": 14,
+        "font_family": "Geist Mono",
+        "toolbar": {
+            "title": false
+        }
+    },
+    "theme": "Rosé Pine",
+    "toolbar": {
+        "quick_actions": false
+    },
+    "vim_mode": true
+}

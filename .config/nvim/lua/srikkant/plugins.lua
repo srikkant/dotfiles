@@ -41,10 +41,6 @@ deps.add("hrsh7th/cmp-path")
 deps.add("stevearc/conform.nvim")
 deps.add("nvim-treesitter/nvim-treesitter")
 deps.add("rose-pine/neovim")
-deps.add("mfussenegger/nvim-dap")
-deps.add("rcarriga/nvim-dap-ui")
-deps.add("leoluz/nvim-dap-go")
-deps.add({ source = "ThePrimeagen/harpoon", checkout = "harpoon2" })
 
 local colorscheme = require("rose-pine")
 local gitsigns = require("gitsigns")
@@ -69,9 +65,6 @@ local surround = require("mini.surround")
 local neodev = require("neodev")
 local treesitter_configs = require("nvim-treesitter.configs")
 local web_devicons = require("nvim-web-devicons")
-local dapui = require("dapui")
-local dapgo = require("dap-go")
-local harpoon = require("harpoon")
 
 --
 -- set up theme
@@ -96,7 +89,6 @@ neodev.setup()
 ufo.setup()
 gitsigns.setup()
 web_devicons.setup()
-harpoon:setup()
 
 --
 -- Mini.nvim stack of plugins
@@ -208,21 +200,3 @@ conform.formatters.injected = {
         },
     },
 }
-
---
--- DAP
--- Add more languages as needed.
---
-dapui.setup()
-
--- for golang.
-dapgo.setup({
-    dap_configurations = {
-        {
-            type = "go",
-            name = "Attach remote",
-            mode = "remote",
-            request = "attach",
-        },
-    },
-})

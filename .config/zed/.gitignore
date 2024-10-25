@@ -1,0 +1,8 @@
+embeddings/*
+conversations/*
+prompts/*
+.tmp*
+
+
+!settings.json
+!keymap.json

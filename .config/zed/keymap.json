@@ -1,0 +1,36 @@
+[
+    {
+        "bindings": {
+            "space f": "file_finder::Toggle",
+            "space b": "tab_switcher::Toggle",
+            "space /": "pane::DeploySearch",
+            "space e": "diagnostics::Deploy",
+            "'": "workspace::ToggleLeftDock"
+        }
+    },
+    {
+        "context": "vim_mode == insert && showing_completions",
+        "bindings": {
+            "ctrl-y": "editor::ConfirmCompletion"
+        }
+    },
+    {
+        "context": "vim_mode == normal",
+        "bindings": {
+            "g r": "editor::FindAllReferences"
+        }
+    },
+    {
+        "context": "VimControl && !menu",
+        "bindings": {
+            "space a": "editor::ToggleCodeActions",
+            "space r": "editor::Rename"
+        }
+    },
+    {
+        "context": "Editor && mode == full",
+        "bindings": {
+            "enter": "editor::OpenExcerpts"
+        }
+    }
+]

@@ -44,22 +44,3 @@ vim.keymap.set("n", "<leader>'", utils.toggle_files_explorer_cwd, utils.opts("Sh
 vim.keymap.set("n", "<leader>h", function() pickers.keymaps() end, utils.opts("Show keymaps"))
 vim.keymap.set("n", "<leader>S", function() pickers.lsp({ scope = "workspace_symbol" }) end, utils.opts("Work symbols"))
 vim.keymap.set("n", "<leader>s", function() pickers.lsp({ scope = "document_symbol" }) end, utils.opts("Symbols"))
-
-vim.keymap.set("n", "<leader>1", function() require("dap").continue() end, utils.opts("Debug: Continue"))
-vim.keymap.set("n", "<leader>2", function() require("dap").step_over() end, utils.opts("Debug: Stepover"))
-vim.keymap.set("n", "<leader>3", function() require("dap").step_into() end, utils.opts("Debug: Step into"))
-vim.keymap.set("n", "<leader>4", function() require("dap").step_out() end, utils.opts("Debug: Step out"))
-vim.keymap.set("n", "<Leader>qb", function() require("dap").toggle_breakpoint() end, utils.opts("Debug: Breakpoint"))
-vim.keymap.set("n", "<Leader>qB", function() require("dap").set_breakpoint() end, utils.opts("Debug: Set breakpoint"))
-
-vim.keymap.set("n", "<Leader>qr", function() require("dap").repl.open() end, utils.opts("Debug: Open REPL"))
-vim.keymap.set("n", "<Leader>ql", function() require("dap").run_last() end, utils.opts("Debug: Run last"))
-vim.keymap.set({ "n", "v" }, "<Leader>qK", function() require("dapui").eval() end, utils.opts("Debug: Eval"))
-vim.keymap.set({ "n", "v" }, "<Leader>qo", function() require("dapui").toggle() end, utils.opts("Debug: Toggle UI"))
-
-vim.keymap.set("n", "<leader>j", function() harpoon:list():add() end, utils.opts("Haroon: Add"))
-vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, utils.opts("Harpoon: Menu"))
-vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end, utils.opts("Harpoon: Goto 1"))
-vim.keymap.set("n", "<C-j>", function() harpoon:list():select(2) end, utils.opts("Harpoon: Goto 2"))
-vim.keymap.set("n", "<C-k>", function() harpoon:list():select(3) end, utils.opts("Harpoon: Goto 3"))
-vim.keymap.set("n", "<C-l>", function() harpoon:list():select(4) end, utils.opts("Harpoon: Goto 4"))
