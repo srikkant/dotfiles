@@ -7,6 +7,7 @@
         }
     },
     "buffer_font_family": "Geist Mono",
+    "buffer_font_fallbacks": ["Symbols Nerd Font Mono"],
     "buffer_font_size": 14,
     "collaboration_panel": {
         "dock": "right"
@@ -49,8 +50,6 @@
     },
     "tab_size": 4,
     "terminal": {
-        "font_size": 14,
-        "font_family": "Geist Mono",
         "toolbar": {
             "title": false
         }

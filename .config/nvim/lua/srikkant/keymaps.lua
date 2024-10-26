@@ -1,5 +1,4 @@
 local utils = require("srikkant.utils")
-local harpoon = require("harpoon")
 local pickers = require("mini.extra").pickers
 
 vim.keymap.set("n", "<leader>tn", "<cmd>tabnext<CR>", utils.opts("Next tab"))

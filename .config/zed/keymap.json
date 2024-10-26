@@ -1,10 +1,19 @@
 [
     {
+        "context": "VimControl || EmptyPane",
         "bindings": {
             "space f": "file_finder::Toggle",
             "space b": "tab_switcher::Toggle",
             "space /": "pane::DeploySearch",
             "space e": "diagnostics::Deploy",
+            "ctrl-~": "workspace::NewTerminal",
+            "ctrl-`": "workspace::ToggleBottomDock",
+            "'": "workspace::ToggleLeftDock"
+        }
+    },
+    {
+        "context": "ProjectPanel && not_editing",
+        "bindings": {
             "'": "workspace::ToggleLeftDock"
         }
     },
@@ -31,6 +40,12 @@
         "context": "Editor && mode == full",
         "bindings": {
             "enter": "editor::OpenExcerpts"
+        }
+    },
+    {
+        "context": "TabSwitcher",
+        "bindings": {
+            "x": "tab_switcher::CloseSelectedItem"
         }
     }
 ]
