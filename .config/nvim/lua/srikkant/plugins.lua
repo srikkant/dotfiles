@@ -129,16 +129,7 @@ treesitter_configs.setup({
 --
 -- LSP, completions, linting, formatting & other IDE stuff.
 --
-lsp_zero.extend_lspconfig({
-    capabilities = require("cmp_nvim_lsp").default_capabilities(),
-    sign_text = {
-        error = "",
-        warn = "",
-        hint = "",
-        info = "",
-    },
-})
-
+lsp_zero.extend_lspconfig({ capabilities = require("cmp_nvim_lsp").default_capabilities() })
 trouble.setup()
 mason.setup()
 mason_lspconfig.setup({ handlers = { lsp_zero.default_setup } })
@@ -149,10 +140,13 @@ cmp.setup({
         { name = "path" },
         { name = "buffer" },
     },
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+    },
     snippet = {
         expand = function(args) vim.snippet.expand(args.body) end,
     },
-    mapping = cmp.mapping.preset.insert({}),
 })
 
 lint.linters_by_ft = {

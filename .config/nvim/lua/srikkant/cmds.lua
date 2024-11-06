@@ -20,5 +20,3 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
     pattern = { "*.tsx", "*.ts", "*.js", "*.jsx" },
     callback = function() lint.try_lint() end,
 })
-
-vim.api.nvim_create_user_command("AutofixEslint", "!eslint_d % --fix", { bang = true })

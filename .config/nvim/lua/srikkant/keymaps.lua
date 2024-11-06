@@ -1,10 +1,6 @@
 local utils = require("srikkant.utils")
 local pickers = require("mini.extra").pickers
 
-vim.keymap.set("n", "<leader>tn", "<cmd>tabnext<CR>", utils.opts("Next tab"))
-vim.keymap.set("n", "<leader>tp", "<cmd>tabprev<CR>", utils.opts("Previous tab"))
-vim.keymap.set("n", "<leader>tt", "<cmd>tabnew<CR>", utils.opts("New Tab"))
-vim.keymap.set("n", "<leader>td", "<cmd>tabclose<CR>", utils.opts("Close tab"))
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], utils.opts("Copy to system clipboard"))
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], utils.opts("Delete into oblivion"))
 
