@@ -7,6 +7,7 @@
             "model": "gpt-4o"
         }
     },
+    "buffer_font_family": "Geist Mono",
     "buffer_font_fallbacks": ["Symbols Nerd Font Mono"],
     "buffer_font_size": 14,
     "chat_panel": {
