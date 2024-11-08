@@ -12,7 +12,7 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
     group = lintGroup,
-    callback = function() lint.try_lint() end,
+    callback = function() lint.try_lint(nil, { ignore_errors = true }) end,
 })
 
 vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {

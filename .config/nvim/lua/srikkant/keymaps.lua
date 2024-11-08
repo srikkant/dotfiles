@@ -1,6 +1,9 @@
 local utils = require("srikkant.utils")
 local pickers = require("mini.extra").pickers
 
+local dap = require("dap")
+local widgets = require("dap.ui.widgets")
+
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], utils.opts("Copy to system clipboard"))
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], utils.opts("Delete into oblivion"))
 
@@ -29,3 +32,14 @@ vim.keymap.set("n", "'", utils.toggle_files_explorer, utils.opts("Show explorer"
 vim.keymap.set("n", "<leader>'", utils.toggle_files_explorer_cwd, utils.opts("Show explorer (CWD)"))
 
 vim.keymap.set("n", "<leader>h", function() pickers.keymaps() end, utils.opts("Show keymaps"))
+
+vim.keymap.set("n", "<leader>b", function() dap.toggle_breakpoint() end, utils.opts("Debug: Toggle breakpoint"))
+vim.keymap.set("n", "<leader>1", function() dap.continue() end, utils.opts("Debug: Continue"))
+vim.keymap.set("n", "<leader>2", function() dap.step_into() end, utils.opts("Debug: Step into"))
+vim.keymap.set("n", "<leader>3", function() dap.step_over() end, utils.opts("Debug: Step over"))
+vim.keymap.set("n", "<leader>4", function() dap.step_out() end, utils.opts("Debug: Step out"))
+
+vim.keymap.set({ "n", "v" }, "<Leader>dh", function() widgets.hover() end)
+vim.keymap.set({ "n", "v" }, "<Leader>dp", function() widgets.preview() end)
+vim.keymap.set("n", "<Leader>df", function() widgets.centered_float(widgets.frames) end)
+vim.keymap.set("n", "<Leader>ds", function() widgets.centered_float(widgets.scopes) end)

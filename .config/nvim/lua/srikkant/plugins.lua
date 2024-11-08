@@ -41,6 +41,9 @@ deps.add("hrsh7th/cmp-path")
 deps.add("stevearc/conform.nvim")
 deps.add("nvim-treesitter/nvim-treesitter")
 deps.add("rose-pine/neovim")
+deps.add("andrewferrier/debugprint.nvim")
+deps.add("mfussenegger/nvim-dap")
+deps.add("leoluz/nvim-dap-go")
 
 local colorscheme = require("rose-pine")
 local gitsigns = require("gitsigns")
@@ -65,6 +68,8 @@ local surround = require("mini.surround")
 local neodev = require("neodev")
 local treesitter_configs = require("nvim-treesitter.configs")
 local web_devicons = require("nvim-web-devicons")
+local dap_go = require("dap-go")
+local debugprint = require("debugprint")
 
 --
 -- set up theme
@@ -89,6 +94,9 @@ neodev.setup()
 ufo.setup()
 gitsigns.setup()
 web_devicons.setup()
+
+dap_go.setup()
+debugprint.setup()
 
 --
 -- Mini.nvim stack of plugins
@@ -147,7 +155,21 @@ cmp.setup({
     snippet = {
         expand = function(args) vim.snippet.expand(args.body) end,
     },
+    mapping = cmp.mapping.preset.insert({}),
 })
+
+lint.linters = {
+    eslint_d = {
+        args = {
+            "--no-warn-ignored", -- <-- this is the key argument
+            "--format",
+            "json",
+            "--stdin",
+            "--stdin-filename",
+            function() return vim.api.nvim_buf_get_name(0) end,
+        },
+    },
+}
 
 lint.linters_by_ft = {
     javascript = { "eslint_d" },
