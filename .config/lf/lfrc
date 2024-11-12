@@ -1,6 +1,5 @@
 set previewer ~/.config/lf/preview
 
-set ifs "\n"
 set scrolloff 10
 
 set promptfmt ""
@@ -35,23 +34,6 @@ cmd open &{{
 
 # mkdir command. See wiki if you want it to select created dir
 map a :push %mkdir<space>
-
-# define a custom 'rename' command without prompt for overwrite
-# cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
-# map r push :rename<space>
-
-# make sure trash folder exists
-# %mkdir -p ~/.trash
-
-# move current file or selected files to trash folder
-# (also see 'man mv' for backup/overwrite options)
-cmd trash %set -f; mv $fx ~/.trash
-
-# use '<delete>' key for either 'trash' or 'delete' command
-# map <delete> trash
-# map <delete> delete
-
-map f $hx $(fzf)
 
 cmd fzf_jump ${{
     res="$(find . | fzf --reverse)"
@@ -89,12 +71,3 @@ cmd zi ${{
 	lf -remote "send $id cd \"$result\""
 }}
 
-${{
-    w=$(tput cols)
-    if [ $w -le 120 ]; then
-        lf -remote "send $id set nopreview"
-        lf -remote "send $id set ratios 1"
-    else
-        lf -remote "send $id set ratios 1:2:3:5"
-    fi
-}}
