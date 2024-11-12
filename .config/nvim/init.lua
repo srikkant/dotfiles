@@ -39,12 +39,8 @@ deps.add("kevinhwang91/nvim-ufo")
 deps.add("neovim/nvim-lspconfig")
 deps.add("williamboman/mason.nvim")
 deps.add("williamboman/mason-lspconfig.nvim")
-deps.add({ source = "VonHeikemen/lsp-zero.nvim", checkout = "v4.x" })
 deps.add("folke/trouble.nvim")
 deps.add("mfussenegger/nvim-lint")
-deps.add("hrsh7th/nvim-cmp")
-deps.add("hrsh7th/cmp-nvim-lsp")
-deps.add("hrsh7th/cmp-path")
 deps.add("github/copilot.vim")
 deps.add("nvim-treesitter/nvim-treesitter")
 deps.add("rose-pine/neovim")
@@ -52,16 +48,13 @@ deps.add("andrewferrier/debugprint.nvim")
 deps.add("mfussenegger/nvim-dap")
 deps.add("leoluz/nvim-dap-go")
 deps.add("stevearc/conform.nvim")
-deps.add("stevearc/oil.nvim")
 
 local colorscheme = require("rose-pine")
 local ufo = require("ufo")
-local lsp_zero = require("lsp-zero")
 local trouble = require("trouble")
 local mason = require("mason")
 local mason_lspconfig = require("mason-lspconfig")
 local lint = require("lint")
-local cmp = require("cmp")
 local conform = require("conform")
 local basics = require("mini.basics")
 local bracketed = require("mini.bracketed")
@@ -70,12 +63,13 @@ local pairs = require("mini.pairs")
 local pick = require("mini.pick")
 local git = require("mini.git")
 local diff = require("mini.diff")
+local files = require("mini.files")
 local icons = require("mini.icons")
 local indentscope = require("mini.indentscope")
 local surround = require("mini.surround")
+local completion = require("mini.completion")
 local treesitter_configs = require("nvim-treesitter.configs")
 local debugprint = require("debugprint")
-local oil = require("oil")
 
 local lintGroup = vim.api.nvim_create_augroup("Linting", {})
 
@@ -94,7 +88,8 @@ diff.setup({})
 git.setup({})
 indentscope.setup({})
 surround.setup({})
-oil.setup({})
+files.setup({})
+completion.setup({})
 
 --
 -- Treesitter configurations
@@ -118,27 +113,10 @@ treesitter_configs.setup({
 --
 -- LSP, completions, linting, formatting & other IDE stuff.
 --
-lsp_zero.extend_lspconfig({ capabilities = require("cmp_nvim_lsp").default_capabilities() })
 trouble.setup()
 mason.setup()
-mason_lspconfig.setup({ handlers = { lsp_zero.default_setup } })
-
-cmp.setup({
-    sources = {
-        { name = "nvim_lsp" },
-        { name = "path" },
-        { name = "buffer" },
-        { name = "copilot" },
-    },
-    window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
-    },
-    snippet = {
-        expand = function(args) vim.snippet.expand(args.body) end,
-    },
-    mapping = cmp.mapping.preset.insert({}),
-})
+mason_lspconfig.setup({})
+mason_lspconfig.setup_handlers({ function(server_name) require("lspconfig")[server_name].setup({}) end })
 
 lint.linters = {
     eslint_d = {
@@ -236,8 +214,8 @@ vim.keymap.set("n", "gi", "<cmd>Trouble lsp_implementations toggle focus=true<cr
 vim.keymap.set("n", "gr", "<cmd>Trouble lsp_references toggle focus=true<cr>")
 vim.keymap.set("n", "gs", "<cmd>Trouble symbols toggle focus=true<cr>")
 
-vim.keymap.set("n", "gb", "<cmd>Pick bufferscr>")
+vim.keymap.set("n", "gb", "<cmd>Pick buffers<cr>")
 vim.keymap.set("n", "gf", "<cmd>Pick files<cr>")
 vim.keymap.set("n", "g;", "<cmd>Pick resume<cr>")
 vim.keymap.set("n", "g/", "<cmd>Pick grep_live<cr>")
-vim.keymap.set("n", "'", "<cmd>Oil<cr>")
+vim.keymap.set("n", "'", files.open)
