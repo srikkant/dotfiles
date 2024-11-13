@@ -4,12 +4,10 @@ if not vim.uv.fs_stat(mini_path) then
     vim.cmd("packadd mini.nvim | helptags ALL")
 end
 
-vim.opt.completeopt = "menuone,noselect"
-vim.opt.expandtab = true
-vim.opt.foldcolumn = "auto"
-vim.opt.foldlevel = 99
-vim.opt.foldlevelstart = 99
-vim.opt.hlsearch = false
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = ""
+vim.opt.foldenable = false
 vim.opt.ignorecase = true
 vim.opt.shiftwidth = 4
 vim.opt.showtabline = 0
@@ -19,38 +17,32 @@ vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
 vim.opt.termguicolors = true
 vim.opt.undofile = true
-vim.wo.number = true
-vim.wo.signcolumn = "yes"
-vim.wo.relativenumber = true
+vim.opt.signcolumn = "yes"
+vim.opt.relativenumber = true
 
 local deps = require("mini.deps")
 deps.setup()
 
 local add = deps.add
+
 add("folke/lazydev.nvim")
 add("rose-pine/neovim")
-add("nvim-lua/plenary.nvim")
-add("kevinhwang91/promise-async")
-add("kevinhwang91/nvim-ufo")
+add("nvim-treesitter/nvim-treesitter")
 add("neovim/nvim-lspconfig")
-add("VonHeikemen/lsp-zero.nvim")
 add("williamboman/mason.nvim")
 add("williamboman/mason-lspconfig.nvim")
 add("hrsh7th/nvim-cmp")
 add("hrsh7th/cmp-nvim-lsp")
-add("hrsh7th/cmp-path")
 add("folke/trouble.nvim")
 add("mfussenegger/nvim-lint")
-add("nvim-treesitter/nvim-treesitter")
-add("andrewferrier/debugprint.nvim")
 add("stevearc/conform.nvim")
+add("andrewferrier/debugprint.nvim")
 add("github/copilot.vim")
 
 require("lazydev").setup()
 require("rose-pine").setup({ styles = { italic = false, transparency = true } })
 vim.cmd([[colorscheme rose-pine]])
 
-require("ufo").setup()
 require("debugprint").setup()
 require("mason").setup()
 
@@ -62,6 +54,7 @@ require("mini.diff").setup({})
 require("mini.git").setup({})
 require("mini.indentscope").setup({})
 require("mini.surround").setup({})
+require("mini.pairs").setup({})
 require("mini.pick").setup({})
 
 local files = require("mini.files")
@@ -91,12 +84,15 @@ require("nvim-treesitter.configs").setup({
 --
 local mason_lspconfig = require("mason-lspconfig")
 local cmp = require("cmp")
-local lsp_zero = require("lsp-zero")
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-lsp_zero.extend_lspconfig({ capabilities = require("cmp_nvim_lsp").default_capabilities() })
-mason_lspconfig.setup({ handlers = { lsp_zero.default_setup } })
+mason_lspconfig.setup()
+mason_lspconfig.setup_handlers({
+    function(server) require("lspconfig")[server].setup({ capabilities = capabilities }) end,
+})
+
 cmp.setup({
-    sources = { { name = "nvim_lsp" }, { name = "path" } },
+    sources = { { name = "nvim_lsp" } },
     window = { completion = cmp.config.window.bordered(), documentation = cmp.config.window.bordered() },
     snippet = { expand = function(args) vim.snippet.expand(args.body) end },
     mapping = cmp.mapping.preset.insert({}),
@@ -169,9 +165,9 @@ key("n", "gb", "<cmd>Pick buffers<cr>")
 key("n", "gf", "<cmd>Pick files<cr>")
 key("n", "g;", "<cmd>Pick resume<cr>")
 key("n", "g/", "<cmd>Pick grep_live<cr>")
-key("n", "gc", "<cmd>Trouble lsp toggle focus=true<cr>")
 key("n", "ge", "<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>")
 key("n", "gE", "<cmd>Trouble diagnostics toggle focus=true<cr>")
+key("n", "gc", "<cmd>Trouble lsp toggle focus=true<cr>")
 key("n", "gd", "<cmd>Trouble lsp_definitions toggle focus=true<cr>")
 key("n", "gD", "<cmd>Trouble lsp_type_definitions toggle focus=true<cr>")
 key("n", "gi", "<cmd>Trouble lsp_implementations toggle focus=true<cr>")
