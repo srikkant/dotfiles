@@ -1,11 +1,9 @@
 local mini_path = vim.fn.stdpath("data") .. "/site/pack/deps/start/mini.nvim"
-if not vim.loop.fs_stat(mini_path) then
+if not vim.uv.fs_stat(mini_path) then
     vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/echasnovski/mini.nvim", mini_path })
     vim.cmd("packadd mini.nvim | helptags ALL")
 end
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
 vim.opt.completeopt = "menuone,noselect"
 vim.opt.expandtab = true
 vim.opt.foldcolumn = "1"
@@ -14,7 +12,6 @@ vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.hlsearch = false
 vim.opt.ignorecase = true
-vim.opt.mouse = ""
 vim.opt.shiftwidth = 4
 vim.opt.showtabline = 0
 vim.opt.smartcase = true
@@ -30,71 +27,51 @@ vim.wo.relativenumber = true
 local deps = require("mini.deps")
 deps.setup()
 
--- indirect dependencies
-deps.add("nvim-lua/plenary.nvim")
-deps.add("nvim-neotest/nvim-nio")
+local add = deps.add
+add("folke/lazydev.nvim")
+add("rose-pine/neovim")
+add("nvim-lua/plenary.nvim")
+add("kevinhwang91/promise-async")
+add("kevinhwang91/nvim-ufo")
+add("neovim/nvim-lspconfig")
+add("VonHeikemen/lsp-zero.nvim")
+add("williamboman/mason.nvim")
+add("williamboman/mason-lspconfig.nvim")
+add("hrsh7th/nvim-cmp")
+add("hrsh7th/cmp-nvim-lsp")
+add("hrsh7th/cmp-path")
+add("folke/trouble.nvim")
+add("mfussenegger/nvim-lint")
+add("nvim-treesitter/nvim-treesitter")
+add("andrewferrier/debugprint.nvim")
+add("stevearc/conform.nvim")
+add("github/copilot.vim")
 
-deps.add("kevinhwang91/promise-async")
-deps.add("kevinhwang91/nvim-ufo")
-deps.add("neovim/nvim-lspconfig")
-deps.add("williamboman/mason.nvim")
-deps.add("williamboman/mason-lspconfig.nvim")
-deps.add("folke/trouble.nvim")
-deps.add("mfussenegger/nvim-lint")
-deps.add("github/copilot.vim")
-deps.add("nvim-treesitter/nvim-treesitter")
-deps.add("rose-pine/neovim")
-deps.add("andrewferrier/debugprint.nvim")
-deps.add("mfussenegger/nvim-dap")
-deps.add("leoluz/nvim-dap-go")
-deps.add("stevearc/conform.nvim")
-
-local colorscheme = require("rose-pine")
-local ufo = require("ufo")
-local trouble = require("trouble")
-local mason = require("mason")
-local mason_lspconfig = require("mason-lspconfig")
-local lint = require("lint")
-local conform = require("conform")
-local basics = require("mini.basics")
-local bracketed = require("mini.bracketed")
-local comment = require("mini.comment")
-local pairs = require("mini.pairs")
-local pick = require("mini.pick")
-local git = require("mini.git")
-local diff = require("mini.diff")
-local files = require("mini.files")
-local icons = require("mini.icons")
-local indentscope = require("mini.indentscope")
-local surround = require("mini.surround")
-local completion = require("mini.completion")
-local treesitter_configs = require("nvim-treesitter.configs")
-local debugprint = require("debugprint")
-
-local lintGroup = vim.api.nvim_create_augroup("Linting", {})
-
-colorscheme.setup({ styles = { italic = false, transparency = true } })
+require("lazydev").setup()
+require("rose-pine").setup({ styles = { italic = false, transparency = true } })
 vim.cmd([[colorscheme rose-pine]])
 
-ufo.setup()
-debugprint.setup()
-basics.setup({})
-comment.setup({})
-icons.setup({})
-pairs.setup({})
-pick.setup({})
-bracketed.setup({})
-diff.setup({})
-git.setup({})
-indentscope.setup({})
-surround.setup({})
-files.setup({})
-completion.setup({})
+require("ufo").setup()
+require("debugprint").setup()
+require("mason").setup()
 
---
--- Treesitter configurations
---
-treesitter_configs.setup({
+require("mini.basics").setup({})
+require("mini.comment").setup({})
+require("mini.icons").setup({})
+require("mini.bracketed").setup({})
+require("mini.diff").setup({})
+require("mini.git").setup({})
+require("mini.indentscope").setup({})
+require("mini.surround").setup({})
+require("mini.pick").setup({})
+
+local files = require("mini.files")
+files.setup({})
+
+require("nvim-treesitter.configs").setup({
+    modules = {},
+    ensure_installed = {},
+    ignore_install = {},
     auto_install = true,
     sync_install = false,
     highlight = { enable = true },
@@ -113,24 +90,22 @@ treesitter_configs.setup({
 --
 -- LSP, completions, linting, formatting & other IDE stuff.
 --
-trouble.setup()
-mason.setup()
-mason_lspconfig.setup({})
-mason_lspconfig.setup_handlers({ function(server_name) require("lspconfig")[server_name].setup({}) end })
+local mason_lspconfig = require("mason-lspconfig")
+local cmp = require("cmp")
+local lsp_zero = require("lsp-zero")
 
-lint.linters = {
-    eslint_d = {
-        args = {
-            "--no-warn-ignored",
-            "--format",
-            "json",
-            "--stdin",
-            "--stdin-filename",
-            function() return vim.api.nvim_buf_get_name(0) end,
-        },
-    },
-}
+lsp_zero.extend_lspconfig({ capabilities = require("cmp_nvim_lsp").default_capabilities() })
+mason_lspconfig.setup({ handlers = { lsp_zero.default_setup } })
+cmp.setup({
+    sources = { { name = "nvim_lsp" }, { name = "path" } },
+    window = { completion = cmp.config.window.bordered(), documentation = cmp.config.window.bordered() },
+    snippet = { expand = function(args) vim.snippet.expand(args.body) end },
+    mapping = cmp.mapping.preset.insert({}),
+})
 
+require("trouble").setup()
+
+local lint = require("lint")
 lint.linters_by_ft = {
     javascript = { "eslint_d" },
     javascriptreact = { "eslint_d" },
@@ -139,6 +114,8 @@ lint.linters_by_ft = {
     md = { "markdownlint" },
     mdx = { "markdownlint" },
 }
+
+local conform = require("conform")
 
 conform.setup({
     format_on_save = {
@@ -164,58 +141,52 @@ conform.setup({
         sql = { "sql_formatter" },
         templ = { "injected", "templ", lsp_format = "never" },
     },
-})
-
-conform.formatters.injected = {
-    options = {
-        ignore_errors = true,
-        lang_to_formatters = {
-            javascript = { "prettierd" },
-            html = { "prettierd" },
-            templ = { "templ" },
+    formatters = {
+        injected = {
+            options = {
+                ignore_errors = true,
+                lang_to_formatters = {
+                    javascript = { "prettierd" },
+                    html = { "prettierd" },
+                    templ = { "templ" },
+                },
+            },
         },
     },
-}
-
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-    pattern = "*",
-    group = lintGroup,
-    callback = function(args) conform.format({ bufnr = args.buf }) end,
 })
 
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-    group = lintGroup,
-    callback = function() lint.try_lint(nil, { ignore_errors = true }) end,
-})
+---
+--- Keymaps
+---
+local key = vim.keymap.set
 
-vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
-    group = lintGroup,
-    pattern = { "*.tsx", "*.ts", "*.js", "*.jsx" },
-    callback = function() lint.try_lint() end,
-})
+key({ "n", "v" }, "<leader>y", [["+y]])
+key({ "n", "v" }, "<leader>d", [["_d]])
+key("n", "=", [[<cmd>vertical resize +5<cr>]])
+key("n", "-", [[<cmd>vertical resize -5<cr>]])
+key("n", "+", [[<cmd>horizontal resize +2<cr>]])
+key("n", "_", [[<cmd>horizontal resize -2<cr>]])
+key("n", "gb", "<cmd>Pick buffers<cr>")
+key("n", "gf", "<cmd>Pick files<cr>")
+key("n", "g;", "<cmd>Pick resume<cr>")
+key("n", "g/", "<cmd>Pick grep_live<cr>")
+key("n", "gc", "<cmd>Trouble lsp toggle focus=true<cr>")
+key("n", "ge", "<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>")
+key("n", "gE", "<cmd>Trouble diagnostics toggle focus=true<cr>")
+key("n", "gd", "<cmd>Trouble lsp_definitions toggle focus=true<cr>")
+key("n", "gD", "<cmd>Trouble lsp_type_definitions toggle focus=true<cr>")
+key("n", "gi", "<cmd>Trouble lsp_implementations toggle focus=true<cr>")
+key("n", "gr", "<cmd>Trouble lsp_references toggle focus=true<cr>")
+key("n", "gs", "<cmd>Trouble symbols toggle focus=true<cr>")
+key("n", "'", function() files.open((vim.api.nvim_buf_get_name(0)), true) end)
+key("n", "cd", vim.lsp.buf.rename)
+key({ "n", "v" }, "g.", vim.lsp.buf.code_action)
 
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
+--
+-- Auto commands
+--
+local autocmd = vim.api.nvim_create_autocmd
 
-vim.keymap.set("n", "=", [[<cmd>vertical resize +5<cr>]])
-vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]])
-vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]])
-vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]])
-
-vim.keymap.set("n", "cd", vim.lsp.buf.rename)
-vim.keymap.set({ "n", "v" }, "g.", vim.lsp.buf.code_action)
-
-vim.keymap.set("n", "gc", "<cmd>Trouble lsp toggle focus=true<cr>")
-vim.keymap.set("n", "ge", "<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>")
-vim.keymap.set("n", "gE", "<cmd>Trouble diagnostics toggle focus=true<cr>")
-vim.keymap.set("n", "gd", "<cmd>Trouble lsp_definitions toggle focus=true<cr>")
-vim.keymap.set("n", "gD", "<cmd>Trouble lsp_type_definitions toggle focus=true<cr>")
-vim.keymap.set("n", "gi", "<cmd>Trouble lsp_implementations toggle focus=true<cr>")
-vim.keymap.set("n", "gr", "<cmd>Trouble lsp_references toggle focus=true<cr>")
-vim.keymap.set("n", "gs", "<cmd>Trouble symbols toggle focus=true<cr>")
-
-vim.keymap.set("n", "gb", "<cmd>Pick buffers<cr>")
-vim.keymap.set("n", "gf", "<cmd>Pick files<cr>")
-vim.keymap.set("n", "g;", "<cmd>Pick resume<cr>")
-vim.keymap.set("n", "g/", "<cmd>Pick grep_live<cr>")
-vim.keymap.set("n", "'", files.open)
+autocmd({ "BufWritePre" }, { pattern = "*", callback = function(args) conform.format({ bufnr = args.buf }) end })
+autocmd({ "BufWritePost" }, { callback = function() lint.try_lint(nil, { ignore_errors = true }) end })
+autocmd({ "InsertLeave", "TextChanged" }, { callback = function() lint.try_lint(nil, { ignore_errors = true }) end })
