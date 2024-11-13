@@ -25,18 +25,14 @@ deps.setup()
 
 local add = deps.add
 
+add("nvim-lua/plenary.nvim")
 add("folke/lazydev.nvim")
 add("rose-pine/neovim")
-add("nvim-treesitter/nvim-treesitter")
 add("neovim/nvim-lspconfig")
-add("williamboman/mason.nvim")
-add("williamboman/mason-lspconfig.nvim")
-add("hrsh7th/nvim-cmp")
-add("hrsh7th/cmp-nvim-lsp")
-add("folke/trouble.nvim")
-add("mfussenegger/nvim-lint")
-add("stevearc/conform.nvim")
+add("nvim-treesitter/nvim-treesitter")
 add("andrewferrier/debugprint.nvim")
+add("nvimtools/none-ls.nvim")
+add("folke/trouble.nvim")
 add("github/copilot.vim")
 
 require("lazydev").setup()
@@ -44,21 +40,18 @@ require("rose-pine").setup({ styles = { italic = false, transparency = true } })
 vim.cmd([[colorscheme rose-pine]])
 
 require("debugprint").setup()
-require("mason").setup()
+require("trouble").setup()
 
 require("mini.basics").setup({})
-require("mini.comment").setup({})
-require("mini.icons").setup({})
 require("mini.bracketed").setup({})
+require("mini.comment").setup({})
+require("mini.completion").setup({})
 require("mini.diff").setup({})
+require("mini.files").setup({})
 require("mini.git").setup({})
-require("mini.indentscope").setup({})
-require("mini.surround").setup({})
-require("mini.pairs").setup({})
+require("mini.icons").setup({})
 require("mini.pick").setup({})
-
-local files = require("mini.files")
-files.setup({})
+require("mini.surround").setup({})
 
 require("nvim-treesitter.configs").setup({
     modules = {},
@@ -80,74 +73,27 @@ require("nvim-treesitter.configs").setup({
 })
 
 --
--- LSP, completions, linting, formatting & other IDE stuff.
+-- LSPs
 --
-local mason_lspconfig = require("mason-lspconfig")
-local cmp = require("cmp")
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+for _, lsp in ipairs({ "cssls", "eslint", "html", "ts_ls", "gopls", "lua_ls" }) do
+    require("lspconfig")[lsp].setup({})
+end
 
-mason_lspconfig.setup()
-mason_lspconfig.setup_handlers({
-    function(server) require("lspconfig")[server].setup({ capabilities = capabilities }) end,
-})
-
-cmp.setup({
-    sources = { { name = "nvim_lsp" } },
-    window = { completion = cmp.config.window.bordered(), documentation = cmp.config.window.bordered() },
-    snippet = { expand = function(args) vim.snippet.expand(args.body) end },
-    mapping = cmp.mapping.preset.insert({}),
-})
-
-require("trouble").setup()
-
-local lint = require("lint")
-lint.linters_by_ft = {
-    javascript = { "eslint_d" },
-    javascriptreact = { "eslint_d" },
-    typescript = { "eslint_d" },
-    typescriptreact = { "eslint_d" },
-    md = { "markdownlint" },
-    mdx = { "markdownlint" },
-}
-
-local conform = require("conform")
-
-conform.setup({
-    format_on_save = {
-        lsp_fallback = true,
-        timeout_ms = 500,
+local null_ls = require("null-ls")
+null_ls.setup({
+    sources = {
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.prettierd,
+        null_ls.builtins.formatting.goimports,
     },
-    format_after_save = {
-        lsp_fallback = true,
-    },
-    formatters_by_ft = {
-        go = { "goimports" },
-        lua = { "stylua" },
-        css = { "prettierd" },
-        scss = { "prettierd" },
-        javascript = { "injected", "prettierd" },
-        javascriptreact = { "prettierd" },
-        typescript = { "prettierd" },
-        typescriptreact = { "prettierd" },
-        json = { "prettierd" },
-        yaml = { "prettierd" },
-        markdown = { "prettierd" },
-        html = { "injected", "prettierd" },
-        sql = { "sql_formatter" },
-        templ = { "injected", "templ", lsp_format = "never" },
-    },
-    formatters = {
-        injected = {
-            options = {
-                ignore_errors = true,
-                lang_to_formatters = {
-                    javascript = { "prettierd" },
-                    html = { "prettierd" },
-                    templ = { "templ" },
-                },
-            },
-        },
-    },
+    on_attach = function(client, bufnr)
+        if client.supports_method("textDocument/formatting") then
+            vim.api.nvim_create_autocmd(
+                "BufWritePre",
+                { buffer = bufnr, callback = function() vim.lsp.buf.format() end }
+            )
+        end
+    end,
 })
 
 ---
@@ -155,8 +101,6 @@ conform.setup({
 ---
 local key = vim.keymap.set
 
-key({ "n", "v" }, "<leader>y", [["+y]])
-key({ "n", "v" }, "<leader>d", [["_d]])
 key("n", "=", [[<cmd>vertical resize +5<cr>]])
 key("n", "-", [[<cmd>vertical resize -5<cr>]])
 key("n", "+", [[<cmd>horizontal resize +2<cr>]])
@@ -173,15 +117,8 @@ key("n", "gD", "<cmd>Trouble lsp_type_definitions toggle focus=true<cr>")
 key("n", "gi", "<cmd>Trouble lsp_implementations toggle focus=true<cr>")
 key("n", "gr", "<cmd>Trouble lsp_references toggle focus=true<cr>")
 key("n", "gs", "<cmd>Trouble symbols toggle focus=true<cr>")
-key("n", "'", function() files.open((vim.api.nvim_buf_get_name(0)), true) end)
 key("n", "cd", vim.lsp.buf.rename)
+key("n", "'", function() require("mini.files").open((vim.api.nvim_buf_get_name(0)), true) end)
 key({ "n", "v" }, "g.", vim.lsp.buf.code_action)
-
---
--- Auto commands
---
-local autocmd = vim.api.nvim_create_autocmd
-
-autocmd({ "BufWritePre" }, { pattern = "*", callback = function(args) conform.format({ bufnr = args.buf }) end })
-autocmd({ "BufWritePost" }, { callback = function() lint.try_lint(nil, { ignore_errors = true }) end })
-autocmd({ "InsertLeave", "TextChanged" }, { callback = function() lint.try_lint(nil, { ignore_errors = true }) end })
+key({ "n", "v" }, "<leader>y", [["+y]])
+key({ "n", "v" }, "<leader>d", [["_d]])
