@@ -9,35 +9,26 @@ vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldtext = ""
 vim.opt.foldenable = false
 vim.opt.ignorecase = true
-vim.opt.shiftwidth = 4
-vim.opt.showtabline = 0
 vim.opt.smartcase = true
 vim.opt.smartindent = true
-vim.opt.softtabstop = 4
-vim.opt.tabstop = 4
-vim.opt.termguicolors = true
 vim.opt.undofile = true
-vim.opt.signcolumn = "yes"
 vim.opt.relativenumber = true
 
 local deps = require("mini.deps")
 deps.setup()
 
-local add = deps.add
-
-add("nvim-lua/plenary.nvim")
-add("folke/lazydev.nvim")
-add("rose-pine/neovim")
-add("neovim/nvim-lspconfig")
-add("nvim-treesitter/nvim-treesitter")
-add("andrewferrier/debugprint.nvim")
-add("nvimtools/none-ls.nvim")
-add("folke/trouble.nvim")
-add("github/copilot.vim")
+deps.add("nvim-lua/plenary.nvim")
+deps.add("folke/lazydev.nvim")
+deps.add("rose-pine/neovim")
+deps.add("neovim/nvim-lspconfig")
+deps.add("nvim-treesitter/nvim-treesitter")
+deps.add("andrewferrier/debugprint.nvim")
+deps.add("nvimtools/none-ls.nvim")
+deps.add("folke/trouble.nvim")
+deps.add("github/copilot.vim")
 
 require("lazydev").setup()
 require("rose-pine").setup({ styles = { italic = false, transparency = true } })
-vim.cmd([[colorscheme rose-pine]])
 
 require("debugprint").setup()
 require("trouble").setup()
@@ -82,9 +73,10 @@ end
 local null_ls = require("null-ls")
 null_ls.setup({
     sources = {
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.prettierd,
         null_ls.builtins.formatting.goimports,
+        null_ls.builtins.formatting.prettierd,
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.sql_formatter,
     },
     on_attach = function(client, bufnr)
         if client.supports_method("textDocument/formatting") then
@@ -95,6 +87,8 @@ null_ls.setup({
         end
     end,
 })
+
+vim.cmd([[colorscheme rose-pine]])
 
 ---
 --- Keymaps
