@@ -18,7 +18,6 @@ local deps = require("mini.deps")
 deps.setup()
 
 deps.add("nvim-lua/plenary.nvim")
-deps.add("folke/lazydev.nvim")
 deps.add("rose-pine/neovim")
 deps.add("neovim/nvim-lspconfig")
 deps.add("nvim-treesitter/nvim-treesitter")
@@ -27,12 +26,9 @@ deps.add("nvimtools/none-ls.nvim")
 deps.add("folke/trouble.nvim")
 deps.add("github/copilot.vim")
 
-require("lazydev").setup()
 require("rose-pine").setup({ styles = { italic = false, transparency = true } })
-
 require("debugprint").setup()
 require("trouble").setup()
-
 require("mini.basics").setup({})
 require("mini.bracketed").setup({})
 require("mini.comment").setup({})
@@ -45,28 +41,17 @@ require("mini.pick").setup({})
 require("mini.surround").setup({})
 
 require("nvim-treesitter.configs").setup({
-    modules = {},
-    ensure_installed = {},
-    ignore_install = {},
     auto_install = true,
     sync_install = false,
     highlight = { enable = true },
     indent = { enable = true },
     incremental_selection = {
         enable = true,
-        keymaps = {
-            init_selection = "]x",
-            scope_incremental = "]X",
-            node_incremental = "]x",
-            node_decremental = "[x",
-        },
+        keymaps = { init_selection = "]x", scope_incremental = "]X", node_incremental = "]x", node_decremental = "[x" },
     },
 })
 
---
--- LSPs
---
-for _, lsp in ipairs({ "cssls", "eslint", "html", "ts_ls", "gopls", "lua_ls" }) do
+for _, lsp in ipairs({ "cssls", "eslint", "html", "ts_ls", "gopls", "templ" }) do
     require("lspconfig")[lsp].setup({})
 end
 
@@ -78,41 +63,30 @@ null_ls.setup({
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.sql_formatter,
     },
-    on_attach = function(client, bufnr)
-        if client.supports_method("textDocument/formatting") then
-            vim.api.nvim_create_autocmd(
-                "BufWritePre",
-                { buffer = bufnr, callback = function() vim.lsp.buf.format() end }
-            )
-        end
-    end,
 })
 
 vim.cmd([[colorscheme rose-pine]])
 
----
---- Keymaps
----
-local key = vim.keymap.set
+vim.keymap.set("n", "=", [[<cmd>vertical resize +5<cr>]])
+vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]])
+vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]])
+vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]])
+vim.keymap.set("n", "gb", "<cmd>Pick buffers<cr>")
+vim.keymap.set("n", "gf", "<cmd>Pick files<cr>")
+vim.keymap.set("n", "g;", "<cmd>Pick resume<cr>")
+vim.keymap.set("n", "g/", "<cmd>Pick grep_live<cr>")
+vim.keymap.set("n", "ge", "<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>")
+vim.keymap.set("n", "gE", "<cmd>Trouble diagnostics toggle focus=true<cr>")
+vim.keymap.set("n", "gc", "<cmd>Trouble lsp toggle focus=true<cr>")
+vim.keymap.set("n", "gd", "<cmd>Trouble lsp_definitions toggle focus=true<cr>")
+vim.keymap.set("n", "gD", "<cmd>Trouble lsp_type_definitions toggle focus=true<cr>")
+vim.keymap.set("n", "gi", "<cmd>Trouble lsp_implementations toggle focus=true<cr>")
+vim.keymap.set("n", "gr", "<cmd>Trouble lsp_references toggle focus=true<cr>")
+vim.keymap.set("n", "gs", "<cmd>Trouble symbols toggle focus=true<cr>")
+vim.keymap.set("n", "cd", vim.lsp.buf.rename)
+vim.keymap.set("n", "'", function() require("mini.files").open((vim.api.nvim_buf_get_name(0)), true) end)
+vim.keymap.set({ "n", "v" }, "g.", vim.lsp.buf.code_action)
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
-key("n", "=", [[<cmd>vertical resize +5<cr>]])
-key("n", "-", [[<cmd>vertical resize -5<cr>]])
-key("n", "+", [[<cmd>horizontal resize +2<cr>]])
-key("n", "_", [[<cmd>horizontal resize -2<cr>]])
-key("n", "gb", "<cmd>Pick buffers<cr>")
-key("n", "gf", "<cmd>Pick files<cr>")
-key("n", "g;", "<cmd>Pick resume<cr>")
-key("n", "g/", "<cmd>Pick grep_live<cr>")
-key("n", "ge", "<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>")
-key("n", "gE", "<cmd>Trouble diagnostics toggle focus=true<cr>")
-key("n", "gc", "<cmd>Trouble lsp toggle focus=true<cr>")
-key("n", "gd", "<cmd>Trouble lsp_definitions toggle focus=true<cr>")
-key("n", "gD", "<cmd>Trouble lsp_type_definitions toggle focus=true<cr>")
-key("n", "gi", "<cmd>Trouble lsp_implementations toggle focus=true<cr>")
-key("n", "gr", "<cmd>Trouble lsp_references toggle focus=true<cr>")
-key("n", "gs", "<cmd>Trouble symbols toggle focus=true<cr>")
-key("n", "cd", vim.lsp.buf.rename)
-key("n", "'", function() require("mini.files").open((vim.api.nvim_buf_get_name(0)), true) end)
-key({ "n", "v" }, "g.", vim.lsp.buf.code_action)
-key({ "n", "v" }, "<leader>y", [["+y]])
-key({ "n", "v" }, "<leader>d", [["_d]])
+vim.api.nvim_create_autocmd("BufWritePre", { buffer = bufnr, callback = function() vim.lsp.buf.format() end })
