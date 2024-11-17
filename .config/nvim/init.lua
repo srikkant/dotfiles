@@ -30,15 +30,13 @@ require("rose-pine").setup({ styles = { italic = false, transparency = true } })
 require("debugprint").setup()
 require("trouble").setup()
 require("mini.basics").setup({})
+require("mini.icons").setup({})
 require("mini.bracketed").setup({})
-require("mini.comment").setup({})
 require("mini.completion").setup({})
 require("mini.diff").setup({})
-require("mini.files").setup({})
 require("mini.git").setup({})
-require("mini.icons").setup({})
+require("mini.files").setup({})
 require("mini.pick").setup({})
-require("mini.surround").setup({})
 
 require("nvim-treesitter.configs").setup({
     auto_install = true,
