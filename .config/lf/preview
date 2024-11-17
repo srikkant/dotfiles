@@ -1,2 +1,0 @@
-#!/bin/sh
-bat --theme=TwoDark --color always --tabs 4 --style plain "$1"

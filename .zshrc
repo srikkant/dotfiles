@@ -11,6 +11,7 @@ bindkey '^n' history-search-forward
 export EDITOR=nvim
 export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export BAT_THEME="base16"
 
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
@@ -28,7 +29,6 @@ setopt hist_find_no_dups
 eval "$(starship init zsh)"
 eval "$(zoxide init --cmd j zsh)"
 eval "$(fzf --zsh)"
-
 
 # Aliases.
 alias -g ls="ls --color"
