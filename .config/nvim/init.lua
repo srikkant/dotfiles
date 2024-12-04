@@ -8,9 +8,6 @@ vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldtext = ""
 vim.opt.foldenable = false
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.smartindent = true
 vim.opt.undofile = true
 vim.opt.relativenumber = true
 
@@ -24,7 +21,6 @@ deps.add("nvim-treesitter/nvim-treesitter")
 deps.add("andrewferrier/debugprint.nvim")
 deps.add("nvimtools/none-ls.nvim")
 deps.add("folke/trouble.nvim")
-deps.add("github/copilot.vim")
 
 require("rose-pine").setup({ styles = { italic = false, transparency = true } })
 require("debugprint").setup()
@@ -65,10 +61,6 @@ null_ls.setup({
 
 vim.cmd([[colorscheme rose-pine]])
 
-vim.keymap.set("n", "=", [[<cmd>vertical resize +5<cr>]])
-vim.keymap.set("n", "-", [[<cmd>vertical resize -5<cr>]])
-vim.keymap.set("n", "+", [[<cmd>horizontal resize +2<cr>]])
-vim.keymap.set("n", "_", [[<cmd>horizontal resize -2<cr>]])
 vim.keymap.set("n", "gb", "<cmd>Pick buffers<cr>")
 vim.keymap.set("n", "gf", "<cmd>Pick files<cr>")
 vim.keymap.set("n", "g;", "<cmd>Pick resume<cr>")

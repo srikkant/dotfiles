@@ -2,7 +2,8 @@
 decorations = "Buttonless"
 dynamic_padding = true
 padding = { x = 2, y = 2 }
-opacity = 0.95
+opacity = 0.8
+blur=true
 
 [font]
 normal = { family = "OverpassM Nerd Font Mono" }
