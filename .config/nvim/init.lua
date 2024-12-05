@@ -45,8 +45,11 @@ require("nvim-treesitter.configs").setup({
     },
 })
 
-for _, lsp in ipairs({ "cssls", "eslint", "html", "ts_ls", "gopls", "templ" }) do
-    require("lspconfig")[lsp].setup({})
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+for _, lsp in ipairs({ "cssls", "eslint", "html", "custom_elements_ls", "ts_ls", "gopls", "templ" }) do
+    require("lspconfig")[lsp].setup({ capabilities = capabilities })
 end
 
 local null_ls = require("null-ls")
