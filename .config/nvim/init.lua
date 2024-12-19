@@ -21,6 +21,7 @@ deps.add("nvim-treesitter/nvim-treesitter")
 deps.add("andrewferrier/debugprint.nvim")
 deps.add("nvimtools/none-ls.nvim")
 deps.add("folke/trouble.nvim")
+deps.add("ibhagwan/fzf-lua")
 
 require("rose-pine").setup({ styles = { italic = false, transparency = true } })
 require("debugprint").setup()
@@ -32,7 +33,7 @@ require("mini.completion").setup({})
 require("mini.diff").setup({})
 require("mini.git").setup({})
 require("mini.files").setup({})
-require("mini.pick").setup({})
+require("fzf-lua").setup({})
 
 require("nvim-treesitter.configs").setup({
     auto_install = true,
@@ -64,10 +65,10 @@ null_ls.setup({
 
 vim.cmd([[colorscheme rose-pine]])
 
-vim.keymap.set("n", "gb", "<cmd>Pick buffers<cr>")
-vim.keymap.set("n", "gf", "<cmd>Pick files<cr>")
-vim.keymap.set("n", "g;", "<cmd>Pick resume<cr>")
-vim.keymap.set("n", "g/", "<cmd>Pick grep_live<cr>")
+vim.keymap.set("n", "gb", "<cmd>FzfLua buffers<cr>")
+vim.keymap.set("n", "gf", "<cmd>FzfLua files<cr>")
+vim.keymap.set("n", "g;", "<cmd>FzfLua resume<cr>")
+vim.keymap.set("n", "g/", "<cmd>FzfLua live_grep<cr>")
 vim.keymap.set("n", "ge", "<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>")
 vim.keymap.set("n", "gE", "<cmd>Trouble diagnostics toggle focus=true<cr>")
 vim.keymap.set("n", "gc", "<cmd>Trouble lsp toggle focus=true<cr>")
