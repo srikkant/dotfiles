@@ -14,14 +14,16 @@ vim.opt.relativenumber = true
 local deps = require("mini.deps")
 deps.setup()
 
-deps.add("nvim-lua/plenary.nvim")
-deps.add("rose-pine/neovim")
-deps.add("neovim/nvim-lspconfig")
-deps.add("nvim-treesitter/nvim-treesitter")
-deps.add("andrewferrier/debugprint.nvim")
-deps.add("nvimtools/none-ls.nvim")
-deps.add("folke/trouble.nvim")
-deps.add("ibhagwan/fzf-lua")
+deps.add({ source = "nvim-lua/plenary.nvim" })
+deps.add({ source = "rose-pine/neovim" })
+deps.add({ source = "neovim/nvim-lspconfig" })
+deps.add({ source = "nvim-treesitter/nvim-treesitter" })
+deps.add({ source = "andrewferrier/debugprint.nvim" })
+deps.add({ source = "nvimtools/none-ls.nvim" })
+deps.add({ source = "folke/trouble.nvim" })
+deps.add({ source = "ibhagwan/fzf-lua" })
+deps.add({ source = "stevearc/oil.nvim" })
+deps.add({ source = "saghen/blink.cmp", checkout = "v0.7.6" })
 
 require("rose-pine").setup({ styles = { italic = false, transparency = true } })
 require("debugprint").setup()
@@ -29,11 +31,10 @@ require("trouble").setup()
 require("mini.basics").setup({})
 require("mini.icons").setup({})
 require("mini.bracketed").setup({})
-require("mini.completion").setup({})
 require("mini.diff").setup({})
 require("mini.git").setup({})
-require("mini.files").setup({})
 require("fzf-lua").setup({})
+require("oil").setup()
 
 require("nvim-treesitter.configs").setup({
     auto_install = true,
@@ -46,12 +47,13 @@ require("nvim-treesitter.configs").setup({
     },
 })
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 for _, lsp in ipairs({ "cssls", "eslint", "html", "custom_elements_ls", "ts_ls", "gopls", "templ" }) do
     require("lspconfig")[lsp].setup({ capabilities = capabilities })
 end
+
+require("blink.cmp").setup()
 
 local null_ls = require("null-ls")
 null_ls.setup({
@@ -78,7 +80,7 @@ vim.keymap.set("n", "gi", "<cmd>Trouble lsp_implementations toggle focus=true<cr
 vim.keymap.set("n", "gr", "<cmd>Trouble lsp_references toggle focus=true<cr>")
 vim.keymap.set("n", "gs", "<cmd>Trouble symbols toggle focus=true<cr>")
 vim.keymap.set("n", "cd", vim.lsp.buf.rename)
-vim.keymap.set("n", "'", function() require("mini.files").open((vim.api.nvim_buf_get_name(0)), true) end)
+vim.keymap.set("n", "'", "<CMD>Oil<CR>")
 vim.keymap.set({ "n", "v" }, "g.", vim.lsp.buf.code_action)
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
