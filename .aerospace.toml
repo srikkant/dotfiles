@@ -15,7 +15,7 @@ outer.right =      4
 [mode.main.binding]
 alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
-alt-enter = 'exec-and-forget open -n /Applications/Alacritty.app'
+alt-enter = 'exec-and-forget open -n /Applications/Ghostty.app'
 
 alt-h = 'focus left'
 alt-j = 'focus down'

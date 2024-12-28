@@ -49,7 +49,7 @@ require("nvim-treesitter.configs").setup({
 
 local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-for _, lsp in ipairs({ "cssls", "eslint", "html", "custom_elements_ls", "ts_ls", "gopls", "rust_analyzer" }) do
+for _, lsp in ipairs({ "cssls", "eslint", "html", "ts_ls", "gopls", "rust_analyzer", "clangd" }) do
     require("lspconfig")[lsp].setup({ capabilities = capabilities })
 end
 
