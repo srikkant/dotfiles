@@ -1,5 +1,8 @@
+adjust-cell-height = 4
 background-opacity = 0.9
 background-blur-radius = 20
+font-family = SF Mono
+font-size = 13.5
 macos-titlebar-style = hidden
 theme = rose-pine
 window-padding-balance = true
