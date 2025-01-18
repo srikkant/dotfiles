@@ -1,9 +1,10 @@
 adjust-cell-height = 4
-background-opacity = 0.9
+background-opacity = 0.95
 background-blur-radius = 20
-font-family = SF Mono
+font-family = Monaspace Neon
 font-size = 13.5
 macos-titlebar-style = hidden
+macos-option-as-alt = true
 theme = rose-pine
 window-padding-balance = true
 window-padding-x = 2

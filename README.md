@@ -5,11 +5,12 @@ right now, it is a very simple set of defaults for my two devices - linux & osx.
 
 #### install the following tools:
 
-- **zsh**: shell
 - **stow**: config management
-- **wezterm**: terminal
+- **aerospace**: window management (OSX)
+- **zsh**: shell
+- **ghostty**: terminal
+- **tmux**: multiplexer
 - **nvim**: editor
-- **lf**: file explorer
 - **starship**: shell prompt
 - **fzf**: fuzzy finder
 - **antidote**: plugin manager (install to home)

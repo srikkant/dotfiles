@@ -49,7 +49,7 @@ require("nvim-treesitter.configs").setup({
 
 local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-for _, lsp in ipairs({ "cssls", "eslint", "html", "ts_ls", "gopls", "rust_analyzer", "clangd" }) do
+for _, lsp in ipairs({ "cssls", "eslint", "html", "ts_ls", "gopls", "rust_analyzer", "clangd", "qmlls" }) do
     require("lspconfig")[lsp].setup({ capabilities = capabilities })
 end
 
@@ -80,7 +80,7 @@ vim.keymap.set("n", "gD", "<cmd>Trouble lsp_type_definitions toggle focus=true<c
 vim.keymap.set("n", "gi", "<cmd>Trouble lsp_implementations toggle focus=true<cr>")
 vim.keymap.set("n", "gr", "<cmd>Trouble lsp_references toggle focus=true<cr>")
 vim.keymap.set("n", "cd", vim.lsp.buf.rename)
-vim.keymap.set("n", "'", "<CMD>Oil<CR>")
+vim.keymap.set("n", "-", "<CMD>Oil<CR>")
 vim.keymap.set({ "n", "v" }, "g.", vim.lsp.buf.code_action)
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
