@@ -22,7 +22,6 @@ deps.add({ source = "andrewferrier/debugprint.nvim" })
 deps.add({ source = "nvimtools/none-ls.nvim" })
 deps.add({ source = "folke/trouble.nvim" })
 deps.add({ source = "ibhagwan/fzf-lua" })
-deps.add({ source = "stevearc/oil.nvim" })
 deps.add({ source = "saghen/blink.cmp", checkout = "v0.7.6" })
 
 require("rose-pine").setup({ styles = { italic = false, transparency = true } })
@@ -33,8 +32,8 @@ require("mini.icons").setup({})
 require("mini.bracketed").setup({})
 require("mini.diff").setup({})
 require("mini.git").setup({})
+require("mini.files").setup({})
 require("fzf-lua").setup({})
-require("oil").setup()
 
 require("nvim-treesitter.configs").setup({
     auto_install = true,
@@ -66,7 +65,6 @@ null_ls.setup({
 })
 
 vim.cmd([[colorscheme rose-pine]])
-
 vim.keymap.set("n", "gb", "<cmd>FzfLua buffers<cr>")
 vim.keymap.set("n", "gf", "<cmd>FzfLua files<cr>")
 vim.keymap.set("n", "g;", "<cmd>FzfLua resume<cr>")
@@ -80,7 +78,7 @@ vim.keymap.set("n", "gD", "<cmd>Trouble lsp_type_definitions toggle focus=true<c
 vim.keymap.set("n", "gi", "<cmd>Trouble lsp_implementations toggle focus=true<cr>")
 vim.keymap.set("n", "gr", "<cmd>Trouble lsp_references toggle focus=true<cr>")
 vim.keymap.set("n", "cd", vim.lsp.buf.rename)
-vim.keymap.set("n", "-", "<CMD>Oil<CR>")
+vim.keymap.set("n", "-", "<CMD>lua MiniFiles.open()<CR>")
 vim.keymap.set({ "n", "v" }, "g.", vim.lsp.buf.code_action)
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
