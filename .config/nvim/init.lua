@@ -15,7 +15,7 @@ local deps = require("mini.deps")
 deps.setup()
 
 deps.add({ source = "nvim-lua/plenary.nvim" })
-deps.add({ source = "rose-pine/neovim" })
+deps.add({ source = "ellisonleao/gruvbox.nvim" })
 deps.add({ source = "neovim/nvim-lspconfig" })
 deps.add({ source = "nvim-treesitter/nvim-treesitter" })
 deps.add({ source = "andrewferrier/debugprint.nvim" })
@@ -24,7 +24,7 @@ deps.add({ source = "folke/trouble.nvim" })
 deps.add({ source = "ibhagwan/fzf-lua" })
 deps.add({ source = "saghen/blink.cmp", checkout = "v0.7.6" })
 
-require("rose-pine").setup({ styles = { italic = false, transparency = true } })
+require("gruvbox").setup({ transparent_mode = true, contrast = "soft" })
 require("debugprint").setup()
 require("trouble").setup()
 require("mini.basics").setup({})
@@ -64,7 +64,7 @@ null_ls.setup({
     },
 })
 
-vim.cmd([[colorscheme rose-pine]])
+vim.cmd([[colorscheme gruvbox]])
 vim.keymap.set("n", "gb", "<cmd>FzfLua buffers<cr>")
 vim.keymap.set("n", "gf", "<cmd>FzfLua files<cr>")
 vim.keymap.set("n", "g;", "<cmd>FzfLua resume<cr>")
