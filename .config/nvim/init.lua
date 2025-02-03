@@ -1,92 +1,152 @@
-local mini_path = vim.fn.stdpath("data") .. "/site/pack/deps/start/mini.nvim"
-if not vim.uv.fs_stat(mini_path) then
-    vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/echasnovski/mini.nvim", mini_path })
-    vim.cmd("packadd mini.nvim | helptags ALL")
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", lazypath })
 end
+vim.opt.rtp:prepend(lazypath)
+
+vim.g.netrw_browse_split = 0
+vim.g.netrw_banner = 0
+vim.g.netrw_winsize = 5
+vim.g.mapleader = " "
 
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldtext = ""
 vim.opt.foldenable = false
-vim.opt.undofile = true
+vim.opt.nu = true
 vim.opt.relativenumber = true
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+vim.opt.wrap = false
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undofile = true
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
+vim.opt.termguicolors = true
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = "yes"
+vim.opt.fillchars = "eob: "
+vim.opt.isfname:append("@-@")
+vim.opt.updatetime = 50
+vim.opt.breakindent = true
+vim.opt.cursorline = true
+vim.opt.ignorecase = true
+vim.opt.infercase = true
+vim.opt.smartcase = true
+vim.opt.completeopt = "menuone,noinsert,noselect"
 
-local deps = require("mini.deps")
-deps.setup()
+require("lazy").setup({
+    spec = {
+        {
+            "ellisonleao/gruvbox.nvim",
+            config = function()
+                require("gruvbox").setup({ transparent_mode = true, contrast = "soft" })
+                vim.cmd([[colorscheme gruvbox]])
+            end,
+        },
+        {
+            "folke/snacks.nvim",
+            dependencies = {
+                "echasnovski/mini.icons",
+            },
+            keys = {
+                { "gz", function() Snacks.picker.marks() end },
+                { "gq", function() Snacks.picker.qflist() end },
+                { "gl", function() Snacks.picker.loclist() end },
+                { "gj", function() Snacks.picker.jumps() end },
+                { "gb", function() Snacks.picker.buffers() end },
+                { "gf", function() Snacks.picker.files() end },
+                { "g;", function() Snacks.picker.resume() end },
+                { "g/", function() Snacks.picker.grep() end },
+                { "gs", function() Snacks.picker.lsp_symbols() end },
+                { "gS", function() Snacks.picker.lsp_workspace_symbols() end },
+                { "ge", function() Snacks.picker.diagnostics_buffer() end },
+                { "gE", function() Snacks.picker.diagnostics() end },
+                { "gd", function() Snacks.picker.lsp_definitions() end },
+                { "gD", function() Snacks.picker.lsp_declarations() end },
+                { "gi", function() Snacks.picker.lsp_implementations() end },
+                { "gr", function() Snacks.picker.lsp_references() end },
+                { "<leader>h", function() Snacks.picker.help() end },
+            },
+        },
+        { "saghen/blink.cmp", version = "0.11.0" },
+        {
+            "neovim/nvim-lspconfig",
+            lazy = false,
+            opts = {
+                servers = {
+                    cssls = {},
+                    eslint = {},
+                    html = {},
+                    ts_ls = {},
+                    gopls = {},
+                    rust_analyzer = {},
+                    clangd = {},
+                },
+            },
+            keys = {
+                { "<C-h>", function() vim.diagnostic.open_float() end },
+                { "<C-k>", function() vim.lsp.buf.signature_help() end },
+                { "cd", function() vim.lsp.buf.rename() end },
+                { "g.", function() vim.lsp.buf.code_action() end, mode = { "n", "v" } },
+            },
+            config = function(_, opts)
+                local blink = require("blink.cmp")
+                local lspconfig = require("lspconfig")
+                for server, config in pairs(opts.servers) do
+                    config.capabilities = blink.get_lsp_capabilities(config.capabilities)
+                    lspconfig[server].setup(config)
+                end
 
-deps.add({ source = "nvim-lua/plenary.nvim" })
-deps.add({ source = "ellisonleao/gruvbox.nvim" })
-deps.add({ source = "neovim/nvim-lspconfig" })
-deps.add({ source = "nvim-treesitter/nvim-treesitter" })
-deps.add({ source = "nvimtools/none-ls.nvim" })
-deps.add({ source = "saghen/blink.cmp", checkout = "v0.7.6" })
-
-require("gruvbox").setup({ transparent_mode = true, contrast = "soft" })
-
-require("mini.basics").setup({})
-require("mini.icons").setup({})
-require("mini.bracketed").setup({})
-require("mini.diff").setup({})
-require("mini.git").setup({})
-require("mini.files").setup({})
-require("mini.pick").setup({})
-require("mini.extra").setup({})
-
-require("nvim-treesitter.configs").setup({
-    auto_install = true,
-    sync_install = false,
-    highlight = { enable = true },
-    indent = { enable = true },
-    incremental_selection = {
-        enable = true,
-        keymaps = { init_selection = "]x", scope_incremental = "]X", node_incremental = "]x", node_decremental = "[x" },
+                blink.setup({})
+            end,
+        },
+        {
+            "nvim-treesitter/nvim-treesitter",
+            config = function()
+                require("nvim-treesitter.configs").setup({
+                    auto_install = true,
+                    sync_install = false,
+                    highlight = { enable = true },
+                    indent = { enable = true },
+                    incremental_selection = { enable = true },
+                })
+            end,
+        },
+        {
+            "stevearc/conform.nvim",
+            opts = {
+                format_on_save = {
+                    timeout_ms = 500,
+                    lsp_format = "fallback",
+                },
+                formatters_by_ft = {
+                    lua = { "stylua" },
+                    javascript = { "prettierd" },
+                    typescript = { "prettierd" },
+                    javacriptreact = { "prettierd" },
+                    typescriptreact = { "prettierd" },
+                    go = { "goimports" },
+                    cpp = { "clang-format" },
+                    bzl = { "buildifier" },
+                    sql = { "sql_formatter" },
+                },
+            },
+        },
     },
 })
 
-local capabilities = require("blink.cmp").get_lsp_capabilities()
-
-for _, lsp in ipairs({ "cssls", "eslint", "html", "ts_ls", "gopls", "rust_analyzer", "clangd", "qmlls" }) do
-    require("lspconfig")[lsp].setup({ capabilities = capabilities })
-end
-
-require("blink.cmp").setup()
-
-local null_ls = require("null-ls")
-null_ls.setup({
-    sources = {
-        null_ls.builtins.formatting.clang_format,
-        null_ls.builtins.formatting.goimports,
-        null_ls.builtins.formatting.prettierd,
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.sql_formatter,
-        null_ls.builtins.formatting.buildifier,
-        null_ls.builtins.diagnostics.buildifier,
-    },
-})
-
-vim.cmd([[colorscheme gruvbox]])
-vim.keymap.set("n", "gz", "<cmd>Pick marks<cr>")
-vim.keymap.set("n", "gq", "<cmd>Pick list scope='quickfix'<cr>")
-vim.keymap.set("n", "gl", "<cmd>Pick list scope='location'<cr>")
-vim.keymap.set("n", "gj", "<cmd>Pick list scope='jump'<cr>")
-vim.keymap.set("n", "gc", "<cmd>Pick list scope='change'<cr>")
-vim.keymap.set("n", "gb", "<cmd>Pick buffers<cr>")
-vim.keymap.set("n", "gf", "<cmd>Pick files tool='git'<cr>")
-vim.keymap.set("n", "g;", "<cmd>Pick resume<cr>")
-vim.keymap.set("n", "g/", "<cmd>Pick grep_live<cr>")
-vim.keymap.set("n", "gs", "<cmd>Pick lsp scope='document_symbol'<cr>")
-vim.keymap.set("n", "gS", "<cmd>Pick lsp scope='workspace_symbol'<cr>")
-vim.keymap.set("n", "ge", "<cmd>Pick diagnostic scope='current'<cr>")
-vim.keymap.set("n", "gE", "<cmd>Pick diagnostic<cr>")
-vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-vim.keymap.set("n", "gD", "<cmd>Pick lsp scope='definition'<cr>")
-vim.keymap.set("n", "gi", "<cmd>Pick lsp scope='implementation'<cr>")
-vim.keymap.set("n", "gI", "<cmd>Pick lsp scope='type_definition'<cr>")
-vim.keymap.set("n", "gr", "<cmd>Pick lsp scope='references'<cr>")
-vim.keymap.set("n", "cd", vim.lsp.buf.rename)
-vim.keymap.set("n", "-", "<CMD>lua MiniFiles.open()<CR>")
-vim.keymap.set({ "n", "v" }, "g.", vim.lsp.buf.code_action)
+vim.keymap.set("n", "-", vim.cmd.Ex)
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
-vim.api.nvim_create_autocmd("BufWritePre", { buffer = bufnr, callback = function() vim.lsp.buf.format() end })
+local MeGroup = vim.api.nvim_create_augroup("Me", {})
+vim.api.nvim_create_autocmd("TextYankPost", {
+    group = MeGroup,
+    pattern = "*",
+    callback = function() vim.highlight.on_yank({ higroup = "IncSearch", timeout = 40 }) end,
+})
