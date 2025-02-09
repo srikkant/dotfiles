@@ -6,5 +6,6 @@
   "mini.icons": { "branch": "main", "commit": "ec61af6e606fc89ee3b1d8f2f20166a3ca917a36" },
   "nvim-lspconfig": { "branch": "master", "commit": "f98fa715acc975c2dd5fb5ba7ceddeb1cc725ad2" },
   "nvim-treesitter": { "branch": "master", "commit": "73b68cb943cd6718bdee318a70874620070255d4" },
+  "oil.nvim": { "branch": "master", "commit": "add50252b5e9147c0a09d36480d418c7e2737472" },
   "snacks.nvim": { "branch": "main", "commit": "00905642eb42a9aaa9ac2d55623882fd31815102" }
 }

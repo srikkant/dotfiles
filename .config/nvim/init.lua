@@ -54,22 +54,22 @@ require("lazy").setup({
                 "echasnovski/mini.icons",
             },
             keys = {
-                { "gz", function() Snacks.picker.marks() end },
-                { "gq", function() Snacks.picker.qflist() end },
-                { "gl", function() Snacks.picker.loclist() end },
-                { "gj", function() Snacks.picker.jumps() end },
-                { "gb", function() Snacks.picker.buffers() end },
-                { "gf", function() Snacks.picker.files() end },
-                { "g;", function() Snacks.picker.resume() end },
-                { "g/", function() Snacks.picker.grep() end },
-                { "gs", function() Snacks.picker.lsp_symbols() end },
-                { "gS", function() Snacks.picker.lsp_workspace_symbols() end },
-                { "ge", function() Snacks.picker.diagnostics_buffer() end },
-                { "gE", function() Snacks.picker.diagnostics() end },
-                { "gd", function() Snacks.picker.lsp_definitions() end },
-                { "gD", function() Snacks.picker.lsp_declarations() end },
-                { "gi", function() Snacks.picker.lsp_implementations() end },
-                { "gr", function() Snacks.picker.lsp_references() end },
+                { "<leader>z", function() Snacks.picker.marks() end },
+                { "<leader>q", function() Snacks.picker.qflist() end },
+                { "<leader>l", function() Snacks.picker.loclist() end },
+                { "<leader>j", function() Snacks.picker.jumps() end },
+                { "<leader>b", function() Snacks.picker.buffers() end },
+                { "<leader>f", function() Snacks.picker.files() end },
+                { "<leader>;", function() Snacks.picker.resume() end },
+                { "<leader>/", function() Snacks.picker.grep() end },
+                { "<leader>s", function() Snacks.picker.lsp_symbols() end },
+                { "<leader>S", function() Snacks.picker.lsp_workspace_symbols() end },
+                { "<leader>e", function() Snacks.picker.diagnostics_buffer() end },
+                { "<leader>E", function() Snacks.picker.diagnostics() end },
+                { "<leader>d", function() Snacks.picker.lsp_definitions() end },
+                { "<leader>D", function() Snacks.picker.lsp_declarations() end },
+                { "<leader>i", function() Snacks.picker.lsp_implementations() end },
+                { "<leader>r", function() Snacks.picker.lsp_references() end },
                 { "<leader>h", function() Snacks.picker.help() end },
             },
         },
@@ -92,7 +92,7 @@ require("lazy").setup({
                 { "<C-h>", function() vim.diagnostic.open_float() end },
                 { "<C-k>", function() vim.lsp.buf.signature_help() end },
                 { "cd", function() vim.lsp.buf.rename() end },
-                { "g.", function() vim.lsp.buf.code_action() end, mode = { "n", "v" } },
+                { "<leader>.", function() vim.lsp.buf.code_action() end, mode = { "n", "v" } },
             },
             config = function(_, opts)
                 local blink = require("blink.cmp")
@@ -137,16 +137,22 @@ require("lazy").setup({
                 },
             },
         },
+        {
+            "stevearc/oil.nvim",
+            lazy = false,
+            opts = {},
+            keys = {
+                { "-", "<CMD>Oil<CR>" },
+            },
+        },
     },
 })
 
-vim.keymap.set("n", "-", vim.cmd.Ex)
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 local MeGroup = vim.api.nvim_create_augroup("Me", {})
-vim.api.nvim_create_autocmd("TextYankPost", {
-    group = MeGroup,
-    pattern = "*",
-    callback = function() vim.highlight.on_yank({ higroup = "IncSearch", timeout = 40 }) end,
-})
+vim.api.nvim_create_autocmd(
+    "TextYankPost",
+    { group = MeGroup, pattern = "*", callback = function() vim.highlight.on_yank() end }
+)
