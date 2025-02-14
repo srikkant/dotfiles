@@ -4,9 +4,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.netrw_browse_split = 0
-vim.g.netrw_banner = 0
-vim.g.netrw_winsize = 5
 vim.g.mapleader = " "
 
 vim.opt.foldmethod = "expr"
@@ -73,7 +70,20 @@ require("lazy").setup({
                 { "<leader>h", function() Snacks.picker.help() end },
             },
         },
-        { "saghen/blink.cmp", version = "0.11.0" },
+        {
+            "saghen/blink.cmp",
+            version = "0.11.0",
+            opts = {
+                completion = {
+                    menu = {
+                        auto_show = false,
+                    },
+                },
+                keymap = {
+                    ["<C-s>"] = { "show" },
+                },
+            },
+        },
         {
             "neovim/nvim-lspconfig",
             lazy = false,
@@ -148,8 +158,8 @@ require("lazy").setup({
     },
 })
 
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
+vim.keymap.set({ "n", "v" }, "+y", [["+y]])
+vim.keymap.set({ "n", "v" }, "+d", [["_d]])
 
 local MeGroup = vim.api.nvim_create_augroup("Me", {})
 vim.api.nvim_create_autocmd(
