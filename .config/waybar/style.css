@@ -1,0 +1,25 @@
+* {
+    font-family: FontAwesome, Geist Mono;
+    font-size: 12px;
+    color: #ffffff;
+}
+
+window#waybar {
+    background-color: transparent;
+}
+
+button {
+    border-radius: 8px;
+}
+
+.module {
+    margin: 5px 10px;
+}
+
+#workspaces button {
+    padding: 0 5px;
+}
+
+#workspaces button.active {
+    background-color: #64727D;
+}

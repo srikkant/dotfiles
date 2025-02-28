@@ -1,0 +1,5 @@
+configuration {
+    font: "Geist Mono 11";
+}
+
+@theme "/usr/share/rofi/themes/gruvbox-dark.rasi"
