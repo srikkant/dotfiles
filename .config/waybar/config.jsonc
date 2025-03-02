@@ -39,6 +39,10 @@
     "custom/power": {
         "format": "⩔",
         "on-click": "rofi -show p -modi p:rofi-power-menu"
-    }
+    },
+    "tray": {
+        "icon-size": 13,
+        "spacing": 10
+    },
 }
 

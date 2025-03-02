@@ -1,5 +1,59 @@
 configuration {
     font: "Geist Mono 11";
+    show-icons: true;
+    icon-theme: "Papirus";
+    display-drun: "";
 }
 
 @theme "/usr/share/rofi/themes/gruvbox-dark.rasi"
+
+window {
+    border: 2;
+    border-radius: 10;
+    transparency: "real";
+    padding: 10;
+    width: 25%;
+}
+
+textbox {
+    highlight:  @highlight;
+    text-color: @foreground;
+}
+
+listview {
+    lines: 6;
+    border: 0;
+    padding: 0;
+}
+
+element {
+    border:  0;
+    padding: 10;
+    border-radius: 100;
+}
+
+element.alternate.normal {
+    background-color: @normal-background;
+    text-color:       @normal-foreground;
+}
+
+element.alternate.active {
+    background-color: @active-background;
+    text-color:       @active-foreground;
+}
+
+scrollbar {
+    width: 4;
+    handle-width: 4;
+}
+
+inputbar {
+    spacing:    0;
+    text-color: @normal-foreground;
+    padding:    10;
+    children:   [ entry ];
+}
+
+element-icon {
+    padding: 0 10 0 0;
+}
