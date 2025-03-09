@@ -85,6 +85,11 @@ require("lazy").setup({
             },
         },
         {
+            "pmizio/typescript-tools.nvim",
+            dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+            opts = {},
+        },
+        {
             "neovim/nvim-lspconfig",
             lazy = false,
             opts = {
@@ -92,7 +97,6 @@ require("lazy").setup({
                     cssls = {},
                     eslint = {},
                     html = {},
-                    ts_ls = {},
                     gopls = {},
                     rust_analyzer = {},
                     clangd = {},

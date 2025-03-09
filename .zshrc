@@ -9,10 +9,6 @@ bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
 export EDITOR=nvim
-export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export BAT_THEME="base16"
-
 export PATH="$HOME/.local/bin:$PATH"
 
 HISTSIZE=5000
@@ -29,13 +25,12 @@ setopt hist_save_no_dups
 setopt hist_find_no_dups
 
 eval "$(starship init zsh)"
-eval "$(zoxide init --cmd j zsh)"
+eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
 # Aliases.
 alias -g ls="ls --color"
 alias -g c="clear"
-alias -g ffzf="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' menu no
