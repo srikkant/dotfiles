@@ -29,7 +29,6 @@ eval "$(fzf --zsh)"
 
 # Aliases.
 alias -g ls="ls --color"
-alias -g c="clear"
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' menu no
@@ -37,4 +36,4 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-PS1='%3~ %# '
+PS1='%m:%3~ %# '
