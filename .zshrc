@@ -36,4 +36,5 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-PS1='%m:%3~ %# '
+PROMPT='%3~ %# '
+RPROMPT='%n@%m'
