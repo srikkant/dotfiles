@@ -1,10 +1,12 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", lazypath })
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    vim.fn.system({ "git", "clone", "--branch=stable", "https://github.com/folke/lazy.nvim.git", lazypath })
 end
 vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " "
+vim.g.netrw_banner = 0
+vim.g.netrw_keepdir = 0
 
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
@@ -34,16 +36,67 @@ vim.opt.cursorline = true
 vim.opt.ignorecase = true
 vim.opt.infercase = true
 vim.opt.smartcase = true
-vim.opt.completeopt = "menuone,noinsert,noselect"
+vim.opt.completeopt = "menuone,noselect,popup"
+
+vim.keymap.set({ "n", "v" }, "+y", [["+y]])
+vim.keymap.set({ "n", "v" }, "+d", [["_d]])
+vim.keymap.set({ "n" }, "-", "<cmd>Explore<cr>")
+
+vim.api.nvim_create_autocmd("TextYankPost", { pattern = "*", callback = function() vim.highlight.on_yank() end })
 
 require("lazy").setup({
     spec = {
         {
-            "ellisonleao/gruvbox.nvim",
-            config = function()
-                require("gruvbox").setup({ transparent_mode = true, contrast = "soft" })
-                vim.cmd([[colorscheme gruvbox]])
+            "folke/lazydev.nvim",
+            ft = "lua",
+            opts = {},
+        },
+        {
+            'maxmx03/solarized.nvim',
+            lazy = false,
+            opts = {
+                transparent = { enabled = true },
+            },
+            config = function(_, opts)
+                vim.o.termguicolors = true
+                require('solarized').setup(opts)
+                vim.cmd.colorscheme 'solarized'
             end,
+        },
+        {
+            "f-person/auto-dark-mode.nvim",
+            opts = {}
+        },
+        {
+            "nvim-treesitter/nvim-treesitter",
+            opts = {}
+        },
+        {
+            "saghen/blink.cmp",
+            version = "1.*",
+            opts = {}
+        },
+        {
+            "neovim/nvim-lspconfig",
+            config = function()
+                vim.lsp.config('*', {
+                    on_attach = function(client, bufnr)
+                        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr })
+                        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr })
+
+                        if client and client:supports_method('textDocument/formatting') then
+                            vim.api.nvim_create_autocmd("BufWritePre", {
+                                buffer = bufnr,
+                                callback = function() vim.lsp.buf.format({ bufnr = bufnr, async = false }) end,
+                            })
+                        end
+                    end
+                })
+
+                vim.lsp.enable("lua_ls")
+                vim.lsp.enable("ts_ls")
+                vim.lsp.enable("html")
+           end
         },
         {
             "folke/snacks.nvim",
@@ -51,122 +104,14 @@ require("lazy").setup({
                 "echasnovski/mini.icons",
             },
             keys = {
-                { "<leader>z", function() Snacks.picker.marks() end },
-                { "<leader>q", function() Snacks.picker.qflist() end },
-                { "<leader>l", function() Snacks.picker.loclist() end },
-                { "<leader>j", function() Snacks.picker.jumps() end },
-                { "<leader>b", function() Snacks.picker.buffers() end },
-                { "<leader>f", function() Snacks.picker.files() end },
-                { "<leader>;", function() Snacks.picker.resume() end },
-                { "<leader>/", function() Snacks.picker.grep() end },
-                { "<leader>s", function() Snacks.picker.lsp_symbols() end },
-                { "<leader>S", function() Snacks.picker.lsp_workspace_symbols() end },
-                { "<leader>e", function() Snacks.picker.diagnostics_buffer() end },
-                { "<leader>E", function() Snacks.picker.diagnostics() end },
-                { "<leader>d", function() Snacks.picker.lsp_definitions() end },
-                { "<leader>D", function() Snacks.picker.lsp_declarations() end },
-                { "<leader>i", function() Snacks.picker.lsp_implementations() end },
-                { "<leader>r", function() Snacks.picker.lsp_references() end },
-                { "<leader>h", function() Snacks.picker.help() end },
-            },
-        },
-        {
-            "saghen/blink.cmp",
-            version = "0.11.0",
-            opts = {
-                completion = {
-                    menu = {
-                        auto_show = false,
-                    },
-                },
-                keymap = {
-                    ["<C-s>"] = { "show" },
-                },
-            },
-        },
-        {
-            "pmizio/typescript-tools.nvim",
-            dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-            opts = {},
-        },
-        {
-            "neovim/nvim-lspconfig",
-            lazy = false,
-            opts = {
-                servers = {
-                    cssls = {},
-                    eslint = {},
-                    html = {},
-                    gopls = {},
-                    rust_analyzer = {},
-                    clangd = {},
-                },
-            },
-            keys = {
-                { "<C-h>", function() vim.diagnostic.open_float() end },
-                { "<C-k>", function() vim.lsp.buf.signature_help() end },
-                { "cd", function() vim.lsp.buf.rename() end },
-                { "<leader>.", function() vim.lsp.buf.code_action() end, mode = { "n", "v" } },
-            },
-            config = function(_, opts)
-                local blink = require("blink.cmp")
-                local lspconfig = require("lspconfig")
-                for server, config in pairs(opts.servers) do
-                    config.capabilities = blink.get_lsp_capabilities(config.capabilities)
-                    lspconfig[server].setup(config)
-                end
-
-                blink.setup({})
-            end,
-        },
-        {
-            "nvim-treesitter/nvim-treesitter",
-            config = function()
-                require("nvim-treesitter.configs").setup({
-                    auto_install = true,
-                    sync_install = false,
-                    highlight = { enable = true },
-                    indent = { enable = true },
-                    incremental_selection = { enable = true },
-                })
-            end,
-        },
-        {
-            "stevearc/conform.nvim",
-            opts = {
-                format_on_save = {
-                    timeout_ms = 500,
-                    lsp_format = "fallback",
-                },
-                formatters_by_ft = {
-                    lua = { "stylua" },
-                    javascript = { "prettierd" },
-                    typescript = { "prettierd" },
-                    javacriptreact = { "prettierd" },
-                    typescriptreact = { "prettierd" },
-                    go = { "goimports" },
-                    cpp = { "clang-format" },
-                    bzl = { "buildifier" },
-                    sql = { "sql_formatter" },
-                },
-            },
-        },
-        {
-            "stevearc/oil.nvim",
-            lazy = false,
-            opts = {},
-            keys = {
-                { "-", "<CMD>Oil<CR>" },
+                { "<leader>b", function() require("snacks").picker.buffers() end },
+                { "<leader>f", function() require("snacks").picker.files() end },
+                { "<leader>;", function() require("snacks").picker.resume() end },
+                { "<leader>/", function() require("snacks").picker.grep() end },
+                { "<leader>e", function() require("snacks").picker.diagnostics_buffer() end },
+                { "<leader>E", function() require("snacks").picker.diagnostics() end },
+                { "<leader>h", function() require("snacks").picker.help() end },
             },
         },
     },
 })
-
-vim.keymap.set({ "n", "v" }, "+y", [["+y]])
-vim.keymap.set({ "n", "v" }, "+d", [["_d]])
-
-local MeGroup = vim.api.nvim_create_augroup("Me", {})
-vim.api.nvim_create_autocmd(
-    "TextYankPost",
-    { group = MeGroup, pattern = "*", callback = function() vim.highlight.on_yank() end }
-)
