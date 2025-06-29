@@ -1,3 +1,5 @@
 macos-titlebar-style = hidden
 window-padding-balance = true
-theme = GruvboxDark
+theme = light:Builtin Solarized Light,dark:Builtin Solarized Dark
+font-family=Intel One Mono
+font-size=14
