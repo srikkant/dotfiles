@@ -51,20 +51,18 @@ require("lazy").setup({
             opts = {},
         },
         {
-            'maxmx03/solarized.nvim',
-            lazy = false,
-            opts = {
-                transparent = { enabled = true },
-            },
+            'rose-pine/neovim',
+            name = 'rose-pine',
             config = function(_, opts)
                 vim.o.termguicolors = true
-                require('solarized').setup(opts)
-                vim.cmd.colorscheme 'solarized'
+                require('rose-pine').setup({
+                    styles = {
+                        transparency = true,
+                        italic = false,
+                    }
+                })
+                vim.cmd.colorscheme 'rose-pine'
             end,
-        },
-        {
-            "f-person/auto-dark-mode.nvim",
-            opts = {}
         },
         {
             "nvim-treesitter/nvim-treesitter",

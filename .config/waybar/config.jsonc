@@ -1,0 +1,39 @@
+{
+    "modules-left": [
+        "custom/power"
+    ],
+    "modules-center": [
+        "hyprland/workspaces",
+    ],
+    "modules-right": [
+        "tray",
+        "pulseaudio",
+        "clock",
+    ],
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%R %a %b %d}",
+    },
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": " {icon}",
+        "format-muted": " ",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "custom/power": {
+        "format": " 𝓥 ",
+        "on-click": "rofi -show p -modi \"p:rofi-power-menu --no-symbols\""
+    },
+    "tray": {
+        "icon-size": 13,
+        "spacing": 10
+    },
+}
+
