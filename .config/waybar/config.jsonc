@@ -29,7 +29,7 @@
     },
     "custom/power": {
         "format": " 𝓥 ",
-        "on-click": "rofi -show p -modi \"p:rofi-power-menu --no-symbols\""
+        "on-click": "syspower"
     },
     "tray": {
         "icon-size": 13,
