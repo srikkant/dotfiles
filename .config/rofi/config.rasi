@@ -1,5 +1,3 @@
-@import "default"
-
 * {
 	bg: #191724;
 	cur: #1f1d2e;
@@ -12,132 +10,58 @@
 	red: #eb6f92;
 	yel: #f6c177;
 
-	foreground: @fgd;
-	background: @bg;
-	active-background: @grn;
-	urgent-background: @red;
-
-	selected-background: @active-background;
-	selected-urgent-background: @urgent-background;
-	selected-active-background: @active-background;
-	separatorcolor: @active-background;
-	bordercolor: @ora;
+	background: transparent;
+    text: @cmt;
+    activetext: @cya;
 }
 
 configuration {
-    font: "Geist 10";
-    show-icons: true;
-    icon-theme: "Papirus";
-    display-drun: "";
+    font: "Triptych Roman 11";
+    show-icons: false;
 }
 
 window {
-	background-color: @background;
-	border-color:     @bordercolor;
-    border: 2;
-    border-radius: 10;
+    fullscreen: true;
+    transparency: "real";
+    background-color: #191724cc;
+    children: [ dummy1, hdum, dummy2 ];
+}
+
+hdum {
+    orientation: horizontal;
+    children: [ dummy3, mainbox, dummy4 ];
+}
+
+inputbar {
     padding: 10;
-    width: 25%;
-}
-
-element.normal.normal {
-	background-color: @background;
-	text-color:       @foreground;
-}
-
-element.normal.urgent {
-	background-color: @urgent-background;
-	text-color:       @urgent-foreground;
-}
-
-element.normal.active {
-	background-color: @active-background;
-	text-color:       @background;
-}
-
-element.selected.normal {
-	background-color: @selected-background;
-	text-color:       @foreground;
-}
-
-element.selected.urgent {
-	background-color: @selected-urgent-background;
-	text-color:       @foreground;
-}
-
-element.selected.active {
-	background-color: @selected-active-background;
-	text-color:       @background;
-}
-
-element.alternate.normal {
-	background-color: @background;
-	text-color:       @foreground;
-}
-
-element.alternate.urgent {
-	background-color: @urgent-background;
-	text-color:       @foreground;
-}
-
-element.alternate.active {
-	background-color: @active-background;
-	text-color:       @foreground;
-}
-
-button.selected {
-	background-color: @selected-background;
-	text-color:       @foreground;
-}
-
-case-indicator {
-	spacing:    0;
-	text-color: @foreground;
+    children: [ entry ];
 }
 
 entry {
-	spacing:    0;
-	text-color: @cya;
-}
-
-prompt {
-	spacing:    0;
-	text-color: @grn;
-}
-
-window {
-    border: 2;
-    border-radius: 10;
-    transparency: "real";
-    padding: 10;
-    width: 30%;
-}
-
-textbox {
-    text-color: @foreground;
+    text-color: @text;
 }
 
 listview {
     scrollbar: false;
-	border-color: @bordercolor;
-    lines: 8;
+    lines: 6;
     border: 0;
-    padding: 0;
 }
 
 element {
-    border:  0;
     padding: 10;
-    border-radius: 100;
 }
 
-inputbar {
-    spacing:    0;
-    padding:    10;
-    children:   [ entry ];
-	text-color: @foreground;
+element.normal.normal {
+	text-color: @text;
+    background-color: transparent;
 }
 
-element-icon {
-    padding: 0 10 0 0;
+element.selected.normal {
+	text-color: @activetext;
+    background-color: transparent;
+}
+
+element.alternate.normal {
+	text-color: @text;
+    background-color: transparent;
 }

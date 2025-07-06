@@ -18,9 +18,9 @@
 @define-color highlightHigh   #524f67;
 
 * {
-    font-family: FontAwesome, Geist;
+    font-family: FontAwesome, Triptych;
     font-weight: 800;
-    font-size: 12px;
+    font-size: 14px;
     color: @text;
 }
 

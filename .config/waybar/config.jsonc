@@ -11,8 +11,8 @@
         "clock",
     ],
     "clock": {
-        "tooltip-format": "<big>{:%Y %B}</big>\n\n<tt><small>{calendar}</small></tt>",
-        "format": "{:%R %a %b %d}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n\n<tt><span>{calendar}</span></tt>",
+        "format": "{:%R %a  %b %d}",
     },
     "pulseaudio": {
         "format": "{volume}% {icon}",
