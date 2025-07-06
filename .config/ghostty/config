@@ -1,5 +1,9 @@
+adjust-cell-height=20%
+background-opacity= 0.85
+background-blur = true
 macos-titlebar-style = hidden
-window-padding-balance = true
-theme = light:Builtin Solarized Light,dark:Builtin Solarized Dark
-font-family=Intel One Mono
-font-size=14
+theme=rose-pine
+font-family=Geist Mono
+font-style = Medium
+font-style-italic = Medium
+font-size = 14

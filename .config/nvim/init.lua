@@ -40,6 +40,7 @@ vim.opt.completeopt = "menuone,noselect,popup"
 
 vim.keymap.set({ "n", "v" }, "+y", [["+y]])
 vim.keymap.set({ "n", "v" }, "+d", [["_d]])
+vim.keymap.set("n", "-", "<cmd>Explore<cr>")
 
 vim.api.nvim_create_autocmd("TextYankPost", { pattern = "*", callback = function() vim.highlight.on_yank() end })
 
@@ -51,53 +52,42 @@ require("lazy").setup({
             opts = {},
         },
         {
-            'maxmx03/solarized.nvim',
-            lazy = false,
-            opts = {
-                transparent = { enabled = true },
-            },
-            config = function(_, opts)
-                vim.o.termguicolors = true
-                require('solarized').setup(opts)
-                vim.cmd.colorscheme 'solarized'
+            "rose-pine/neovim",
+            name = "rose-pine",
+            config = function()
+                require("rose-pine").setup({
+                    styles = {
+                        italic = false,
+                        transparency = true,
+                    },
+                })
+                vim.cmd("colorscheme rose-pine")
             end,
         },
         {
-            "f-person/auto-dark-mode.nvim",
-            opts = {}
-        },
-        {
             "nvim-treesitter/nvim-treesitter",
-            opts = {}
-        },
-        {
-            "stevearc/oil.nvim",
-            opts = { default_file_explorer = true },
-            dependencies = { "echasnovski/mini.icons" },
-            keys = {
-                { "-", "<cmd>Oil<cr>" }
-            }
+            opts = {},
         },
         {
             "saghen/blink.cmp",
             version = "1.*",
-            opts = {}
+            opts = {},
         },
         {
             "neovim/nvim-lspconfig",
             config = function()
-                vim.lsp.config('*', {
+                vim.lsp.config("*", {
                     on_attach = function(client, bufnr)
-                        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr })
-                        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr })
+                        vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr })
+                        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr })
 
-                        if client and client:supports_method('textDocument/formatting') then
+                        if client and client:supports_method("textDocument/formatting") then
                             vim.api.nvim_create_autocmd("BufWritePre", {
                                 buffer = bufnr,
                                 callback = function() vim.lsp.buf.format({ bufnr = bufnr, async = false }) end,
                             })
                         end
-                    end
+                    end,
                 })
 
                 vim.lsp.enable("lua_ls")
@@ -105,7 +95,20 @@ require("lazy").setup({
                 vim.lsp.enable("gopls")
                 vim.lsp.enable("protols")
                 vim.lsp.enable("html")
-            end
+            end,
+        },
+        {
+            "folke/snacks.nvim",
+            dependencies = {
+                "echasnovski/mini.icons",
+            },
+            keys = {
+                { "<leader>b", function() require("snacks").picker.buffers() end },
+                { "<leader>f", function() require("snacks").picker.files() end },
+                { "<leader>;", function() require("snacks").picker.resume() end },
+                { "<leader>/", function() require("snacks").picker.grep() end },
+                { "<leader>h", function() require("snacks").picker.help() end },
+            },
         },
         {
             "folke/snacks.nvim",
@@ -125,32 +128,33 @@ require("lazy").setup({
             opts = { focus = true, auto_jump = true },
             cmd = "Trouble",
             keys = {
-                { "<leader>E",  "<cmd>Trouble diagnostics toggle<cr>", },
-                { "<leader>e",  "<cmd>Trouble diagnostics toggle filter.buf=0<cr>" },
+                { "<leader>E", "<cmd>Trouble diagnostics toggle<cr>" },
+                { "<leader>e", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>" },
                 { "<leader>xl", "<cmd>Trouble loclist toggle<cr>" },
                 { "<leader>xq", "<cmd>Trouble qflist toggle<cr>" },
-                { "gd",         "<cmd>Trouble lsp_definitions toggle<cr>" },
-                { "grr",        "<cmd>Trouble lsp_references toggle<cr>" },
+                { "gd", "<cmd>Trouble lsp_definitions toggle<cr>" },
+                { "grr", "<cmd>Trouble lsp_references toggle<cr>" },
             },
         },
         { "github/copilot.vim" },
         {
-            "yetone/avante.nvim",
+            "olimorris/codecompanion.nvim",
             dependencies = {
                 "nvim-lua/plenary.nvim",
-                "MunifTanjim/nui.nvim",
+                "nvim-treesitter/nvim-treesitter",
             },
-            build = function()
-                if vim.fn.has("win32") == 1 then
-                    return "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
-                else
-                    return "make"
-                end
-            end,
-            version = false,
-            event = "VeryLazy",
             opts = {
-                provider = "copilot",
+                strategies = {
+                    chat = {
+                        adapter = "anthropic",
+                    },
+                    inline = {
+                        adapter = "copilot",
+                    },
+                    cmd = {
+                        adapter = "deepseek",
+                    },
+                },
             },
         },
     },
