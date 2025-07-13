@@ -23,7 +23,7 @@ configuration {
 window {
     fullscreen: true;
     transparency: "real";
-    background-color: #191724cc;
+    background-color: #191724e5;
     children: [ dummy1, hdum, dummy2 ];
 }
 
