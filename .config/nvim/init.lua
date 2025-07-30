@@ -99,6 +99,7 @@ require("lazy").setup({
                 vim.lsp.enable("gopls")
                 vim.lsp.enable("protols")
                 vim.lsp.enable("html")
+                vim.lsp.enable("zls")
             end,
         },
         {
