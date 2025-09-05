@@ -13,47 +13,39 @@ outer.top =        10
 outer.right =      10
 
 [mode.main.binding]
-alt-slash = 'layout tiles horizontal vertical'
-alt-comma = 'layout accordion horizontal vertical'
-alt-enter = 'exec-and-forget open -n /Applications/Ghostty.app'
+cmd-slash = 'layout tiles horizontal vertical'
+cmd-comma = 'layout accordion horizontal vertical'
+cmd-enter = 'exec-and-forget open -n /Applications/Ghostty.app'
 
-alt-h = 'focus left'
-alt-j = 'focus down'
-alt-k = 'focus up'
-alt-l = 'focus right'
+cmd-h = 'focus left'
+cmd-j = 'focus down'
+cmd-k = 'focus up'
+cmd-l = 'focus right'
 
-alt-shift-h = 'move left'
-alt-shift-j = 'move down'
-alt-shift-k = 'move up'
-alt-shift-l = 'move right'
+cmd-shift-h = 'move left'
+cmd-shift-j = 'move down'
+cmd-shift-k = 'move up'
+cmd-shift-l = 'move right'
 
-alt-shift-minus = 'resize smart -50'
-alt-shift-equal = 'resize smart +50'
+cmd-shift-minus = 'resize smart -50'
+cmd-shift-equal = 'resize smart +50'
 
-alt-q = 'workspace 1'
-alt-w = 'workspace 2'
-alt-e = 'workspace 3'
-alt-r = 'workspace 4'
-alt-t = 'workspace 5'
-alt-y = 'workspace 6'
-alt-u = 'workspace 7'
-alt-i = 'workspace 8'
-alt-o = 'workspace 9'
+cmd-1 = 'workspace 1'
+cmd-2 = 'workspace 2'
+cmd-3 = 'workspace 3'
+cmd-4 = 'workspace 4'
+cmd-5 = 'workspace 5'
 
-alt-shift-q = 'move-node-to-workspace 1'
-alt-shift-w = 'move-node-to-workspace 2'
-alt-shift-e = 'move-node-to-workspace 3'
-alt-shift-r = 'move-node-to-workspace 4'
-alt-shift-t = 'move-node-to-workspace 5'
-alt-shift-y = 'move-node-to-workspace 6'
-alt-shift-u = 'move-node-to-workspace 7'
-alt-shift-i = 'move-node-to-workspace 8'
-alt-shift-o = 'move-node-to-workspace 9'
+cmd-shift-1 = 'move-node-to-workspace 1'
+cmd-shift-2 = 'move-node-to-workspace 2'
+cmd-shift-3 = 'move-node-to-workspace 3'
+cmd-shift-4 = 'move-node-to-workspace 4'
+cmd-shift-5 = 'move-node-to-workspace 5'
 
-alt-tab = 'workspace-back-and-forth'
-alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+cmd-tab = 'workspace-back-and-forth'
+cmd-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
-alt-shift-semicolon = 'mode service'
+cmd-shift-semicolon = 'mode service'
 
 [mode.service.binding]
 esc = ['reload-config', 'mode main']
@@ -61,10 +53,10 @@ r = ['flatten-workspace-tree', 'mode main'] # reset layout
 f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
 backspace = ['close-all-windows-but-current', 'mode main']
 
-alt-shift-h = ['join-with left', 'mode main']
-alt-shift-j = ['join-with down', 'mode main']
-alt-shift-k = ['join-with up', 'mode main']
-alt-shift-l = ['join-with right', 'mode main']
+cmd-shift-h = ['join-with left', 'mode main']
+cmd-shift-j = ['join-with down', 'mode main']
+cmd-shift-k = ['join-with up', 'mode main']
+cmd-shift-l = ['join-with right', 'mode main']
 
 [workspace-to-monitor-force-assignment]
 1 = 'main'                       

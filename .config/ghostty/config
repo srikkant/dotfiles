@@ -1,9 +1,6 @@
-adjust-cell-height=20%
 background-opacity= 0.85
 background-blur = true
+font-family=Cascadia Code PL
 macos-titlebar-style = hidden
-theme=rose-pine
-font-family=Geist Mono
-font-style = Medium
-font-style-italic = Medium
-font-size = 14
+theme=dark:rose-pine, light:rose-pine-dawn
+window-padding-balance = true

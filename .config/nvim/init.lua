@@ -5,8 +5,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " "
-vim.g.netrw_banner = 0
-vim.g.netrw_keepdir = 0
+vim.g.netrw_sort_sequence = "[\\/]$"
 
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
@@ -52,6 +51,10 @@ require("lazy").setup({
             opts = {},
         },
         {
+            "f-person/auto-dark-mode.nvim",
+            opts = {}
+        },
+        {
             "rose-pine/neovim",
             name = "rose-pine",
             config = function()
@@ -76,86 +79,54 @@ require("lazy").setup({
         {
             "neovim/nvim-lspconfig",
             config = function()
-                vim.lsp.config("*", {
-                    on_attach = function(client, bufnr)
-                        vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr })
-                        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = bufnr })
+                local on_attach = function(client, bufnr)
+                    if client and client:supports_method("textDocument/formatting") then
+                        vim.api.nvim_create_autocmd("BufWritePre", {
+                            buffer = bufnr,
+                            callback = function() vim.lsp.buf.format({ bufnr = bufnr, async = false }) end,
+                        })
+                    end
+                end
 
-                        if client and client:supports_method("textDocument/formatting") then
-                            vim.api.nvim_create_autocmd("BufWritePre", {
-                                buffer = bufnr,
-                                callback = function() vim.lsp.buf.format({ bufnr = bufnr, async = false }) end,
-                            })
-                        end
-                    end,
-                })
+
+                vim.lsp.config("*", { on_attach = on_attach })
+                vim.lsp.config("clangd", { filetypes = { "c", "cpp" }, on_attach = on_attach })
 
                 vim.lsp.enable("lua_ls")
                 vim.lsp.enable("ts_ls")
+                vim.lsp.enable("html")
+                vim.lsp.enable("clangd")
                 vim.lsp.enable("gopls")
                 vim.lsp.enable("protols")
-                vim.lsp.enable("html")
             end,
         },
         {
-            "folke/snacks.nvim",
+            "nvim-telescope/telescope.nvim",
             dependencies = {
-                "echasnovski/mini.icons",
+                "nvim-lua/plenary.nvim"
             },
             keys = {
-                { "<leader>b", function() require("snacks").picker.buffers() end },
-                { "<leader>f", function() require("snacks").picker.files() end },
-                { "<leader>;", function() require("snacks").picker.resume() end },
-                { "<leader>/", function() require("snacks").picker.grep() end },
-                { "<leader>h", function() require("snacks").picker.help() end },
+                { "<leader>b", function() require("telescope.builtin").buffers() end },
+                { "<leader>f", function() require("telescope.builtin").find_files() end },
+                { "<leader>;", function() require("telescope.builtin").resume() end },
+                { "<leader>/", function() require("telescope.builtin").live_grep() end },
+                { "<leader>h", function() require("telescope.builtin").help_tags() end },
+                { "<leader>e", function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end },
+                { "<leader>E", function() require("telescope.builtin").diagnostics() end },
+                { "<leader>l", function() require("telescope.builtin").loclist() end },
+                { "<leader>q", function() require("telescope.builtin").quickfix() end },
+                { "<leader>j", function() require("telescope.builtin").jumplist() end },
+                { "<leader>s", function() require("telescope.builtin").symbols() end },
+                { "grr",       function() require("telescope.builtin").lsp_references() end },
+                { "gd",        function() require("telescope.builtin").lsp_definitions() end },
+                { "gD",        function() require("telescope.builtin").lsp_type_definitions() end },
             },
         },
         {
-            "folke/snacks.nvim",
-            dependencies = {
-                "echasnovski/mini.icons",
-            },
-            keys = {
-                { "<leader>b", function() require("snacks").picker.buffers() end },
-                { "<leader>f", function() require("snacks").picker.files() end },
-                { "<leader>;", function() require("snacks").picker.resume() end },
-                { "<leader>/", function() require("snacks").picker.grep() end },
-                { "<leader>h", function() require("snacks").picker.help() end },
-            },
-        },
-        {
-            "folke/trouble.nvim",
-            opts = { focus = true, auto_jump = true },
-            cmd = "Trouble",
-            keys = {
-                { "<leader>E", "<cmd>Trouble diagnostics toggle<cr>" },
-                { "<leader>e", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>" },
-                { "<leader>xl", "<cmd>Trouble loclist toggle<cr>" },
-                { "<leader>xq", "<cmd>Trouble qflist toggle<cr>" },
-                { "gd", "<cmd>Trouble lsp_definitions toggle<cr>" },
-                { "grr", "<cmd>Trouble lsp_references toggle<cr>" },
-            },
-        },
-        { "github/copilot.vim" },
-        {
-            "olimorris/codecompanion.nvim",
-            dependencies = {
-                "nvim-lua/plenary.nvim",
-                "nvim-treesitter/nvim-treesitter",
-            },
-            opts = {
-                strategies = {
-                    chat = {
-                        adapter = "anthropic",
-                    },
-                    inline = {
-                        adapter = "copilot",
-                    },
-                    cmd = {
-                        adapter = "deepseek",
-                    },
-                },
-            },
+            "supermaven-inc/supermaven-nvim",
+            config = function()
+                require("supermaven-nvim").setup({})
+            end,
         },
     },
 })

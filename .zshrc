@@ -9,7 +9,7 @@ bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
 export EDITOR=nvim
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
 
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
