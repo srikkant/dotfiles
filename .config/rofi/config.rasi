@@ -16,7 +16,7 @@
 }
 
 configuration {
-    font: "Geist 11";
+    font: "Adwaita Sans 11";
     show-icons: false;
 }
 
