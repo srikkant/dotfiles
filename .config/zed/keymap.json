@@ -1,0 +1,36 @@
+[
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "-": "project_panel::ToggleFocus",
+      "space a": "agent::ToggleFocus",
+      "space f": "file_finder::Toggle",
+      "space e": "diagnostics::DeployCurrentFile",
+      "space E": "diagnostics::Deploy",
+      "space b": "tab_switcher::Toggle"
+    }
+  },
+  {
+    "context": "multibuffer && vim_mode == normal",
+    "bindings": {
+      "escape": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "EmptyPane || SharedScreen",
+    "bindings": {
+      "-": "project_panel::ToggleFocus",
+      "space a": "agent::ToggleFocus",
+      "space f": "file_finder::Toggle",
+      "space e": "diagnostics::DeployCurrentFile",
+      "space E": "diagnostics::Deploy",
+      "space b": "tab_switcher::Toggle"
+    }
+  },
+  {
+    "context": "ProjectPanel && !editing",
+    "bindings": {
+      "escape": "workspace::ToggleLeftDock"
+    }
+  }
+]

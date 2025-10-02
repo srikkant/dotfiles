@@ -9,6 +9,7 @@ vim.g.netrw_sort_sequence = "[\\/]$"
 
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.formatexpr = "v:lua.require'conform'.formatexpr()"
 vim.opt.foldtext = ""
 vim.opt.foldenable = false
 vim.opt.nu = true
@@ -91,6 +92,7 @@ require("lazy").setup({
 
                 vim.lsp.config("*", { on_attach = on_attach })
                 vim.lsp.config("clangd", { filetypes = { "c", "cpp" }, on_attach = on_attach })
+                vim.lsp.config("ts_ls", { on_attach = on_attach })
 
                 vim.lsp.enable("lua_ls")
                 vim.lsp.enable("ts_ls")
@@ -121,6 +123,27 @@ require("lazy").setup({
                 { "gd",        function() require("telescope.builtin").lsp_definitions() end },
                 { "gD",        function() require("telescope.builtin").lsp_type_definitions() end },
             },
+        },
+        {
+            "stevearc/conform.nvim",
+            opts = {},
+            config = function()
+                require("conform").setup({
+                    formatters_by_ft = {
+                        javascript = { "prettierd", "prettier", stop_after_first = true },
+                        typescript = { "prettierd", "prettier", stop_after_first = true },
+                        typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+                        javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+                    },
+                })
+
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                    pattern = "*",
+                    callback = function(args)
+                        require("conform").format({ bufnr = args.buf })
+                    end,
+                })
+            end,
         },
         {
             "supermaven-inc/supermaven-nvim",

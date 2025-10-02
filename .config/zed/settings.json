@@ -1,0 +1,42 @@
+{
+  "agent": {
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-5-mini"
+    },
+    "model_parameters": []
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "buffer_font_size": 13,
+  "buffer_line_height": "standard",
+  "buffer_font_family": "Cascadia Mono",
+  "buffer_font_weight": 400,
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
+  "indent_guides": {
+    "enabled": false
+  },
+  "relative_line_numbers": true,
+  "theme": {
+    "dark": "Rosé Pine",
+    "light": "Rosé Pine Dawn",
+    "mode": "system"
+  },
+  "toolbar": {
+    "breadcrumbs": false,
+    "quick_actions": false,
+    "selections_menu": false,
+    "agent_review": false,
+    "code_actions": false
+  },
+  "tab_bar": {
+    "show": false
+  },
+  "title_bar": {
+    "show_user_picture": false
+  },
+  "vim_mode": true
+}
