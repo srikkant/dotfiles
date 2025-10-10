@@ -15,7 +15,6 @@ outer.right =      10
 [mode.main.binding]
 cmd-slash = 'layout tiles horizontal vertical'
 cmd-comma = 'layout accordion horizontal vertical'
-cmd-enter = 'exec-and-forget open -n /Applications/Ghostty.app'
 
 cmd-h = 'focus left'
 cmd-j = 'focus down'
@@ -59,9 +58,9 @@ cmd-shift-k = ['join-with up', 'mode main']
 cmd-shift-l = ['join-with right', 'mode main']
 
 [workspace-to-monitor-force-assignment]
-1 = 'main'                       
-2 = 'main'                       
-3 = 'main'                       
-4 = ['secondary', 'built-in']    
-5 = ['secondary', 'built-in']    
-6 = ['secondary', 'built-in']    
+1 = 'main'
+2 = 'main'
+3 = 'main'
+4 = ['secondary', 'built-in']
+5 = ['secondary', 'built-in']
+6 = ['secondary', 'built-in']

@@ -2,19 +2,32 @@
   "agent": {
     "default_model": {
       "provider": "copilot_chat",
-      "model": "gpt-5-mini"
-    },
-    "model_parameters": []
+      "model": "claude-sonnet-4.5"
+    }
   },
-  "collaboration_panel": {
-    "button": false
-  },
-  "buffer_font_size": 13,
+  "format_on_save": "language_server",
+  "buffer_font_size": 12.5,
   "buffer_line_height": "standard",
-  "buffer_font_family": "Cascadia Mono",
-  "buffer_font_weight": 400,
   "features": {
     "edit_prediction_provider": "copilot"
+  },
+  "languages": {
+    "YAML": {
+      "format_on_save": "prettier",
+      "formatter": "prettier"
+    },
+    "JSON": {
+      "format_on_save": "prettier",
+      "formatter": "prettier"
+    },
+    "TypeScript": {
+      "format_on_save": "prettier",
+      "formatter": "prettier"
+    },
+    "TSX": {
+      "format_on_save": "prettier",
+      "formatter": "prettier"
+    }
   },
   "indent_guides": {
     "enabled": false
@@ -25,18 +38,13 @@
     "light": "Rosé Pine Dawn",
     "mode": "system"
   },
-  "toolbar": {
-    "breadcrumbs": false,
-    "quick_actions": false,
-    "selections_menu": false,
-    "agent_review": false,
-    "code_actions": false
-  },
   "tab_bar": {
     "show": false
   },
-  "title_bar": {
-    "show_user_picture": false
+  "terminal": {
+    "line_height": "standard",
+    "font_size": 13
   },
+  "ui_font_size": 14,
   "vim_mode": true
 }
