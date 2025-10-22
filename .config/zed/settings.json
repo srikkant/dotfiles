@@ -1,31 +1,38 @@
 {
+  "ui_font_family": ".SystemUIFont",
   "agent": {
+    "always_allow_tool_actions": true,
+    "inline_assistant_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-4.1"
+    },
+    "default_profile": "write",
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4.5"
+      "model": "gpt-4.1"
     }
   },
-  "format_on_save": "language_server",
-  "buffer_font_size": 12.5,
+  "buffer_font_family": "SF Mono",
+  "format_on_save": "on",
+  "buffer_font_size": 12,
   "buffer_line_height": "standard",
   "features": {
     "edit_prediction_provider": "copilot"
   },
   "languages": {
     "YAML": {
-      "format_on_save": "prettier",
       "formatter": "prettier"
     },
     "JSON": {
-      "format_on_save": "prettier",
       "formatter": "prettier"
     },
     "TypeScript": {
-      "format_on_save": "prettier",
       "formatter": "prettier"
     },
     "TSX": {
-      "format_on_save": "prettier",
+      "formatter": "prettier"
+    },
+    "Markdown": {
       "formatter": "prettier"
     }
   },
@@ -34,17 +41,17 @@
   },
   "relative_line_numbers": true,
   "theme": {
-    "dark": "Rosé Pine",
-    "light": "Rosé Pine Dawn",
+    "dark": "Alabaster Dark BG",
+    "light": "Alabaster BG",
     "mode": "system"
   },
   "tab_bar": {
     "show": false
   },
   "terminal": {
-    "line_height": "standard",
-    "font_size": 13
+    "line_height": "standard"
   },
-  "ui_font_size": 14,
+  "ui_font_size": 13,
+  "unstable.ui_density": "compact",
   "vim_mode": true
 }

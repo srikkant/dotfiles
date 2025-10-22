@@ -1,6 +1,7 @@
 background-opacity= 0.85
 background-blur = true
-font-family=Cascadia Code PL
+font-size=13
+font-family=SF Mono
 macos-titlebar-style = hidden
-theme=dark:Rose Pine, light:Rose Pine Dawn
+theme=dark:Zenbones Dark, light:Zenbones
 window-padding-balance = true
