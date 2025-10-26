@@ -36,6 +36,7 @@ vim.opt.ignorecase = true
 vim.opt.infercase = true
 vim.opt.smartcase = true
 vim.opt.completeopt = "menuone,noselect,popup"
+vim.opt.termguicolors = true
 
 vim.keymap.set({ "n", "v" }, "+y", [["+y]])
 vim.keymap.set({ "n", "v" }, "+d", [["_d]])
@@ -54,17 +55,20 @@ require("lazy").setup({
             opts = {},
         },
         {
-            "rose-pine/neovim",
-            name = "rose-pine",
+            "f-person/auto-dark-mode.nvim",
+            opts = {}
+        },
+        { 
+            "xiyaowong/transparent.nvim",
+            config = function()
+                require("transparent").setup();
+                vim.g.transparent_enabled = true;
+            end
+        },
+        {
+            "p00f/alabaster.nvim",
             config = function(_, opts)
-                vim.o.termguicolors = true
-                require("rose-pine").setup({
-                    styles = {
-                        transparency = true,
-                        italic = false,
-                    },
-                })
-                vim.cmd.colorscheme("rose-pine")
+                vim.cmd.colorscheme("alabaster")
             end,
         },
         {
@@ -101,47 +105,6 @@ require("lazy").setup({
             end,
         },
         {
-            "folke/snacks.nvim",
-            dependencies = {
-                "echasnovski/mini.icons",
-            },
-            keys = {
-                {
-                    "<leader>b",
-                    function() require("snacks").picker.buffers() end,
-                },
-                {
-                    "<leader>f",
-                    function() require("snacks").picker.files() end,
-                },
-                {
-                    "<leader>;",
-                    function() require("snacks").picker.resume() end,
-                },
-                {
-                    "<leader>/",
-                    function() require("snacks").picker.grep() end,
-                },
-                {
-                    "<leader>h",
-                    function() require("snacks").picker.help() end,
-                },
-            },
-        },
-        {
-            "folke/trouble.nvim",
-            opts = { focus = true, auto_jump = true },
-            cmd = "Trouble",
-            keys = {
-                { "<leader>E", "<cmd>Trouble diagnostics toggle<cr>" },
-                { "<leader>e", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>" },
-                { "<leader>xl", "<cmd>Trouble loclist toggle<cr>" },
-                { "<leader>xq", "<cmd>Trouble qflist toggle<cr>" },
-                { "gd", "<cmd>Trouble lsp_definitions toggle<cr>" },
-                { "grr", "<cmd>Trouble lsp_references toggle<cr>" },
-            },
-        },
-        {
             "nvim-telescope/telescope.nvim",
             dependencies = {
                 "nvim-lua/plenary.nvim"
@@ -162,12 +125,6 @@ require("lazy").setup({
                 { "gd",        function() require("telescope.builtin").lsp_definitions() end },
                 { "gD",        function() require("telescope.builtin").lsp_type_definitions() end },
             },
-        },
-        {
-            "supermaven-inc/supermaven-nvim",
-            config = function()
-                require("supermaven-nvim").setup({})
-            end,
         },
     },
 })
