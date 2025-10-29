@@ -1,7 +1,0 @@
-background-opacity= 0.85
-background-blur = true
-font-size=13
-font-family=SF Mono
-macos-titlebar-style = hidden
-theme=dark:Zenbones Dark, light:Zenbones
-window-padding-balance = true

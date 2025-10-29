@@ -9,7 +9,7 @@
     "default_profile": "write",
     "default_model": {
       "provider": "copilot_chat",
-      "model": "gpt-4.1"
+      "model": "gpt-5"
     }
   },
   "buffer_font_family": "SF Mono",
