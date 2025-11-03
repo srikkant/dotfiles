@@ -1,0 +1,7 @@
+background-blur = true
+background-opacity = 0.9
+font-family = SF Mono
+macos-titlebar-style = hidden
+theme = light:Alabaster, dark:Black Metal
+window-padding-x = 12
+window-padding-y = 12

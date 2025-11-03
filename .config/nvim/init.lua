@@ -56,16 +56,16 @@ require("lazy").setup({
             opts = {}
         },
         {
-            "rose-pine/neovim",
-            name = "rose-pine",
+            "xiyaowong/transparent.nvim",
             config = function()
-                require("rose-pine").setup({
-                    styles = {
-                        italic = false,
-                        transparency = true,
-                    },
-                })
-                vim.cmd("colorscheme rose-pine")
+                require("transparent").setup()
+                vim.g.transparent_enabled = true
+            end,
+        },
+        {
+            "p00f/alabaster.nvim",
+            config = function()
+                vim.cmd("colorscheme alabaster")
             end,
         },
         {
