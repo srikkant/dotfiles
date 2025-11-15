@@ -1,4 +1,10 @@
 {
+  "project_panel": {
+    "hide_root": true
+  },
+  "scrollbar": {
+    "git_diff": false
+  },
   "ui_font_family": "SF Pro Display",
   "agent": {
     "always_allow_tool_actions": true,
@@ -13,12 +19,12 @@
     }
   },
   "buffer_font_family": "SF Mono",
-  "format_on_save": "on",
   "buffer_font_size": 12,
   "buffer_line_height": "standard",
   "features": {
     "edit_prediction_provider": "copilot"
   },
+  "format_on_save": "on",
   "languages": {
     "YAML": {
       "formatter": "prettier"
