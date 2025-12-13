@@ -1,7 +1,7 @@
 background-blur = true
 background-opacity = 0.9
-font-family = SF Mono
+font-family = Cascadia Code PL
 macos-titlebar-style = hidden
-theme = light:Alabaster, dark:Black Metal
+theme = light:Alabaster, dark:Flexoki Dark
 window-padding-x = 12
 window-padding-y = 12

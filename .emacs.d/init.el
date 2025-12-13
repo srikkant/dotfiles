@@ -163,13 +163,6 @@
 
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd")))
 
-(use-package realgud
-  :ensure t
-  :commands (realgud:gdb realgud:lldb))
-
-(use-package realgud-lldb
-  :ensure t
-  :after realgud)
 
 (use-package magit
   :commands magit-status

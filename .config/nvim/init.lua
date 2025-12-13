@@ -92,6 +92,7 @@ require("lazy").setup({
 
                 vim.lsp.config("*", { on_attach = on_attach })
                 vim.lsp.config("clangd", { filetypes = { "c", "cpp" }, on_attach = on_attach })
+                vim.lsp.config("gdscript", { on_attach = on_attach })
                 vim.lsp.config("ts_ls", { on_attach = on_attach })
 
                 vim.lsp.enable("lua_ls")
@@ -100,6 +101,7 @@ require("lazy").setup({
                 vim.lsp.enable("clangd")
                 vim.lsp.enable("gopls")
                 vim.lsp.enable("protols")
+                vim.lsp.enable("gdscript")
             end,
         },
         {
