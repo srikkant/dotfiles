@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Define the list of options
+entries=" Shutdown\n Reboot\n Suspend"
+
+# Show the menu and get the selected option
+selected=$(echo -e $entries | wofi --width 250 --height 220 --dmenu --cache-file /dev/null | awk '{print tolower($2)}')
+
+case $selected in
+  shutdown)
+    systemctl poweroff;;
+  reboot)
+    systemctl reboot;;
+  suspend)
+    systemctl suspend;;
+esac

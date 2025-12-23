@@ -1,0 +1,29 @@
+window {
+    opacity: 0.98;
+    border-radius: 20px;
+    font-family: SF Pro;
+    background-color: rgba(16, 16, 16, 0.99);
+}
+
+#input {
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    background-color: transparent;
+}
+
+#outer-box {
+    padding: 10px;
+}
+
+#img{
+    margin-right: 20px;
+}
+
+#entry {
+    padding: 15px;
+}
+
+#entry:selected {
+    background-color: black;
+}
