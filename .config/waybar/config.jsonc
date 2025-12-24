@@ -7,7 +7,6 @@
   "modules-left": ["custom/power", "hyprland/workspaces"],
   "modules-center": [],
   "modules-right": [
-    "group/tray-expander",
     "bluetooth",
     "network",
     "pulseaudio",
@@ -16,7 +15,7 @@
     "clock"
   ],
   "custom/power": {
-    "format": "Ⓥ ",
+    "format": "ᳫ ",
     "tooltip": false,
     "on-click": "srikkant-power-menu"
   },
@@ -60,7 +59,7 @@
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1,
-    "on-click": "foot -e impala"
+    "on-click": "xdg-terminal-exec impala"
   },
   "battery": {
     "format": "{capacity}% {icon}",
@@ -85,11 +84,11 @@
     "format-disabled": "󰂲",
     "format-connected": "",
     "tooltip-format": "Devices connected: {num_connections}",
-    "on-click": "foot -e bluetui"
+    "on-click": "xdg-terminal-exec bluetui"
   },
   "pulseaudio": {
     "format": "{icon}",
-    "on-click": "foot -e wiremix",
+    "on-click": "xdg-terminal-exec wiremix",
     "on-click-right": "pamixer -t",
     "tooltip-format": "Playing at {volume}%",
     "scroll-step": 5,

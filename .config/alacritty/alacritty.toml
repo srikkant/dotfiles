@@ -1,5 +1,5 @@
 [general]
-import = ["./dark.toml"]
+import = ["./.theme.toml"]
 
 [window]
 padding = { x = 4, y = 4 }

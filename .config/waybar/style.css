@@ -1,5 +1,4 @@
-@define-color foreground #ffffff;
-@define-color background #000000;
+@import ".theme.css"; 
 
 * {
   background-color: @background;

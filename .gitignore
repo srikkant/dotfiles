@@ -1,5 +1,8 @@
 .luarc.json
 .DS_Store
 
+.theme.css
+.theme.toml
+
 .config/zed/conversations
 .config/zed/prompts

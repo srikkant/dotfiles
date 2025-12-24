@@ -1,14 +1,16 @@
+@import ".theme.css";
+
 window {
     opacity: 0.98;
-    border-radius: 20px;
     font-family: SF Pro;
-    background-color: rgba(16, 16, 16, 0.99);
+    background-color: @background 
+    color: @foreground;
 }
 
 #input {
     padding: 10px 20px;
     border: none;
-    color: white;
+    color: @foreground;
     background-color: transparent;
 }
 
@@ -22,8 +24,4 @@ window {
 
 #entry {
     padding: 15px;
-}
-
-#entry:selected {
-    background-color: black;
 }
