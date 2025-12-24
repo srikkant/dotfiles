@@ -19,10 +19,13 @@
           (bg-mode-line-inactive bg-main)
           (fg-mode-line-active fg-main)
           (fg-mode-line-inactive fg-dim)))
-  (setq modus-themes-mode-line '(accented borderless))
   (modus-themes-load-theme (if (eq (frame-parameter nil 'background-mode) 'dark)
                                'modus-vivendi
-                               'modus-operandi)))
+                             'modus-operandi))
+  (setq modus-themes-mode-line '(accented borderless))
+  (setq modus-themes-common-palette-overrides
+      '((border-mode-line-active unspecified)
+        (border-mode-line-inactive unspecified))))
 
 (defun my/apply-theme (appearance)
   (mapc #'disable-theme custom-enabled-themes)

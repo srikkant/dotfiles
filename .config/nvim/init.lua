@@ -52,10 +52,6 @@ require("lazy").setup({
             opts = {},
         },
         {
-            "f-person/auto-dark-mode.nvim",
-            opts = {}
-        },
-        {
             "xiyaowong/transparent.nvim",
             config = function()
                 require("transparent").setup()
