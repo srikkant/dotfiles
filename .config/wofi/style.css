@@ -1,27 +1,36 @@
-@import ".theme.css";
+@import ".config/wofi/.theme.css";
 
 window {
-    opacity: 0.98;
     font-family: SF Pro;
-    background-color: @background 
-    color: @foreground;
+    background-color: transparent;
 }
 
 #input {
     padding: 10px 20px;
     border: none;
-    color: @foreground;
+    border-radius: 20px;
+    margin-bottom: 10px;
     background-color: transparent;
+    color: @foreground;
 }
 
 #outer-box {
+    background-color: @background;
+    color: @foreground;
+    border-radius: 20px;
     padding: 10px;
 }
 
 #img{
-    margin-right: 20px;
+    margin-right: 15px;
 }
 
 #entry {
-    padding: 15px;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+#entry:selected {
+    background-color: @background;
+    color: @foreground;
 }
