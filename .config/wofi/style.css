@@ -34,3 +34,7 @@ window {
     background-color: @background;
     color: @foreground;
 }
+
+#text:selected {
+    color: @foreground;
+}
