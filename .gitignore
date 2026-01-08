@@ -1,5 +1,7 @@
 .luarc.json
 .DS_Store
 
+jj
+
 .config/zed/conversations
 .config/zed/prompts

@@ -61,6 +61,18 @@ require("lazy").setup({
         {
             "p00f/alabaster.nvim",
             config = function()
+                vim.api.nvim_create_autocmd("ColorScheme", {
+                    pattern = "alabaster",
+                    callback = function()
+                        for _, group in ipairs({ "Underlined", "DiagnosticUnderlineError", "DiagnosticUnderlineWarn", "DiagnosticUnderlineInfo", "DiagnosticUnderlineHint" }) do
+                            local gui = vim.api.nvim_get_hl(0, { name = group })
+                            vim.api.nvim_set_hl(0, group, {
+                                undercurl = true,
+                                sp = gui.sp or gui.fg
+                            })
+                        end
+                    end,
+                })
                 vim.cmd("colorscheme alabaster")
             end,
         },
