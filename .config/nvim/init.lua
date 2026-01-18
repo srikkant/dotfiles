@@ -87,6 +87,9 @@ require("lazy").setup({
         },
         {
             "neovim/nvim-lspconfig",
+            dependencies = {
+                "creativenull/efmls-configs-nvim",
+            },
             config = function()
                 local on_attach = function(client, bufnr)
                     if client and client:supports_method("textDocument/formatting") then
@@ -102,6 +105,33 @@ require("lazy").setup({
                 vim.lsp.config("clangd", { filetypes = { "c", "cpp" }, on_attach = on_attach })
                 vim.lsp.config("gdscript", { on_attach = on_attach })
                 vim.lsp.config("ts_ls", { on_attach = on_attach })
+                vim.lsp.config("rust_analyzer", { on_attach = on_attach })
+
+                local eslintd_lint = require("efmls-configs.linters.eslint_d")
+                local eslintd_format = require("efmls-configs.formatters.eslint_d")
+                local prettierd = require("efmls-configs.formatters.prettier_d")
+
+                local languages = {
+                    javascript = { eslintd_lint, eslintd_format, prettierd },
+                    typescript = { eslintd_lint, eslintd_format, prettierd },
+                    typescriptreact = { eslintd_lint, eslintd_format, prettierd },
+                    javascriptreact = { eslintd_lint, eslintd_format, prettierd },
+                }
+
+                local efmls_config = {
+                    filetypes = vim.tbl_keys(languages),
+                    settings = {
+                        rootMarkers = { '.git/' },
+                        languages = languages,
+                    },
+                    init_options = {
+                        documentFormatting = true,
+                        documentRangeFormatting = true,
+                    },
+                }
+
+                vim.lsp.config("efm",
+                    vim.tbl_extend("force", efmls_config, { cmd = { "efm-langserver" }, on_attach = on_attach }))
 
                 vim.lsp.enable("lua_ls")
                 vim.lsp.enable("ts_ls")
@@ -110,6 +140,7 @@ require("lazy").setup({
                 vim.lsp.enable("gopls")
                 vim.lsp.enable("protols")
                 vim.lsp.enable("gdscript")
+                vim.lsp.enable("efm")
             end,
         },
         {
@@ -133,27 +164,6 @@ require("lazy").setup({
                 { "gd",        function() require("telescope.builtin").lsp_definitions() end },
                 { "gD",        function() require("telescope.builtin").lsp_type_definitions() end },
             },
-        },
-        {
-            "stevearc/conform.nvim",
-            opts = {},
-            config = function()
-                require("conform").setup({
-                    formatters_by_ft = {
-                        javascript = { "prettierd", "prettier", stop_after_first = true },
-                        typescript = { "prettierd", "prettier", stop_after_first = true },
-                        typescriptreact = { "prettierd", "prettier", stop_after_first = true },
-                        javascriptreact = { "prettierd", "prettier", stop_after_first = true },
-                    },
-                })
-
-                vim.api.nvim_create_autocmd("BufWritePre", {
-                    pattern = "*",
-                    callback = function(args)
-                        require("conform").format({ bufnr = args.buf })
-                    end,
-                })
-            end,
         },
         {
             "supermaven-inc/supermaven-nvim",
