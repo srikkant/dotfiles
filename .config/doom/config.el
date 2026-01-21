@@ -1,17 +1,7 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(set-fringe-mode 10)
-(menu-bar-mode -1)
-(tab-bar-mode 1)
-
 (setq doom-font (font-spec :family "Cascadia Code" :size 13))
 (setq display-line-numbers-type 'relative)
-(setq org-directory "~/work/sync/org")
-(setq tab-bar-close-button-show nil)
-(setq tab-bar-format nil)
-(setq use-package-always-ensure t)
-(setq inhibit-startup-message t)
-(setq visible-bell t)
 
 (add-to-list 'default-frame-alist '(undecorated-round . t))
 (add-to-list 'default-frame-alist '(internal-border-width . 5))
