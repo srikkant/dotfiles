@@ -2,3 +2,4 @@
 ;;; $DOOMDIR/packages.el
 
 (package! auto-dark)
+(package! eat)

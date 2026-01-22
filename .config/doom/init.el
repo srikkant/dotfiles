@@ -31,14 +31,13 @@
 
        :term
        eshell
-       vterm
 
        :checkers
        syntax
 
        :tools
        (eval +overlay)
-       lookup
+       (lookup +docsets)
        (lsp +eglot)
        magit
        make
@@ -51,6 +50,10 @@
        emacs-lisp
        markdown
        (org +pretty +roam)
+       (javascript +lsp +tree-sitter)
+       (typescript +lsp +tree-sitter)
+       (web +lsp)
+       json
 
        :config
        (default +bindings +smartparens))
