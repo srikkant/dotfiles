@@ -1,12 +1,11 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-    vim.fn.system({ "git", "clone", "--branch=stable", "https://github.com/folke/lazy.nvim.git", lazypath })
+local mini_path = vim.fn.stdpath("data") .. "/site/pack/deps/start/mini.nvim"
+if not vim.loop.fs_stat(mini_path) then
+    vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/nvim-mini/mini.nvim", mini_path })
+    vim.cmd("packadd mini.nvim | helptags ALL")
 end
-vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " "
 vim.g.netrw_sort_sequence = "[\\/]$"
-
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.formatexpr = "v:lua.require'conform'.formatexpr()"
@@ -38,138 +37,114 @@ vim.opt.infercase = true
 vim.opt.smartcase = true
 vim.opt.completeopt = "menuone,noselect,popup"
 
-vim.keymap.set({ "n", "v" }, "+y", [["+y]])
-vim.keymap.set({ "n", "v" }, "+d", [["_d]])
-vim.keymap.set("n", "-", "<cmd>Explore<cr>")
-
 vim.api.nvim_create_autocmd("TextYankPost", { pattern = "*", callback = function() vim.highlight.on_yank() end })
 
-require("lazy").setup({
-    spec = {
-        {
-            "folke/lazydev.nvim",
-            ft = "lua",
-            opts = {},
-        },
-        {
-            "xiyaowong/transparent.nvim",
-            config = function()
-                require("transparent").setup()
-                vim.g.transparent_enabled = true
-            end,
-        },
-        {
-            "p00f/alabaster.nvim",
-            config = function()
-                vim.api.nvim_create_autocmd("ColorScheme", {
-                    pattern = "alabaster",
-                    callback = function()
-                        for _, group in ipairs({ "Underlined", "DiagnosticUnderlineError", "DiagnosticUnderlineWarn", "DiagnosticUnderlineInfo", "DiagnosticUnderlineHint" }) do
-                            local gui = vim.api.nvim_get_hl(0, { name = group })
-                            vim.api.nvim_set_hl(0, group, {
-                                undercurl = true,
-                                sp = gui.sp or gui.fg
-                            })
-                        end
-                    end,
-                })
-                vim.cmd("colorscheme alabaster")
-            end,
-        },
-        {
-            "nvim-treesitter/nvim-treesitter",
-            opts = {},
-        },
-        {
-            "saghen/blink.cmp",
-            version = "1.*",
-            opts = {},
-        },
-        {
-            "neovim/nvim-lspconfig",
-            dependencies = {
-                "creativenull/efmls-configs-nvim",
-            },
-            config = function()
-                local on_attach = function(client, bufnr)
-                    if client and client:supports_method("textDocument/formatting") then
-                        vim.api.nvim_create_autocmd("BufWritePre", {
-                            buffer = bufnr,
-                            callback = function() vim.lsp.buf.format({ bufnr = bufnr, async = false }) end,
-                        })
-                    end
-                end
+require("mini.deps").setup()
 
+local deps = require("mini.deps");
+deps.setup()
 
-                vim.lsp.config("*", { on_attach = on_attach })
-                vim.lsp.config("clangd", { filetypes = { "c", "cpp" }, on_attach = on_attach })
-                vim.lsp.config("gdscript", { on_attach = on_attach })
-                vim.lsp.config("ts_ls", { on_attach = on_attach })
-                vim.lsp.config("rust_analyzer", { on_attach = on_attach })
+deps.add("folke/lazydev.nvim")
+deps.add("xiyaowong/transparent.nvim")
+deps.add("p00f/alabaster.nvim")
+deps.add("nvim-treesitter/nvim-treesitter")
+deps.add("neovim/nvim-lspconfig")
+deps.add("creativenull/efmls-configs-nvim")
+deps.add("supermaven-inc/supermaven-nvim")
+deps.add("folke/trouble.nvim")
 
-                local eslintd_lint = require("efmls-configs.linters.eslint_d")
-                local eslintd_format = require("efmls-configs.formatters.eslint_d")
-                local prettierd = require("efmls-configs.formatters.prettier_d")
+require("lazydev").setup()
+require("transparent").setup()
+require("supermaven-nvim").setup({})
+require("mini.completion").setup()
+require("mini.snippets").setup()
+require("mini.icons").setup()
+require("mini.pairs").setup()
+require("trouble").setup()
 
-                local languages = {
-                    javascript = { eslintd_lint, eslintd_format, prettierd },
-                    typescript = { eslintd_lint, eslintd_format, prettierd },
-                    typescriptreact = { eslintd_lint, eslintd_format, prettierd },
-                    javascriptreact = { eslintd_lint, eslintd_format, prettierd },
-                }
+local files = require("mini.files")
+local pick = require("mini.pick")
+local extra = require("mini.extra")
 
-                local efmls_config = {
-                    filetypes = vim.tbl_keys(languages),
-                    settings = {
-                        rootMarkers = { '.git/' },
-                        languages = languages,
-                    },
-                    init_options = {
-                        documentFormatting = true,
-                        documentRangeFormatting = true,
-                    },
-                }
+files.setup()
+pick.setup()
+extra.setup()
 
-                vim.lsp.config("efm",
-                    vim.tbl_extend("force", efmls_config, { cmd = { "efm-langserver" }, on_attach = on_attach }))
-
-                vim.lsp.enable("lua_ls")
-                vim.lsp.enable("ts_ls")
-                vim.lsp.enable("html")
-                vim.lsp.enable("clangd")
-                vim.lsp.enable("gopls")
-                vim.lsp.enable("protols")
-                vim.lsp.enable("gdscript")
-                vim.lsp.enable("efm")
-            end,
-        },
-        {
-            "nvim-telescope/telescope.nvim",
-            dependencies = {
-                "nvim-lua/plenary.nvim"
-            },
-            keys = {
-                { "<leader>b", function() require("telescope.builtin").buffers() end },
-                { "<leader>f", function() require("telescope.builtin").find_files() end },
-                { "<leader>;", function() require("telescope.builtin").resume() end },
-                { "<leader>/", function() require("telescope.builtin").live_grep() end },
-                { "<leader>h", function() require("telescope.builtin").help_tags() end },
-                { "<leader>e", function() require("telescope.builtin").diagnostics({ bufnr = 0 }) end },
-                { "<leader>E", function() require("telescope.builtin").diagnostics() end },
-                { "<leader>l", function() require("telescope.builtin").loclist() end },
-                { "<leader>q", function() require("telescope.builtin").quickfix() end },
-                { "<leader>j", function() require("telescope.builtin").jumplist() end },
-                { "<leader>s", function() require("telescope.builtin").symbols() end },
-                { "grr",       function() require("telescope.builtin").lsp_references() end },
-                { "gd",        function() require("telescope.builtin").lsp_definitions() end },
-                { "gD",        function() require("telescope.builtin").lsp_type_definitions() end },
-            },
-        },
-        {
-            "supermaven-inc/supermaven-nvim",
-            config = function()
-                require("supermaven-nvim").setup({})
-            end,
-        },
-    },
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "alabaster",
+    callback = function()
+        for _, group in ipairs({ "Underlined", "DiagnosticUnderlineError", "DiagnosticUnderlineWarn", "DiagnosticUnderlineInfo", "DiagnosticUnderlineHint" }) do
+            local gui = vim.api.nvim_get_hl(0, { name = group })
+            vim.api.nvim_set_hl(0, group, {
+                undercurl = true,
+                sp = gui.sp or gui.fg
+            })
+        end
+    end,
 })
+
+vim.g.transparent_enabled = true
+vim.cmd("colorscheme alabaster")
+
+local on_attach = function(client, bufnr)
+    if client and client:supports_method("textDocument/formatting") then
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            callback = function() vim.lsp.buf.format({ bufnr = bufnr, async = false }) end,
+        })
+    end
+end
+
+local eslintd_lint = require("efmls-configs.linters.eslint_d")
+local eslintd_format = require("efmls-configs.formatters.eslint_d")
+local prettierd = require("efmls-configs.formatters.prettier_d")
+local languages = {
+    javascript = { eslintd_lint, eslintd_format, prettierd },
+    typescript = { eslintd_lint, eslintd_format, prettierd },
+    typescriptreact = { eslintd_lint, eslintd_format, prettierd },
+    javascriptreact = { eslintd_lint, eslintd_format, prettierd },
+}
+
+local efmls_config = {
+    filetypes = vim.tbl_keys(languages),
+    settings = {
+        rootMarkers = { ".git/" },
+        languages = languages,
+    },
+    init_options = {
+        documentFormatting = true,
+        documentRangeFormatting = true,
+    },
+}
+
+vim.lsp.config("*", { on_attach = on_attach })
+vim.lsp.config("clangd", { filetypes = { "c", "cpp" }, on_attach = on_attach })
+vim.lsp.config("gdscript", { on_attach = on_attach })
+vim.lsp.config("ts_ls", { on_attach = on_attach })
+vim.lsp.config("rust_analyzer", { on_attach = on_attach })
+vim.lsp.config("efm",
+    vim.tbl_extend("force", efmls_config, { cmd = { "efm-langserver" }, on_attach = on_attach }))
+
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("html")
+vim.lsp.enable("clangd")
+vim.lsp.enable("gopls")
+vim.lsp.enable("protols")
+vim.lsp.enable("gdscript")
+vim.lsp.enable("efm")
+
+vim.keymap.set({ "n", "v" }, "+y", [["+y]])
+vim.keymap.set({ "n", "v" }, "+d", [["_d]])
+vim.keymap.set("n", "-", function() files.open() end)
+vim.keymap.set("n", "<leader>fb", function() pick.builtin.buffers() end)
+vim.keymap.set("n", "<leader>ff", function() pick.builtin.files() end)
+vim.keymap.set("n", "<leader>;", function() pick.builtin.resume() end)
+vim.keymap.set("n", "<leader>/", function() pick.builtin.grep_live() end)
+vim.keymap.set("n", "<leader>fh", function() pick.builtin.help() end)
+vim.keymap.set("n", "<leader>cx", "<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>")
+vim.keymap.set("n", "<leader>cX", "<cmd>Trouble diagnostics toggle focus=true<cr>")
+vim.keymap.set("n", "<leader>fs", "<cmd>Trouble symbols toggle focus=true<cr>")
+vim.keymap.set("n", "grr", "<cmd>Trouble lsp_references toggle focus=true<cr>")
+vim.keymap.set("n", "gd", "<cmd>Trouble lsp_definitions toggle focus=true<cr>")
+vim.keymap.set("n", "gD", "<cmd>Trouble lsp_declarations toggle focus=true<cr>")
