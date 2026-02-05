@@ -2,7 +2,7 @@
 
 - **stow**: config management
 - **aerospace**: window management (OSX)
-- **zsh**: shell
+- **fish**: shell
 - **ghostty**: terminal
 - **tmux**: multiplexer
 - **nvim**: editor

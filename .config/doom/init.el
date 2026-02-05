@@ -51,9 +51,7 @@
        emacs-lisp
        markdown
        (org +pretty +roam)
-       (javascript +lsp +tree-sitter)
-       (typescript +lsp +tree-sitter)
-       (web +lsp)
+       (go +lsp + tree-sitter)
        json
 
        :config
