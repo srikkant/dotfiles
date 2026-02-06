@@ -24,9 +24,11 @@ vim.pack.add({
     "https://github.com/folke/lazydev.nvim",
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/supermaven-inc/supermaven-nvim",
+    "https://github.com/ibhagwan/fzf-lua",
 })
 
 require("lazydev").setup()
+require("fzf-lua").setup()
 require("supermaven-nvim").setup({})
 
 for _, server in ipairs({ "lua_ls", "clangd", "gopls", "gdscript" }) do
@@ -40,7 +42,9 @@ vim.keymap.set("n", "<leader>cq", vim.diagnostic.setqflist)
 vim.keymap.set("n", "<leader>cl", vim.diagnostic.setloclist)
 vim.keymap.set("n", "<leader>cm", ":make ")
 vim.keymap.set("n", "<leader>cc", "<cmd>make<cr>")
-vim.keymap.set("n", "<leader>ff", ":find ")
+vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua files<cr>")
+vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>")
+vim.keymap.set("n", "<leader><leader>", "<cmd>FzfLua global<cr>")
 
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
