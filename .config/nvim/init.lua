@@ -48,6 +48,7 @@ vim.keymap.set("n", "<leader>cq", vim.diagnostic.setqflist)
 vim.keymap.set("n", "<leader>cl", vim.diagnostic.setloclist)
 vim.keymap.set("n", "<leader>cm", ":make ")
 vim.keymap.set("n", "<leader>cc", "<cmd>make<cr>")
+vim.keymap.set("n", "<leader>cr", "<cmd>make run<cr>")
 vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua files<cr>")
 vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>")
 vim.keymap.set("n", "<leader>/", "<cmd>FzfLua live_grep<cr>")
@@ -81,7 +82,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 vim.api.nvim_create_autocmd("OptionSet", {
     pattern = "background",
-    callback = function() vim.api.nvim_set_hl(0, "Normal", { bg = "none" }) end
+    callback = function()
+        vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+    end
 })
 
-vim.api.nvim_create_autocmd("TextYankPost", { callback = function() vim.highlight.on_yank() end })
+vim.api.nvim_create_autocmd("TextYankPost", {
+    callback = function()
+        vim.highlight.on_yank()
+    end
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "odin",
+    callback = function()
+        vim.bo.errorformat = "%f:%l:%c: %m"
+    end,
+})
