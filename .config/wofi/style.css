@@ -1,7 +1,8 @@
-@import ".config/wofi/.theme.css";
+@define-color foreground #ffffff;
+@define-color background rgba(0, 0, 0, 0.9);
 
 window {
-    font-family: SF Pro;
+    font-family: Overpass;
     background-color: transparent;
 }
 

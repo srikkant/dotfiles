@@ -15,36 +15,50 @@ vim.opt.breakindent = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.completeopt = "menuone,noselect,popup"
-vim.opt.wildmode = "longest:full,full"
-vim.opt.wildoptions:append("fuzzy")
-vim.opt.wildignore:append({ "*/.git/*", "*/build/*" })
-vim.opt.path:append("**")
+vim.opt.wrap = false
 
 vim.pack.add({
-    "https://github.com/folke/lazydev.nvim",
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/supermaven-inc/supermaven-nvim",
+    "https://github.com/stevearc/conform.nvim",
     "https://github.com/ibhagwan/fzf-lua",
 })
 
-require("lazydev").setup()
 require("fzf-lua").setup()
 require("supermaven-nvim").setup({})
+require("conform").setup({
+    formatters_by_ft = {
+        markdown = { "prettierd", "prettier", stop_after_first = true },
+    },
+    format_on_save = {
+        timeout_ms = 500,
+        lsp_format = "fallback",
+    },
+})
 
-for _, server in ipairs({ "lua_ls", "clangd", "gopls", "gdscript" }) do
+for _, server in ipairs({ "lua_ls", "ols", "ts_ls", "marksman" }) do
     vim.lsp.enable(server)
 end
 
 vim.keymap.set({ "n", "v" }, "+y", [["+y]])
 vim.keymap.set({ "n", "v" }, "+d", [["_d]])
-vim.keymap.set("n", "-", "<cmd>Explore<cr>")
+vim.keymap.set("n", "-", ":Ex<cr>")
 vim.keymap.set("n", "<leader>cq", vim.diagnostic.setqflist)
 vim.keymap.set("n", "<leader>cl", vim.diagnostic.setloclist)
 vim.keymap.set("n", "<leader>cm", ":make ")
 vim.keymap.set("n", "<leader>cc", "<cmd>make<cr>")
+vim.keymap.set("n", "<leader>cr", "<cmd>make run<cr>")
 vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua files<cr>")
 vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>")
+vim.keymap.set("n", "<leader>/", "<cmd>FzfLua live_grep<cr>")
 vim.keymap.set("n", "<leader><leader>", "<cmd>FzfLua global<cr>")
+
+vim.keymap.set("n", "<leader>dc", function() require("dap").continue() end)
+vim.keymap.set("n", "<leader>dn", function() require("dap").step_over() end)
+vim.keymap.set("n", "<leader>di", function() require("dap").step_into() end)
+vim.keymap.set("n", "<leader>do", function() require("dap").step_out() end)
+vim.keymap.set("n", "<leader>db", function() require("dap").toggle_breakpoint() end)
+vim.keymap.set("n", "<leader>dr", function() require("dap").repl.toggle() end)
 
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
@@ -53,18 +67,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
         if client:supports_method("textDocument/completion", args.buf) then
             vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
-        end
-
-        if client:supports_method("textDocument/formatting") then
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                buffer = args.buf,
-                callback = function()
-                    if vim.bo[args.buf].filetype == "go" then
-                        vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
-                    end
-                    vim.lsp.buf.format({ id = client.id })
-                end,
-            })
         end
 
         vim.keymap.set("n", "gd", vim.lsp.buf.definition)
