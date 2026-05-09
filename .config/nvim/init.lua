@@ -21,29 +21,35 @@ vim.opt.wildoptions:append("fuzzy")
 vim.opt.wildignore:append({ "*/.git/*", "*/build/*" })
 vim.opt.path:append("**")
 
-vim.g.loaded_netrwPlugin = 1
-
 vim.pack.add({
-    "https://github.com/folke/lazydev.nvim",
     "https://github.com/neovim/nvim-lspconfig",
-    "https://github.com/supermaven-inc/supermaven-nvim",
+    "https://github.com/nvim-treesitter/nvim-treesitter",
     "https://github.com/ibhagwan/fzf-lua",
-    "https://github.com/nvim-lua/plenary.nvim",
-    "https://github.com/mikavilpas/yazi.nvim"
+    "https://github.com/stevearc/conform.nvim",
+    "https://github.com/monkoose/neocodeium",
 })
 
-require("lazydev").setup()
 require("fzf-lua").setup()
-require("supermaven-nvim").setup({})
-require("yazi").setup({})
+require("nvim-treesitter").setup({})
 
-for _, server in ipairs({ "lua_ls", "clangd", "gopls", "ols" }) do
+local neocodeium = require("neocodeium")
+neocodeium.setup({})
+
+require("conform").setup({
+    formatters_by_ft = {
+        markdown = { "prettierd", "prettier", stop_after_first = true },
+    },
+    format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
+})
+
+for _, server in ipairs({ "lua_ls", "ols", "org", "ts_ls", "gdscript" }) do
     vim.lsp.enable(server)
 end
 
+
 vim.keymap.set({ "n", "v" }, "+y", [["+y]])
 vim.keymap.set({ "n", "v" }, "+d", [["_d]])
-vim.keymap.set("n", "-", require("yazi").yazi)
+vim.keymap.set("n", "-", "<cmd>Ex<cr>")
 vim.keymap.set("n", "<leader>cq", vim.diagnostic.setqflist)
 vim.keymap.set("n", "<leader>cl", vim.diagnostic.setloclist)
 vim.keymap.set("n", "<leader>cm", ":make ")
@@ -53,6 +59,12 @@ vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua files<cr>")
 vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>")
 vim.keymap.set("n", "<leader>/", "<cmd>FzfLua live_grep<cr>")
 vim.keymap.set("n", "<leader><leader>", "<cmd>FzfLua global<cr>")
+
+vim.keymap.set("i", "<C-l>", function() neocodeium.accept() end)
+vim.keymap.set("i", "<C-g>", function() neocodeium.accept_line() end)
+vim.keymap.set("i", "<C-j>", function() neocodeium.cycle_or_complete() end)
+vim.keymap.set("i", "<C-k>", function() neocodeium.cycle_or_complete(-1) end)
+vim.keymap.set("i", "<C-c>", function() neocodeium.clear() end)
 
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
