@@ -7,8 +7,14 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "agent_buffer_font_size": 13.0,
+  "theme": {
+    "mode": "light",
+    "light": "Alabaster BG Light",
+    "dark": "Alabaster BG Light"
+  },
   "agent_ui_font_size": 14.0,
-  "ui_font_size": 13.0,
+  "ui_font_size": 14.0,
   "git": {
     "git_gutter": "hide",
     "inline_blame": {
@@ -31,6 +37,10 @@
   },
   "ui_font_family": "Overpass",
   "edit_predictions": {
+    "open_ai_compatible_api": {
+      "model": ""
+    },
+    "mode": "subtle",
     "provider": "zed",
   },
   "scrollbar": {
@@ -48,7 +58,7 @@
     "show_branch_name": false,
   },
   "buffer_line_height": "standard",
-  "buffer_font_family": "OverpassM Nerd Font Mono",
+  "buffer_font_family": "Overpass Mono",
   "vim": {
     "use_smartcase_find": true,
     "toggle_relative_line_numbers": true,
