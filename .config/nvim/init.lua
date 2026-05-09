@@ -16,33 +16,40 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.completeopt = "menuone,noselect,popup"
 vim.opt.wrap = false
+vim.opt.wildmode = "longest:full,full"
+vim.opt.wildoptions:append("fuzzy")
+vim.opt.wildignore:append({ "*/.git/*", "*/build/*" })
+vim.opt.path:append("**")
 
 vim.pack.add({
     "https://github.com/neovim/nvim-lspconfig",
-    "https://github.com/supermaven-inc/supermaven-nvim",
-    "https://github.com/stevearc/conform.nvim",
+    "https://github.com/nvim-treesitter/nvim-treesitter",
     "https://github.com/ibhagwan/fzf-lua",
+    "https://github.com/stevearc/conform.nvim",
+    "https://github.com/monkoose/neocodeium",
 })
 
 require("fzf-lua").setup()
-require("supermaven-nvim").setup({})
+require("nvim-treesitter").setup({})
+
+local neocodeium = require("neocodeium")
+neocodeium.setup({})
+
 require("conform").setup({
     formatters_by_ft = {
         markdown = { "prettierd", "prettier", stop_after_first = true },
     },
-    format_on_save = {
-        timeout_ms = 500,
-        lsp_format = "fallback",
-    },
+    format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
 })
 
-for _, server in ipairs({ "lua_ls", "ols", "ts_ls", "marksman" }) do
+for _, server in ipairs({ "lua_ls", "ols", "org", "ts_ls", "gdscript" }) do
     vim.lsp.enable(server)
 end
 
+
 vim.keymap.set({ "n", "v" }, "+y", [["+y]])
 vim.keymap.set({ "n", "v" }, "+d", [["_d]])
-vim.keymap.set("n", "-", ":Ex<cr>")
+vim.keymap.set("n", "-", "<cmd>Ex<cr>")
 vim.keymap.set("n", "<leader>cq", vim.diagnostic.setqflist)
 vim.keymap.set("n", "<leader>cl", vim.diagnostic.setloclist)
 vim.keymap.set("n", "<leader>cm", ":make ")
@@ -53,12 +60,11 @@ vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>")
 vim.keymap.set("n", "<leader>/", "<cmd>FzfLua live_grep<cr>")
 vim.keymap.set("n", "<leader><leader>", "<cmd>FzfLua global<cr>")
 
-vim.keymap.set("n", "<leader>dc", function() require("dap").continue() end)
-vim.keymap.set("n", "<leader>dn", function() require("dap").step_over() end)
-vim.keymap.set("n", "<leader>di", function() require("dap").step_into() end)
-vim.keymap.set("n", "<leader>do", function() require("dap").step_out() end)
-vim.keymap.set("n", "<leader>db", function() require("dap").toggle_breakpoint() end)
-vim.keymap.set("n", "<leader>dr", function() require("dap").repl.toggle() end)
+vim.keymap.set("i", "<C-l>", function() neocodeium.accept() end)
+vim.keymap.set("i", "<C-g>", function() neocodeium.accept_line() end)
+vim.keymap.set("i", "<C-j>", function() neocodeium.cycle_or_complete() end)
+vim.keymap.set("i", "<C-k>", function() neocodeium.cycle_or_complete(-1) end)
+vim.keymap.set("i", "<C-c>", function() neocodeium.clear() end)
 
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
@@ -69,6 +75,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
             vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
         end
 
+        if client:supports_method("textDocument/formatting") then
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                buffer = args.buf,
+                callback = function()
+                    vim.lsp.buf.format({ id = client.id })
+                end,
+            })
+        end
+
         vim.keymap.set("n", "gd", vim.lsp.buf.definition)
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
     end,
@@ -76,7 +91,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 vim.api.nvim_create_autocmd("OptionSet", {
     pattern = "background",
-    callback = function() vim.api.nvim_set_hl(0, "Normal", { bg = "none" }) end
+    callback = function()
+        vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+    end
 })
 
-vim.api.nvim_create_autocmd("TextYankPost", { callback = function() vim.highlight.on_yank() end })
+vim.api.nvim_create_autocmd("TextYankPost", {
+    callback = function()
+        vim.highlight.on_yank()
+    end
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "odin",
+    callback = function()
+        vim.bo.errorformat = "%f:%l:%c: %m"
+    end,
+})
