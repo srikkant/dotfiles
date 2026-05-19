@@ -20,7 +20,6 @@
        fold
        (format +onsave +apheleia)
        snippets
-       (whitespace +guess +trim)
 
        :emacs
        dired
@@ -39,6 +38,7 @@
        (eval +overlay)
        (lookup +docsets)
        (lsp +eglot)
+       (debugger +lsp)
        magit
        make
        tree-sitter
