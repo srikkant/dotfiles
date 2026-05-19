@@ -1,4 +1,5 @@
 font-family = OverpassM Nerd Font Mono
 font-style = SemiBold
 theme = light:Alabaster, dark:Cursor Dark
-macos-titlebar-style = hidden
+background-opacity = 0.85
+background-blur = true

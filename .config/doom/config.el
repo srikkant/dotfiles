@@ -5,24 +5,20 @@
 (add-to-list 'default-frame-alist '(undecorated-round . t))
 
 (setq doom-theme nil)
-(setq doom-font (font-spec :family "Geist Mono" :size 13))
+(setq doom-font (font-spec :family "OverpassM Nerd Font Mono" :size 13))
 (setq display-line-numbers-type 'relative)
 (setq shell-file-name (executable-find "bash"))
 
 (setq-default vterm-shell (executable-find "fish"))
 (setq-default explicit-shell-file-name (executable-find "fish"))
 
-(after! eglot
-  (add-to-list 'eglot-stay-out-of 'eldoc))
-
-(after! projectile
-  (add-to-list 'projectile-ignored-projects (expand-file-name "~/") t))
+(after! eglot (add-to-list 'eglot-stay-out-of 'eldoc))
+(after! projectile (add-to-list 'projectile-ignored-projects (expand-file-name "~/") t))
 
 (add-hook! '(odin-mode-hook)
   (after! apheleia
     (setf (alist-get 'odinfmt apheleia-formatters) '("odinfmt" "-stdin"))
-    (setf (alist-get 'odin-mode apheleia-mode-alist) 'odinfmt)
-    (setf (alist-get 'odin-ts-mode apheleia-mode-alist) 'odinfmt)))
+    (setf (alist-get 'odin-mode apheleia-mode-alist) 'odinfmt)))
 
 (use-package! auto-dark
   :defer t

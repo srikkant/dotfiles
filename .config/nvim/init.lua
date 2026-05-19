@@ -17,23 +17,20 @@ vim.opt.smartcase = true
 vim.opt.completeopt = "menuone,noselect,popup"
 vim.opt.wrap = false
 vim.opt.wildmode = "longest:full,full"
-vim.opt.wildoptions:append("fuzzy")
-vim.opt.wildignore:append({ "*/.git/*", "*/build/*" })
-vim.opt.path:append("**")
 
 vim.pack.add({
     "https://github.com/neovim/nvim-lspconfig",
-    "https://github.com/nvim-treesitter/nvim-treesitter",
     "https://github.com/ibhagwan/fzf-lua",
     "https://github.com/stevearc/conform.nvim",
-    "https://github.com/monkoose/neocodeium",
+    "https://github.com/mason-org/mason.nvim",
+    "https://github.com/supermaven-inc/supermaven-nvim",
+    "https://github.com/mfussenegger/nvim-dap",
+    "https://github.com/thehamsta/nvim-dap-virtual-text"
 })
 
 require("fzf-lua").setup()
-require("nvim-treesitter").setup({})
-
-local neocodeium = require("neocodeium")
-neocodeium.setup({})
+require("mason").setup()
+require("supermaven-nvim").setup({})
 
 require("conform").setup({
     formatters_by_ft = {
@@ -42,10 +39,33 @@ require("conform").setup({
     format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
 })
 
-for _, server in ipairs({ "lua_ls", "ols", "org", "ts_ls", "gdscript" }) do
+for _, server in ipairs({ "lua_ls", "ols" }) do
     vim.lsp.enable(server)
 end
 
+local dap = require("dap")
+local dap_widgets = require("dap.ui.widgets")
+
+dap.adapters.codelldb = {
+    type = "executable",
+    command = "codelldb",
+}
+
+dap.configurations.odin = {
+    {
+        name = "Launch",
+        type = "codelldb",
+        request = "launch",
+        program = function()
+            return vim.fn.getcwd() .. "/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+        end,
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+        args = {},
+    },
+}
+
+require("nvim-dap-virtual-text").setup()
 
 vim.keymap.set({ "n", "v" }, "+y", [["+y]])
 vim.keymap.set({ "n", "v" }, "+d", [["_d]])
@@ -55,16 +75,19 @@ vim.keymap.set("n", "<leader>cl", vim.diagnostic.setloclist)
 vim.keymap.set("n", "<leader>cm", ":make ")
 vim.keymap.set("n", "<leader>cc", "<cmd>make<cr>")
 vim.keymap.set("n", "<leader>cr", "<cmd>make run<cr>")
+vim.keymap.set("n", "<leader>cd", "<cmd>make debug<cr>")
 vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua files<cr>")
 vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>")
 vim.keymap.set("n", "<leader>/", "<cmd>FzfLua live_grep<cr>")
 vim.keymap.set("n", "<leader><leader>", "<cmd>FzfLua global<cr>")
 
-vim.keymap.set("i", "<C-l>", function() neocodeium.accept() end)
-vim.keymap.set("i", "<C-g>", function() neocodeium.accept_line() end)
-vim.keymap.set("i", "<C-j>", function() neocodeium.cycle_or_complete() end)
-vim.keymap.set("i", "<C-k>", function() neocodeium.cycle_or_complete(-1) end)
-vim.keymap.set("i", "<C-c>", function() neocodeium.clear() end)
+vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
+vim.keymap.set("n", "<F5>", dap.continue)
+vim.keymap.set("n", "<F6>", dap.terminate)
+vim.keymap.set("n", "<F7>", dap_widgets.hover)
+vim.keymap.set("n", "<F8>", dap.step_over)
+vim.keymap.set("n", "<F9>", dap.step_into)
+vim.keymap.set("n", "<F10>", dap.step_out)
 
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
@@ -79,9 +102,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
             vim.api.nvim_create_autocmd("BufWritePre", {
                 buffer = args.buf,
                 callback = function()
-                    if vim.bo[args.buf].filetype == "go" then
-                        vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
-                    end
                     vim.lsp.buf.format({ id = client.id })
                 end,
             })
