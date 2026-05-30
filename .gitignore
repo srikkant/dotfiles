@@ -4,5 +4,7 @@
 .theme.css
 .theme.toml
 
+.config/foot/dank-colors.ini
+
 .config/zed/conversations
 .config/zed/prompts
