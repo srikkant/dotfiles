@@ -10,7 +10,6 @@
        (emoji +unicode)
        hl-todo
        ligatures
-       modeline
        ophints
        (popup +defaults)
        workspaces
@@ -19,9 +18,8 @@
        (evil +everywhere)
        file-templates
        fold
-       (format +onsave)
+       (format +onsave +apheleia)
        snippets
-       (whitespace +guess +trim)
 
        :emacs
        dired
@@ -40,14 +38,20 @@
        (eval +overlay)
        (lookup +docsets)
        (lsp +eglot)
+       (debugger +lsp)
        magit
        make
        tree-sitter
+
+       :os
+       (:if (featurep :system 'macos) macos)
 
        :lang
        emacs-lisp
        markdown
        (org +pretty +roam)
+       (go +lsp + tree-sitter)
+       (odin +lsp)
        json
 
        :config
