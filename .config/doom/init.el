@@ -38,7 +38,7 @@
        (eval +overlay)
        (lookup +docsets)
        (lsp +eglot)
-       (debugger +lsp)
+       debugger
        magit
        make
        tree-sitter
