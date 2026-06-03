@@ -201,7 +201,7 @@
   "networkPreference": "auto",
   "iconTheme": "Bibata-Modern-Amber",
   "cursorSettings": {
-    "theme": "Bibata-Modern-Classic",
+    "theme": "BreezeX-RosePine-Linux",
     "size": 24,
     "niri": {
       "hideWhenTyping": false,
@@ -413,7 +413,7 @@
       "id": "default",
       "name": "Main Bar",
       "enabled": true,
-      "position": 0,
+      "position": 2,
       "screenPreferences": [
         "all"
       ],
