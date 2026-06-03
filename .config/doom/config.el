@@ -5,7 +5,7 @@
 (add-to-list 'default-frame-alist '(undecorated-round . t))
 
 (setq doom-theme nil)
-(setq doom-font (font-spec :family "OverpassM Nerd Font Mono" :size 13))
+(setq doom-font (font-spec :family "Geist Mono" :size 13))
 (setq display-line-numbers-type 'relative)
 (setq shell-file-name (executable-find "bash"))
 
@@ -38,6 +38,8 @@
 (use-package! copilot
   :hook ((prog-mode . copilot-mode)
          (prog-mode . copilot-nes-mode))
+  :config
+  (setq copilot-indent-offset-warning-disable t)
   :bind (:map copilot-completion-map
               ("<tab>" . 'copilot-accept-completion)
               ("TAB" . 'copilot-accept-completion)))
