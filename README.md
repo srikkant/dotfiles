@@ -1,10 +1,10 @@
 # srikkant's dotfiles
 
-- **stow**: config management
+- **DMS**: desktop environment(?)
+- **niri**: window manager
+- **doom(emacs)**: everything
 - **fish**: shell
-- **alacritty**: terminal
-- **tmux**: multiplexer
+- **ghostty**: terminal
 - **nvim**: editor
-- **zoxide**: jump to directories
 
 run `stow ~ .` to setup the config.
