@@ -18,6 +18,8 @@
 (global-display-line-numbers-mode 1)
 (pixel-scroll-precision-mode t)
 
+(setq fill-column 100)
+
 ;; Set up which key first. Even if something else breaks, this will
 ;; help me out.
 
@@ -34,9 +36,10 @@
 
 (set-face-attribute 'default nil :family "Geist Mono" :height 100)
 (set-face-attribute 'fixed-pitch nil :family "Geist Mono" :height 100)
-(set-face-attribute 'variable-pitch nil :family "Geist" :height 120)
+(set-face-attribute 'variable-pitch nil :family "Geist" :height 100)
 
-(use-package modus-themes
+(use-package doom-themes
+  :ensure t
   :config
   (setq modus-themes-italic-constructs nil)
   (setq modus-themes-common-palette-overrides
@@ -78,7 +81,9 @@
 
 (use-package project
   :straight (:type built-in)
-  :ensure t)
+  :config
+  (setq project-vc-extra-root-markers '(".project"))
+  (setq project-switch-commands 'project-dired))
 
 ;;
 ;; ORG & SOME RICE
@@ -92,18 +97,33 @@
   (org-pretty-entities t)
   (org-hide-macro-markers t)
   (org-log-into-drawer t)
+  (org-startup-indented t)
   :config
   (add-hook 'org-mode-hook #'visual-line-mode)
   (global-set-key (kbd "C-c l") #'org-store-link)
   (global-set-key (kbd "C-c a") #'org-agenda)
-  (global-set-key (kbd "C-c c") #'org-capture))
+  (global-set-key (kbd "C-c c") #'org-capture)
+  (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
+  (setq org-refile-use-outline-path 'file)
+  (setq org-outline-path-complete-in-steps nil))
+
+(use-package olivetti
+  :ensure t
+  :hook
+  (org-mode . olivetti-mode)
+  (markdown-mode . olivetti-mode)
+  :custom
+  (olivetti-body-width 80)
+  (olivetti-style 'fancy)
+  (olivetti-minimum-body-width 80))
 
 (use-package org-modern
   :straight t
   :hook ((org-mode . org-modern-mode)
          (org-agenda-finalize . org-modern-agenda))
   :custom
-  (org-modern-star '("◉" "○" "◈" "◇" "★" "☆"))
+  (org-modern-star "replace")
+  (org-modern-replace-stars "○✦◈◇★")
   (org-modern-table t)
   (org-modern-block-name t)
   (org-modern-block-fringe t)
@@ -113,20 +133,29 @@
   (org-modern-tag t)
   (org-modern-timestamp t))
 
-(use-package olivetti
-  :ensure t
-  :hook (org-mode . olivetti-mode)
-  :custom
-  (olivetti-body-width 80)
-  (olivetti-style 'fancy)
-  (olivetti-minimum-body-width 80))
-
 (defun my/org-style-faces ()
   (interactive)
-  (display-line-numbers-mode -1)
-  (setq fill-column 80)
-  (setq line-spacing 0.1)
-  (setq cursor-type 'bar)
+  (variable-pitch-mode 1)
+
+  (dolist (face '(org-block
+                  org-block-begin-line
+                  org-block-end-line
+                  org-code
+                  org-verbatim
+                  org-table
+                  org-formula
+                  org-latex-and-related
+                  org-checkbox
+                  org-property-value
+                  org-special-keyword
+                  org-tag
+                  org-meta-line
+                  org-document-info-keyword
+                  org-drawer
+                  org-indent
+                  line-number
+                  line-number-current-line))
+	(set-face-attribute face nil :inherit 'fixed-pitch))
 
   (dolist (face '(org-block
                   org-block-begin-line
@@ -143,14 +172,13 @@
                   line-number-current-line))
     (set-face-attribute face nil :inherit 'fixed-pitch))
 
-  (dolist (face '((org-level-1)
-                  (org-level-2)
-                  (org-level-3)
-                  (org-level-4)
-                  (org-level-5)))
-    (set-face-attribute (car face) nil
-                        :inherit 'variable-pitch
-                        :weight 'bold)))
+  (dolist (face '(org-level-1
+                  org-level-2
+                  org-level-3
+                  org-level-4
+                  org-level-5))
+    (set-face-attribute face nil
+                        :inherit 'variable-pitch)))
 
 (add-hook 'org-mode-hook #'my/org-style-faces)
 
@@ -166,7 +194,10 @@
 
 (use-package ghostel
   :ensure t
-  :bind (("C-c t" . ghostel)))
+  :bind (("C-c t" . ghostel)
+		 :map project-prefix-map
+		 ("t" . ghostel-project)
+         ("T" . ghostel-project-list-buffers)))
 
 (use-package vertico
   :ensure t
@@ -183,34 +214,12 @@
      (variable (styles orderless))))
   (orderless-matching-styles '(orderless-regexp orderless-flex)))
 
-(use-package marginalia
-  :ensure t
-  :init (marginalia-mode 1))
-
-(use-package consult
-  :ensure t
-  :bind (
-         ("C-x b" . consult-buffer)
-         ("C-x B" . consult-buffer-other-window)
-         ("C-s" . consult-line)
-         ("C-c r" . consult-ripgrep)
-         ("C-c m" . consult-mark)
-         ("C-c g" . consult-xref)
-         ("C-c m" . consult-mark)
-         ("C-c o" . consult-outline))
-  :config
-  (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git"))))
-
 (use-package embark
   :ensure t
   :bind (("C-." . embark-act)
          ("C-;" . embark-dwim)
          ("C-h B" . embark-bindings))
   :init (setq prefix-help-command #'embark-prefix-help-command))
-
-(use-package embark-consult
-  :ensure t
-  :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 ;;
 ;; LANGUAGE SUPPORT
@@ -227,6 +236,13 @@
   (add-hook 'eglot-managed-mode-hook
             (lambda ()
               (add-hook 'before-save-hook #'eglot-format nil t))))
+
+(use-package markdown-mode
+  :ensure t
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'"          . markdown-mode)
+         ("\\.markdown\\'"    . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 
 (use-package odin-ts-mode
   :straight (odin-ts-mode :type git
@@ -300,6 +316,8 @@
 
 (dolist (mode '(eshell-mode-hook
 				ghostel-mode-hook
+				org-mode-hook
+				markdown-mode-hook
                 shell-mode-hook
                 magit-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))

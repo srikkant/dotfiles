@@ -18,6 +18,10 @@
 (setq default-frame-alist
       '((menu-bar-lines . 0)
         (tool-bar-lines . 0)
+<<<<<<< HEAD
 		(alpha-background . 85)
         (vertical-scroll-bars . nil)
         (undecorated-round . t)))
+=======
+        (vertical-scroll-bars . nil)))
+>>>>>>> 167487a (chore: solarized and ligatures)

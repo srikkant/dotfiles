@@ -224,7 +224,8 @@
   "launcherLogoContrast": 1,
   "launcherLogoSizeOffset": 0,
   "fontFamily": "Geist",
-  "monoFontFamily": "Hasklig Semibold",
+  "fontWeight": 400,
+  "monoFontFamily": "Geist Mono",
   "fontWeight": 400,
   "fontScale": 1,
   "notepadUseMonospace": true,
@@ -421,18 +422,19 @@
       "leftWidgets": [
         "workspaceSwitcher"
       ],
-      "centerWidgets": [],
+      "centerWidgets": [
+        {
+          "id": "clock",
+          "enabled": true
+        }
+      ],
       "rightWidgets": [
         {
+          "id": "battery",
+          "enabled": true
+        },
+        {
           "id": "music",
-          "enabled": true
-        },
-        {
-          "id": "systemTray",
-          "enabled": true
-        },
-        {
-          "id": "clipboard",
           "enabled": true
         },
         {
@@ -440,20 +442,7 @@
           "enabled": true
         },
         {
-          "id": "spacer",
-          "enabled": true,
-          "size": 20
-        },
-        {
           "id": "controlCenterButton",
-          "enabled": true
-        },
-        {
-          "id": "battery",
-          "enabled": true
-        },
-        {
-          "id": "clock",
           "enabled": true
         }
       ],
