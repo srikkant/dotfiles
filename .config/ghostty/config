@@ -1,5 +1,6 @@
 font-size = 10
 font-family = Hasklig
+font-style = SemiBold
 background-opacity = 0.9
 gtk-single-instance = true
-theme = dankcolors
+theme = light:iTerm2 Solarized Light,dark:iTerm2 Solarized Dark

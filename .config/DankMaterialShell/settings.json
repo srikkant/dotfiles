@@ -413,7 +413,7 @@
       "id": "default",
       "name": "Main Bar",
       "enabled": true,
-      "position": 0,
+      "position": 2,
       "screenPreferences": [
         "all"
       ],
@@ -421,7 +421,12 @@
       "leftWidgets": [
         "workspaceSwitcher"
       ],
-      "centerWidgets": [],
+      "centerWidgets": [
+        {
+          "id": "clock",
+          "enabled": true
+        }
+      ],
       "rightWidgets": [
         {
           "id": "music",
@@ -446,14 +451,6 @@
         },
         {
           "id": "controlCenterButton",
-          "enabled": true
-        },
-        {
-          "id": "battery",
-          "enabled": true
-        },
-        {
-          "id": "clock",
           "enabled": true
         }
       ],
