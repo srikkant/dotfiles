@@ -9,7 +9,7 @@
        doom
        (emoji +unicode)
        hl-todo
-       ligatures
+       (ligatures +extra)
        ophints
        (popup +defaults)
        workspaces
@@ -18,7 +18,7 @@
        (evil +everywhere)
        file-templates
        fold
-       (format +onsave +apheleia)
+       (format +onsave)
        snippets
 
        :emacs
@@ -43,15 +43,14 @@
        make
        tree-sitter
 
-       :os
-       (:if (featurep :system 'macos) macos)
-
        :lang
        emacs-lisp
        markdown
-       (org +pretty +roam)
-       (go +lsp + tree-sitter)
-       (odin +lsp)
+       (org +roam2)
+       (go +lsp +tree-sitter)
+       (odin +lsp +tree-sitter)
+       (javascript +lsp +tree-sitter)
+       (web +lsp +tree-sitter)
        json
 
        :config

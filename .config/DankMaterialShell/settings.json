@@ -198,13 +198,13 @@
   "dankLauncherV2UnloadOnClose": false,
   "useAutoLocation": false,
   "weatherEnabled": false,
-  "networkPreference": "auto",
+  "networkPreference": "wifi",
   "iconTheme": "Bibata-Modern-Amber",
   "cursorSettings": {
     "theme": "BreezeX-RosePine-Linux",
     "size": 24,
     "niri": {
-      "hideWhenTyping": false,
+      "hideWhenTyping": true,
       "hideAfterInactiveMs": 0
     },
     "hyprland": {
@@ -225,7 +225,7 @@
   "launcherLogoSizeOffset": 0,
   "fontFamily": "Geist",
   "monoFontFamily": "Geist Mono",
-  "fontWeight": 700,
+  "fontWeight": 400,
   "fontScale": 1,
   "notepadUseMonospace": true,
   "notepadFontFamily": "",
@@ -243,9 +243,9 @@
   "acSuspendTimeout": 600,
   "acSuspendBehavior": 2,
   "acProfileName": "",
-  "batteryMonitorTimeout": 0,
+  "batteryMonitorTimeout": 180,
   "batteryLockTimeout": 0,
-  "batterySuspendTimeout": 0,
+  "batterySuspendTimeout": 300,
   "batterySuspendBehavior": 0,
   "batteryProfileName": "",
   "batteryChargeLimit": 100,
@@ -289,9 +289,9 @@
   "matugenTemplateZenBrowser": false,
   "matugenTemplateVesktop": false,
   "matugenTemplateEquibop": false,
-  "matugenTemplateGhostty": false,
+  "matugenTemplateGhostty": true,
   "matugenTemplateKitty": false,
-  "matugenTemplateFoot": true,
+  "matugenTemplateFoot": false,
   "matugenTemplateAlacritty": false,
   "matugenTemplateNeovim": false,
   "matugenTemplateWezterm": false,
@@ -299,7 +299,7 @@
   "matugenTemplateKcolorscheme": true,
   "matugenTemplateVscode": false,
   "matugenTemplateEmacs": true,
-  "matugenTemplateZed": true,
+  "matugenTemplateZed": false,
   "showDock": false,
   "dockAutoHide": false,
   "dockSmartAutoHide": false,
@@ -413,7 +413,7 @@
       "id": "default",
       "name": "Main Bar",
       "enabled": true,
-      "position": 2,
+      "position": 0,
       "screenPreferences": [
         "all"
       ],
@@ -421,15 +421,12 @@
       "leftWidgets": [
         "workspaceSwitcher"
       ],
-      "centerWidgets": [
-        "music",
-        {
-          "id": "clock",
-          "enabled": true,
-          "clockCompactMode": false
-        }
-      ],
+      "centerWidgets": [],
       "rightWidgets": [
+        {
+          "id": "music",
+          "enabled": true
+        },
         {
           "id": "systemTray",
           "enabled": true
@@ -449,6 +446,14 @@
         },
         {
           "id": "controlCenterButton",
+          "enabled": true
+        },
+        {
+          "id": "battery",
+          "enabled": true
+        },
+        {
+          "id": "clock",
           "enabled": true
         }
       ],

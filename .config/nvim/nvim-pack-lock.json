@@ -12,10 +12,6 @@
       "rev": "bb639d4bf385a4d89f478b83af4d770be05ab7eb",
       "src": "https://github.com/mason-org/mason.nvim"
     },
-    "neocodeium": {
-      "rev": "f41ecfc1fa3e462396e78e6007448c1da47bfde1",
-      "src": "https://github.com/monkoose/neocodeium"
-    },
     "nvim-dap": {
       "rev": "531771530d4f82ad2d21e436e3cc052d68d7aebb",
       "src": "https://github.com/mfussenegger/nvim-dap"
