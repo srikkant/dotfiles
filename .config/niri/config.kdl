@@ -23,6 +23,12 @@ input {
         natural-scroll;
         click-method "clickfinger"
     }
+    keyboard {
+        xkb {
+            options "ctrl:nocaps"
+        }
+    }
+
 }
 
 window-rule {
@@ -37,7 +43,7 @@ window-rule {
 
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
-    Mod+B hotkey-overlay-title="Browser" { spawn "chromium-browser"; }
+    Mod+B hotkey-overlay-title="Browser" { spawn "google-chrome-beta"; }
 
     Mod+Q repeat=false { close-window; }
 

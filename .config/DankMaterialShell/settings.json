@@ -9,7 +9,7 @@
   "popupTransparency": 1,
   "dockTransparency": 1,
   "widgetBackgroundColor": "sch",
-  "widgetColorMode": "colorful",
+  "widgetColorMode": "default",
   "controlCenterTileColorMode": "primary",
   "buttonColorMode": "primary",
   "cornerRadius": 12,
@@ -199,7 +199,7 @@
   "useAutoLocation": false,
   "weatherEnabled": false,
   "networkPreference": "wifi",
-  "iconTheme": "Bibata-Modern-Amber",
+  "iconTheme": "BreezeX-RosePine-Linux",
   "cursorSettings": {
     "theme": "BreezeX-RosePine-Linux",
     "size": 24,
@@ -223,8 +223,8 @@
   "launcherLogoBrightness": 0.5,
   "launcherLogoContrast": 1,
   "launcherLogoSizeOffset": 0,
-  "fontFamily": "Geist",
-  "monoFontFamily": "Geist Mono",
+  "fontFamily": "Source Serif 4 18pt Medium",
+  "monoFontFamily": "Hasklig Semibold",
   "fontWeight": 400,
   "fontScale": 1,
   "notepadUseMonospace": true,
@@ -259,6 +259,7 @@
   "brightnessDevicePins": {},
   "wifiNetworkPins": {
     "preferredWifi": [
+      "thehomeofikka",
       "Airtel_thehomeofikka"
     ]
   },
@@ -457,7 +458,7 @@
       "spacing": 4,
       "innerPadding": 0,
       "bottomGap": 0,
-      "transparency": 0.8,
+      "transparency": 0,
       "widgetTransparency": 1,
       "squareCorners": false,
       "noBackground": false,
@@ -570,6 +571,9 @@
   "builtInPluginSettings": {
     "dms_settings_search": {
       "trigger": "?",
+      "enabled": false
+    },
+    "dms_notepad": {
       "enabled": false
     }
   },
