@@ -43,8 +43,14 @@
 
 (use-package orderless
   :ensure t
-  :custom (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
+  :custom
+  (completion-styles '(orderless))
+  (completion-category-defaults nil)
+  (completion-category-overrides
+   '((file (styles partial-completion orderless))
+     (command (styles orderless))
+     (variable (styles orderless))))
+  (orderless-matching-styles '(orderless-regexp orderless-flex)))
 
 (use-package marginalia
   :ensure t
@@ -132,16 +138,32 @@
 (use-package minuet
   :ensure t
   :init (add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
-  :config (setq minuet-gemini-options (plist-put minuet-gemini-options
-						 :model "gemini-flash-lite-latest"))
+  :config (setq minuet-gemini-options
+		(plist-put minuet-gemini-options
+			   :model "gemini-flash-lite-latest"))
   (setq minuet-auto-suggestion-block-predicates
         (list #'my/minuet-block-on-navigation
               #'my/minuet-block-middle-of-word))
   (setq minuet-provider 'gemini)
-  :bind (:map minuet-active-mode-map ("<tab>" . minuet-accept-suggestion)
+  :bind (:map minuet-active-mode-map
+	      ("<tab>" . minuet-accept-suggestion)
 	      ("TAB" . minuet-accept-suggestion)
 	      ("<escape>" . minuet-dismiss-suggestion)
 	      ("ESC" . minuet-dismiss-suggestion)))
+
+(use-package elfeed
+  :demand t
+  :bind ("C-x r" . elfeed)
+  :config
+  (setq-default elfeed-search-filter "@1-month-ago +unread ")
+  (setq elfeed-feeds
+	'(("https://www.reddit.com/user/srikkant/m/srikkant.rss" reddit)
+	  ("https://www.youtube.com/feeds/videos.xml?channel_id=UChk6TQce1EJMn6_liKdHDog" youtube)
+	  ("https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ" youtube)
+	  ("https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw" youtube)
+	  ("https://www.youtube.com/feeds/videos.xml?channel_id=UCaTznQhurW5AaiYPbhEA-KA" youtube)
+	  ("https://thegradient.pub/rss" tech)
+          ("https://www.thehindu.com/feeder/default.rss" india))))
 
 (dolist (mode '(eshell-mode-hook
 		ghostel-mode-hook
