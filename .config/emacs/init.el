@@ -9,19 +9,25 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (global-display-line-numbers-mode 1)
+(column-number-mode t)
+(pixel-scroll-precision-mode t)
+
+(setopt mode-line-collapse-minor-modes t)
 
 (setq display-line-numbers-type 'relative)
-(setq tab-width 4)
+(setq-default tab-width 4)
+(setq frame-resize-pixelwise t)
 
 (set-frame-parameter nil 'alpha-background 90)
 (add-to-list 'default-frame-alist '(alpha-background . 90))
 (add-to-list 'default-frame-alist '(undecorated-round . t))
-(add-to-list 'default-frame-alist '(font . "Hasklig-10"))
 
 (global-set-key (kbd "C-c <left>")  #'windmove-left)
 (global-set-key (kbd "C-c <right>") #'windmove-right)
 (global-set-key (kbd "C-c <up>")    #'windmove-up)
 (global-set-key (kbd "C-c <down>")  #'windmove-down)
+
+(add-to-list 'default-frame-alist '(font . "Geist Mono-13"))
 
 (defvar bootstrap-version)
 (let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el" (or (bound-and-true-p straight-base-dir) user-emacs-directory)))
@@ -40,8 +46,8 @@
 (setq which-key-idle-delay 0.5)
 (setq which-key-side-window-location 'bottom)
 
-(use-package doom-themes
-  :config (load-theme 'doom-solarized-dark t))
+(require-theme 'modus-themes)
+(global-set-key (kbd "C-c C-\\") 'modus-themes-toggle)
 
 (use-package vertico
   :ensure t
@@ -104,7 +110,7 @@
 (use-package magit
   :ensure t
   :bind (("C-x g" . magit-status)
-	 ("C-c g" . magit-file-dispatch)))
+		 ("C-c g" . magit-file-dispatch)))
 
 (use-package org
   :ensure t
@@ -121,8 +127,8 @@
 
 (use-package odin-ts-mode
   :straight (odin-ts-mode :type git
-			  :host github
-			  :repo "Sampie159/odin-ts-mode"))
+						  :host github
+						  :repo "Sampie159/odin-ts-mode"))
 
 (use-package eglot
   :hook (odin-ts-mode . eglot-ensure)
@@ -133,22 +139,22 @@
   :hook ((odin-ts-mode) . eglot-ensure)
   :config (add-to-list 'eglot-server-programs '(odin-ts-mode . ("ols")))
   (add-hook 'odin-mode-hook (lambda ()
-			      (add-hook 'before-save-hook #'eglot-format nil t))))
+							  (add-hook 'before-save-hook #'eglot-format nil t))))
 
 (add-to-list 'auto-mode-alist '("\\.odin\\'" . odin-ts-mode))
 
 (defun my/format-elisp-buffer () "Indent the current buffer and clean up whitespace." (interactive)
        (indent-region (point-min)
-		      (point-max))
+					  (point-max))
        (delete-trailing-whitespace))
 
 (add-hook 'emacs-lisp-mode-hook (lambda ()
-				  (add-hook 'before-save-hook #'my/format-elisp-buffer nil t)))
+								  (add-hook 'before-save-hook #'my/format-elisp-buffer nil t)))
 
 (defun my/minuet-block-on-navigation ()
   (memq this-command '(next-line previous-line forward-char backward-char
-				 right-char left-char mwheel-scroll scroll-up-command
-				 scroll-down-command move-end-of-line move-beginning-of-line)))
+								 right-char left-char mwheel-scroll scroll-up-command
+								 scroll-down-command move-end-of-line move-beginning-of-line)))
 
 (defun my/minuet-block-middle-of-word ()
   (looking-at-p "[a-zA-Z0-9_]"))
@@ -156,22 +162,52 @@
 (use-package minuet
   :ensure t
   :init (add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
-  :config (setq minuet-gemini-options (plist-put minuet-gemini-options
-						 :model "gemini-flash-lite-latest"))
+  :config (setq minuet-gemini-options
+				(plist-put minuet-gemini-options
+						   :model "gemini-flash-lite-latest"))
   (setq minuet-auto-suggestion-block-predicates
         (list #'my/minuet-block-on-navigation
               #'my/minuet-block-middle-of-word))
   (setq minuet-provider 'gemini)
-  :bind (:map minuet-active-mode-map ("<tab>" . minuet-accept-suggestion)
-	      ("TAB" . minuet-accept-suggestion)
-	      ("<escape>" . minuet-dismiss-suggestion)
-	      ("ESC" . minuet-dismiss-suggestion)))
+  :bind (:map minuet-active-mode-map
+			  ("<tab>" . minuet-accept-suggestion)
+			  ("TAB" . minuet-accept-suggestion)
+			  ("<escape>" . minuet-dismiss-suggestion)
+			  ("ESC" . minuet-dismiss-suggestion)))
+
+(use-package elfeed
+  :demand t
+  :bind ("C-x r" . elfeed)
+  :config
+  (setq-default elfeed-search-filter "@1-month-ago +unread ")
+  (setq elfeed-feeds
+		'(("https://www.reddit.com/user/srikkant/m/srikkant.rss" reddit)
+		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UChk6TQce1EJMn6_liKdHDog" youtube)
+		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ" youtube)
+		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw" youtube)
+		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UCaTznQhurW5AaiYPbhEA-KA" youtube)
+		  ("https://thegradient.pub/rss" tech)
+          ("https://www.thehindu.com/feeder/default.rss" india))))
+
+(use-package agent-shell
+  :ensure t)
 
 (dolist (mode '(eshell-mode-hook
-		ghostel-mode-hook
+				ghostel-mode-hook
                 shell-mode-hook
                 magit-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+(setq modus-themes-italic-constructs nil)
+(setq modus-themes-common-palette-overrides modus-themes-preset-overrides-faint)
+(setq modus-themes-common-palette-overrides
+      '((border-mode-line-active bg-mode-line-active)
+        (border-mode-line-inactive bg-mode-line-inactive)
+        (bg-line-number-inactive unspecified)
+		(bg-line-number-active unspecified)
+		(fringe unspecified)))
+
+(load-theme 'modus-vivendi t)
 
 (when (file-exists-p "~/.emacs.local.el")
   (load "~/.emacs.local.el"))
