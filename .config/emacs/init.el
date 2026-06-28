@@ -9,14 +9,19 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (global-display-line-numbers-mode 1)
+(column-number-mode t)
+(pixel-scroll-precision-mode t)
+
+(setopt mode-line-collapse-minor-modes t)
 
 (setq display-line-numbers-type 'relative)
 (setq-default tab-width 4)
+(setq frame-resize-pixelwise t)
 
 (set-frame-parameter nil 'alpha '(90 . 90))
 (add-to-list 'default-frame-alist '(alpha . (90 . 90)))
 (add-to-list 'default-frame-alist '(undecorated-round . t))
-(add-to-list 'default-frame-alist '(font . "Geist Mono-12"))
+(add-to-list 'default-frame-alist '(font . "Geist Mono-13"))
 
 (defvar bootstrap-version)
 (let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el" (or (bound-and-true-p straight-base-dir) user-emacs-directory)))
@@ -37,17 +42,6 @@
 
 (require-theme 'modus-themes)
 (global-set-key (kbd "C-c C-\\") 'modus-themes-toggle)
-
-(setq modus-themes-italic-constructs nil)
-(setq modus-themes-common-palette-overrides modus-themes-preset-overrides-faint)
-(setq modus-themes-common-palette-overrides
-      '((border-mode-line-active bg-mode-line-active)
-        (border-mode-line-inactive bg-mode-line-inactive)
-        (bg-line-number-inactive unspecified)
-		(bg-line-number-active unspecified)
-		(fringe unspecified)))
-
-(load-theme 'modus-vivendi t)
 
 (use-package vertico
   :ensure t
@@ -177,11 +171,32 @@
 		  ("https://thegradient.pub/rss" tech)
           ("https://www.thehindu.com/feeder/default.rss" india))))
 
+(use-package agent-shell
+  :ensure t)
+
 (dolist (mode '(eshell-mode-hook
 				ghostel-mode-hook
                 shell-mode-hook
                 magit-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+(setq modus-themes-italic-constructs nil)
+(setq modus-themes-common-palette-overrides modus-themes-preset-overrides-faint)
+(setq modus-themes-common-palette-overrides
+      '((border-mode-line-active bg-mode-line-active)
+        (border-mode-line-inactive bg-mode-line-inactive)
+        (bg-line-number-inactive unspecified)
+		(bg-line-number-active unspecified)
+		(fringe unspecified)))
+
+(defun my/apply-theme (appearance)
+  "Load theme, taking current system APPEARANCE into consideration."
+  (mapc #'disable-theme custom-enabled-themes)
+  (pcase appearance
+    ('light (load-theme 'modus-operandi t))
+    ('dark (load-theme 'modus-vivendi t))))
+
+(add-hook 'ns-system-appearance-change-functions #'my/apply-theme)
 
 (when (file-exists-p "~/.emacs.local.el")
   (load "~/.emacs.local.el"))
