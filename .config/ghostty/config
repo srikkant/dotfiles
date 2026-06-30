@@ -1,5 +1,5 @@
-font-family = OverpassM Nerd Font Mono
-font-style = SemiBold
+font-family = Geist Mono
 theme = light:Alabaster, dark:Cursor Dark
 background-opacity = 0.85
 background-blur = true
+macos-titlebar-style = hidden

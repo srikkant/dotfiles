@@ -18,8 +18,10 @@
 (setq-default tab-width 4)
 (setq frame-resize-pixelwise t)
 
-(set-frame-parameter nil 'alpha '(90 . 90))
-(add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+(set-frame-parameter nil 'alpha-background 0.5)
+(set-frame-parameter nil 'ns-background-blur 20)
+(add-to-list 'default-frame-alist '(ns-background-blur . 30))
+(add-to-list 'default-frame-alist '(ns-alpha-elements ns-alpha-all))
 (add-to-list 'default-frame-alist '(undecorated-round . t))
 (add-to-list 'default-frame-alist '(font . "Geist Mono-13"))
 
@@ -120,8 +122,8 @@
               ("C-c e d" . flymake-show-buffer-diagnostics))
   :hook ((odin-ts-mode) . eglot-ensure)
   :config (add-to-list 'eglot-server-programs '(odin-ts-mode . ("ols")))
-  (add-hook 'odin-mode-hook (lambda ()
-							  (add-hook 'before-save-hook #'eglot-format nil t))))
+  (add-hook 'odin-ts-mode-hook (lambda ()
+								 (add-hook 'before-save-hook #'eglot-format nil t))))
 
 (add-to-list 'auto-mode-alist '("\\.odin\\'" . odin-ts-mode))
 
@@ -161,15 +163,14 @@
   :demand t
   :bind ("C-x r" . elfeed)
   :config
-  (setq-default elfeed-search-filter "@1-month-ago +unread ")
+  (setq-default elfeed-search-filter "@1-month-ago +unread")
   (setq elfeed-feeds
 		'(("https://www.reddit.com/user/srikkant/m/srikkant.rss" reddit)
 		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UChk6TQce1EJMn6_liKdHDog" youtube)
 		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ" youtube)
 		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw" youtube)
 		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UCaTznQhurW5AaiYPbhEA-KA" youtube)
-		  ("https://thegradient.pub/rss" tech)
-          ("https://www.thehindu.com/feeder/default.rss" india))))
+		  ("https://thegradient.pub/rss" tech))))
 
 (use-package agent-shell
   :ensure t)
