@@ -1,22 +1,29 @@
 ;; -*- lexical-binding: t; -*-
+(defvar bootstrap-version)
+(let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el" (or (bound-and-true-p straight-base-dir) user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+	(with-current-buffer (url-retrieve-synchronously "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el" 'silent 'inhibit-cookies)
+	  (goto-char (point-max))
+	  (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
+(straight-use-package 'use-package)
+
+(setq straight-use-package-by-default t)
+(setq frame-resize-pixelwise t)
 (setq gc-cons-threshold 100000000)
 (setq inhibit-startup-message t)
+(setq ring-bell-function 'ignore)
+(setq display-line-numbers-type 'relative)
+(setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups/"))))
+(setq auto-save-file-name-transforms `((".*" ,(concat user-emacs-directory "auto-save/") t)))
+(setq lock-file-name-transforms `((".*" ,(concat user-emacs-directory "lock-files/") t)))
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror 'nomessage)
 
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(global-display-line-numbers-mode 1)
-(column-number-mode t)
-(pixel-scroll-precision-mode t)
-
 (setopt mode-line-collapse-minor-modes t)
-
-(setq display-line-numbers-type 'relative)
 (setq-default tab-width 4)
-(setq frame-resize-pixelwise t)
 
 (set-frame-parameter nil 'alpha-background 0.5)
 (set-frame-parameter nil 'ns-background-blur 20)
@@ -25,25 +32,21 @@
 (add-to-list 'default-frame-alist '(undecorated-round . t))
 (add-to-list 'default-frame-alist '(font . "Geist Mono-13"))
 
-(defvar bootstrap-version)
-(let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el" (or (bound-and-true-p straight-base-dir) user-emacs-directory)))
-      (bootstrap-version 7))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer (url-retrieve-synchronously "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el" 'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(global-display-line-numbers-mode 1)
+(column-number-mode t)
+(pixel-scroll-precision-mode t)
 
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode 1)
+  (setq which-key-idle-delay 0.5)
+  (setq which-key-side-window-location 'bottom))
 
-(which-key-mode 1)
-
-(setq which-key-idle-delay 0.5)
-(setq which-key-side-window-location 'bottom)
-
-(require-theme 'modus-themes)
-(global-set-key (kbd "C-c C-\\") 'modus-themes-toggle)
+(windmove-default-keybindings)
 
 (use-package vertico
   :ensure t
@@ -83,7 +86,7 @@
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package project
-  :bind-keymap ("C-c p" . project-prefix-map))
+  :ensure t)
 
 (use-package corfu
   :ensure t
@@ -98,7 +101,8 @@
 
 (use-package org
   :ensure t
-  :config (global-set-key (kbd "C-c l") #'org-store-link)
+  :config
+  (global-set-key (kbd "C-c l") #'org-store-link)
   (global-set-key (kbd "C-c a") #'org-agenda)
   (global-set-key (kbd "C-c c") #'org-capture))
 
@@ -112,7 +116,12 @@
 (use-package odin-ts-mode
   :straight (odin-ts-mode :type git
 						  :host github
-						  :repo "Sampie159/odin-ts-mode"))
+						  :repo "Sampie159/odin-ts-mode")
+  :bind (:map odin-ts-mode-map
+         ("C-M-d" . treesit-down-list)
+         ("C-M-u" . treesit-up-list)
+         ("C-M-f" . treesit-forward-sexp)
+         ("C-M-b" . treesit-backward-sexp)))
 
 (use-package eglot
   :hook (odin-ts-mode . eglot-ensure)
@@ -121,43 +130,41 @@
               ("C-c e f" . eglot-format)
               ("C-c e d" . flymake-show-buffer-diagnostics))
   :hook ((odin-ts-mode) . eglot-ensure)
-  :config (add-to-list 'eglot-server-programs '(odin-ts-mode . ("ols")))
+  :config
+  (add-to-list 'eglot-server-programs '(odin-ts-mode . ("ols")))
   (add-hook 'odin-ts-mode-hook (lambda ()
 								 (add-hook 'before-save-hook #'eglot-format nil t))))
 
 (add-to-list 'auto-mode-alist '("\\.odin\\'" . odin-ts-mode))
 
-(defun my/format-elisp-buffer () "Indent the current buffer and clean up whitespace." (interactive)
-       (indent-region (point-min)
-					  (point-max))
-       (delete-trailing-whitespace))
-
-(add-hook 'emacs-lisp-mode-hook (lambda ()
-								  (add-hook 'before-save-hook #'my/format-elisp-buffer nil t)))
-
-(defun my/minuet-block-on-navigation ()
-  (memq this-command '(next-line previous-line forward-char backward-char
-								 right-char left-char mwheel-scroll scroll-up-command
-								 scroll-down-command move-end-of-line move-beginning-of-line)))
-
-(defun my/minuet-block-middle-of-word ()
-  (looking-at-p "[a-zA-Z0-9_]"))
-
 (use-package minuet
   :ensure t
-  :init (add-hook 'prog-mode-hook #'minuet-auto-suggestion-mode)
-  :config (setq minuet-gemini-options
-				(plist-put minuet-gemini-options
-						   :model "gemini-flash-lite-latest"))
-  (setq minuet-auto-suggestion-block-predicates
-        (list #'my/minuet-block-on-navigation
-              #'my/minuet-block-middle-of-word))
-  (setq minuet-provider 'gemini)
-  :bind (:map minuet-active-mode-map
-			  ("<tab>" . minuet-accept-suggestion)
-			  ("TAB" . minuet-accept-suggestion)
-			  ("<escape>" . minuet-dismiss-suggestion)
-			  ("ESC" . minuet-dismiss-suggestion)))
+  :bind
+  (("M-y" . #'minuet-complete-with-minibuffer)
+   ("M-i" . #'minuet-show-suggestion)
+   :map minuet-active-mode-map
+   ("M-p" . #'minuet-previous-suggestion)
+   ("M-n" . #'minuet-next-suggestion)
+   ("M-a" . #'minuet-accept-suggestion)
+   ("M-A" . #'minuet-accept-suggestion-line)
+   ("M-e" . #'minuet-dismiss-suggestion))
+   :config
+   (require 'minuet-duet)
+   (setq minuet-gemini-options
+		(plist-put minuet-gemini-options
+				   :model "gemini-flash-lite-latest"))
+  (setq minuet-provider 'gemini))
+
+(use-package minuet-duet
+  :straight nil
+  :after minuet
+  :bind
+  (("C-c d" . #'minuet-duet-predict)
+   :map minuet-duet-active-mode-map
+   ("M-a" . #'minuet-duet-apply)
+   ("M-e" . #'minuet-duet-dismiss))
+  :config
+  (setq minuet-duet-provider 'gemini))
 
 (use-package elfeed
   :demand t
@@ -181,14 +188,15 @@
                 magit-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-(setq modus-themes-italic-constructs nil)
-(setq modus-themes-common-palette-overrides modus-themes-preset-overrides-faint)
-(setq modus-themes-common-palette-overrides
-      '((border-mode-line-active bg-mode-line-active)
-        (border-mode-line-inactive bg-mode-line-inactive)
-        (bg-line-number-inactive unspecified)
-		(bg-line-number-active unspecified)
-		(fringe unspecified)))
+(use-package modus-themes
+  :config
+  (setq modus-themes-italic-constructs nil)
+  (setq modus-themes-common-palette-overrides
+		'((border-mode-line-active bg-mode-line-active)
+		  (border-mode-line-inactive bg-mode-line-inactive)
+		  (bg-line-number-inactive unspecified)
+		  (bg-line-number-active unspecified)
+		  (fringe unspecified))))
 
 (defun my/apply-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
