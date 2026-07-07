@@ -47,7 +47,9 @@
 		  (border-mode-line-inactive bg-mode-line-inactive)
 		  (bg-line-number-inactive unspecified)
 		  (bg-line-number-active unspecified)
-		  (fringe unspecified))))
+		  (fringe unspecified)))
+  :bind
+  (("C-c C-\\" . modus-themes-toggle)))
 
 (defun my/apply-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
@@ -152,16 +154,14 @@
                   line-number-current-line))
     (set-face-attribute face nil :inherit 'fixed-pitch))
 
-  (dolist (face '((org-level-1 . 1.6)
-                  (org-level-2 . 1.3)
-                  (org-level-3 . 1.15)
-                  (org-level-4 . 1.05)
-                  (org-level-5 . 1.0)))
+  (dolist (face '((org-level-1)
+                  (org-level-2)
+                  (org-level-3)
+                  (org-level-4)
+                  (org-level-5)))
     (set-face-attribute (car face) nil
                         :inherit 'variable-pitch
-						:family "Lora"
-                        :weight 'bold
-                        :height (cdr face))))
+                        :weight 'bold)))
 
 (add-hook 'org-mode-hook #'my/org-style-faces)
 
