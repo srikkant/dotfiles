@@ -15,9 +15,6 @@
 (load custom-file 'noerror 'nomessage)
 (setopt mode-line-collapse-minor-modes t)
 
-(set-frame-parameter nil 'alpha-background 0.5)
-(set-frame-parameter nil 'ns-background-blur 20)
-
 (global-display-line-numbers-mode 1)
 (pixel-scroll-precision-mode t)
 
@@ -35,9 +32,9 @@
 ;; THEME & APPEARANCE
 ;;
 
-(set-face-attribute 'default nil :family "Geist Mono" :height 130)
-(set-face-attribute 'fixed-pitch nil :family "Geist Mono" :height 130)
-(set-face-attribute 'variable-pitch nil :family "Geist" :height 150)
+(set-face-attribute 'default nil :family "Geist Mono" :height 100)
+(set-face-attribute 'fixed-pitch nil :family "Geist Mono" :height 100)
+(set-face-attribute 'variable-pitch nil :family "Geist" :height 120)
 
 (use-package modus-themes
   :config
@@ -48,17 +45,9 @@
 		  (bg-line-number-inactive unspecified)
 		  (bg-line-number-active unspecified)
 		  (fringe unspecified)))
+  (load-theme 'modus-vivendi t)
   :bind
   (("C-c C-\\" . modus-themes-toggle)))
-
-(defun my/apply-theme (appearance)
-  "Load theme, taking current system APPEARANCE into consideration."
-  (mapc #'disable-theme custom-enabled-themes)
-  (pcase appearance
-    ('light (load-theme 'modus-operandi t))
-    ('dark (load-theme 'modus-vivendi t))))
-
-(add-hook 'ns-system-appearance-change-functions #'my/apply-theme)
 
 ;;
 ;; ESSENTIAL BUILT IN PACKAGES

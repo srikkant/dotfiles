@@ -18,8 +18,6 @@
 (setq default-frame-alist
       '((menu-bar-lines . 0)
         (tool-bar-lines . 0)
+		(alpha-background . 85)
         (vertical-scroll-bars . nil)
-        (alpha-background . 50)
-        (ns-background-blur . 30)
-        (ns-alpha-elements ns-alpha-all)
         (undecorated-round . t)))
