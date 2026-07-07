@@ -23,6 +23,12 @@ input {
         natural-scroll;
         click-method "clickfinger"
     }
+
+    keyboard {
+        xkb {
+            options "ctrl:nocaps"
+        }
+    }
 }
 
 window-rule {

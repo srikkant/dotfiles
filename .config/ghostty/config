@@ -1,5 +1,6 @@
 font-size = 10
-font-family = Hasklig
-font-style = SemiBold
-background-opacity = 0.9
-theme = light:iTerm2 Solarized Light,dark:iTerm2 Solarized Dark
+font-family = Geist Mono
+theme = dankcolors
+background-opacity = 0.85
+background-blur = true
+macos-titlebar-style = hidden

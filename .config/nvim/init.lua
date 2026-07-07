@@ -44,6 +44,7 @@ for _, server in ipairs({ "lua_ls", "ols" }) do
 end
 
 local dap = require("dap")
+local dap_widgets = require("dap.ui.widgets")
 
 dap.adapters.codelldb = {
     type = "executable",
@@ -74,26 +75,19 @@ vim.keymap.set("n", "<leader>cl", vim.diagnostic.setloclist)
 vim.keymap.set("n", "<leader>cm", ":make ")
 vim.keymap.set("n", "<leader>cc", "<cmd>make<cr>")
 vim.keymap.set("n", "<leader>cr", "<cmd>make run<cr>")
+vim.keymap.set("n", "<leader>cd", "<cmd>make debug<cr>")
 vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua files<cr>")
 vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>")
 vim.keymap.set("n", "<leader>/", "<cmd>FzfLua live_grep<cr>")
 vim.keymap.set("n", "<leader><leader>", "<cmd>FzfLua global<cr>")
 
+vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
 vim.keymap.set("n", "<F5>", dap.continue)
-vim.keymap.set("n", "<F7>", dap.terminate)
-vim.keymap.set("n", "<F10>", dap.step_over)
-vim.keymap.set("n", "<F11>", dap.step_into)
-vim.keymap.set("n", "<F12>", dap.step_out)
-vim.keymap.set("n", "<F9>", dap.toggle_breakpoint)
-
-vim.keymap.set("n", "<F6>", function()
-    local widgets = require("dap.ui.widgets")
-    widgets.centered_element(widgets.scopes)
-end)
-
-vim.keymap.set("n", "<F8>", function()
-    require("dap.ui.widgets").hover()
-end)
+vim.keymap.set("n", "<F6>", dap.terminate)
+vim.keymap.set("n", "<F7>", dap_widgets.hover)
+vim.keymap.set("n", "<F8>", dap.step_over)
+vim.keymap.set("n", "<F9>", dap.step_into)
+vim.keymap.set("n", "<F10>", dap.step_out)
 
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
