@@ -1,7 +1,9 @@
 ;; -*- lexical-binding: t; -*-
+
+;; Bootstrap straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el" (or (bound-and-true-p straight-base-dir) user-emacs-directory)))
-      (bootstrap-version 7))
+	  (bootstrap-version 7))
   (unless (file-exists-p bootstrap-file)
 	(with-current-buffer (url-retrieve-synchronously "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el" 'silent 'inhibit-cookies)
 	  (goto-char (point-max))
@@ -10,34 +12,14 @@
 
 (straight-use-package 'use-package)
 
-(setq straight-use-package-by-default t)
-(setq frame-resize-pixelwise t)
-(setq gc-cons-threshold 100000000)
-(setq inhibit-startup-message t)
-(setq ring-bell-function 'ignore)
-(setq display-line-numbers-type 'relative)
-(setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups/"))))
-(setq auto-save-file-name-transforms `((".*" ,(concat user-emacs-directory "auto-save/") t)))
-(setq lock-file-name-transforms `((".*" ,(concat user-emacs-directory "lock-files/") t)))
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror 'nomessage)
-
 (setopt mode-line-collapse-minor-modes t)
-(setq-default tab-width 4)
 
-(set-frame-parameter nil 'alpha-background 0.5)
-(set-frame-parameter nil 'ns-background-blur 20)
-(add-to-list 'default-frame-alist '(ns-background-blur . 30))
-(add-to-list 'default-frame-alist '(ns-alpha-elements ns-alpha-all))
-(add-to-list 'default-frame-alist '(undecorated-round . t))
-(add-to-list 'default-frame-alist '(font . "Geist Mono-10"))
-
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
 (global-display-line-numbers-mode 1)
-(column-number-mode t)
 (pixel-scroll-precision-mode t)
+
+;; Set up which key first. Even if something else breaks, this will
+;; help me out.
 
 (use-package which-key
   :ensure t
@@ -46,12 +28,144 @@
   (setq which-key-idle-delay 0.5)
   (setq which-key-side-window-location 'bottom))
 
-(windmove-default-keybindings)
+;;
+;; THEME & APPEARANCE
+;;
+
+(set-face-attribute 'default nil :family "Geist Mono" :height 100)
+(set-face-attribute 'fixed-pitch nil :family "Geist Mono" :height 110)
+(set-face-attribute 'variable-pitch nil :family "Geist" :height 130)
+
+(use-package modus-themes
+  :config
+  (setq modus-themes-italic-constructs nil)
+  (setq modus-themes-common-palette-overrides
+		'((border-mode-line-active bg-mode-line-active)
+		  (border-mode-line-inactive bg-mode-line-inactive)
+		  (bg-line-number-inactive unspecified)
+		  (bg-line-number-active unspecified)
+		  (fringe unspecified)))
+  :bind
+  (("C-c C-\\" . modus-themes-toggle)))
+
+;;
+;; ESSENTIAL BUILT IN PACKAGES
+;;
+
+(use-package emacs
+  :ensure nil
+  :bind
+  (("C-c [" . next-error)
+   ("C-c ]" . next-error)))
+
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status)
+		 ("C-c g" . magit-file-dispatch)))
+
+(use-package eshell
+  :straight (:type built-in)
+  :bind (("C-c s" . eshell)))
+
 (use-package windmove
-  :bind ((("C-c <up>" . windmove-up)
-		  ("C-c <down>" . windmove-down)
-		  ("C-c <left>" . windmove-left)
-		  ("C-c <right>" . windmove-right))))
+  :straight (:type built-in)
+  :ensure t
+  :bind (("C-c <up>" . windmove-up)
+		 ("C-c <down>" . windmove-down)
+		 ("C-c <left>" . windmove-left)
+		 ("C-c <right>" . windmove-right)))
+
+(use-package project
+  :straight (:type built-in)
+  :ensure t)
+
+;;
+;; ORG & SOME RICE
+;;
+
+(use-package org
+  :straight (:type built-in)
+  :custom
+  (org-hide-emphasis-markers t)
+  (org-ellipsis " ▾ ")
+  (org-pretty-entities t)
+  (org-hide-macro-markers t)
+  (org-log-into-drawer t)
+  :config
+  (add-hook 'org-mode-hook #'visual-line-mode)
+  (global-set-key (kbd "C-c l") #'org-store-link)
+  (global-set-key (kbd "C-c a") #'org-agenda)
+  (global-set-key (kbd "C-c c") #'org-capture))
+
+(use-package org-modern
+  :straight t
+  :hook ((org-mode . org-modern-mode)
+         (org-agenda-finalize . org-modern-agenda))
+  :custom
+  (org-modern-star '("◉" "○" "◈" "◇" "★" "☆"))
+  (org-modern-table t)
+  (org-modern-block-name t)
+  (org-modern-block-fringe t)
+  (org-modern-keyword t)
+  (org-modern-todo t)
+  (org-modern-priority t)
+  (org-modern-tag t)
+  (org-modern-timestamp t))
+
+(use-package olivetti
+  :ensure t
+  :hook (org-mode . olivetti-mode)
+  :custom
+  (olivetti-body-width 80)
+  (olivetti-style 'fancy)
+  (olivetti-minimum-body-width 80))
+
+(defun my/org-style-faces ()
+  (interactive)
+  (display-line-numbers-mode -1)
+  (setq fill-column 80)
+  (setq line-spacing 0.1)
+  (setq cursor-type 'bar)
+
+  (dolist (face '(org-block
+                  org-block-begin-line
+                  org-block-end-line
+                  org-code
+                  org-date
+                  org-formula
+                  org-inline-src-block
+                  org-latex-and-related
+                  org-special-keyword
+                  org-table
+                  org-verbatim
+				  line-number
+                  line-number-current-line))
+    (set-face-attribute face nil :inherit 'fixed-pitch))
+
+  (dolist (face '((org-level-1)
+                  (org-level-2)
+                  (org-level-3)
+                  (org-level-4)
+                  (org-level-5)))
+    (set-face-attribute (car face) nil
+                        :inherit 'variable-pitch
+                        :weight 'bold)))
+
+(add-hook 'org-mode-hook #'my/org-style-faces)
+
+;;
+;; THIRD PARTY PACKAGES
+;;
+
+(use-package corfu
+  :ensure t
+  :custom (corfu-cycle t)
+  (corfu-auto t)
+  :init (global-corfu-mode))
+
+(use-package ghostel
+  :ensure t
+  :bind (("C-c t" . ghostel)))
 
 (use-package vertico
   :ensure t
@@ -76,16 +190,13 @@
   :ensure t
   :bind (
          ("C-x b" . consult-buffer)
+         ("C-x B" . consult-buffer-other-window)
          ("C-s" . consult-line)
-         ("M-s r" . consult-ripgrep)
-         ("M-s l" . consult-line)
-         ("M-s m" . consult-mark)
-         ("M-g a" . consult-xref)
-         ("M-g g" . consult-goto-line)
-         ("M-g m" . consult-mark)
-         ("M-g o" . consult-outline)
-         ("C-x r b" . consult-bookmark)
-         ("C-x 4 b" . consult-buffer-other-window))
+         ("C-c r" . consult-ripgrep)
+         ("C-c m" . consult-mark)
+         ("C-c g" . consult-xref)
+         ("C-c m" . consult-mark)
+         ("C-c o" . consult-outline))
   :config
   (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git"))))
 
@@ -102,58 +213,41 @@
   :ensure t
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
-(use-package project
-  :ensure t)
+;;
+;; LANGUAGE SUPPORT
+;;
 
-(use-package corfu
-  :ensure t
-  :custom (corfu-cycle t)
-  (corfu-auto t)
-  :init (global-corfu-mode))
-
-(use-package magit
-  :ensure t
-  :bind (("C-x g" . magit-status)))
-
-(use-package org
-  :ensure t
+(use-package eglot
+  :hook ((odin-ts-mode js-ts-mode) . eglot-ensure)
+  :bind (:map eglot-mode-map ("C-c e a" . eglot-code-actions)
+              ("C-c e r" . eglot-rename)
+              ("C-c e f" . eglot-format)
+              ("C-c e d" . flymake-show-buffer-diagnostics))
   :config
-  (global-set-key (kbd "C-c l") #'org-store-link)
-  (global-set-key (kbd "C-c a") #'org-agenda)
-  (global-set-key (kbd "C-c c") #'org-capture))
-
-(use-package eshell
-  :bind (("C-c s" . eshell)))
-
-(use-package ghostel
-  :ensure t
-  :bind (("C-c t" . ghostel)))
+  (add-to-list 'eglot-server-programs '(odin-ts-mode . ("ols")))
+  (add-hook 'eglot-managed-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook #'eglot-format nil t))))
 
 (use-package odin-ts-mode
   :straight (odin-ts-mode :type git
 						  :host github
 						  :repo "Sampie159/odin-ts-mode")
   :bind (:map odin-ts-mode-map
-			  ("C-M-d" . treesit-down-list)
-			  ("C-M-u" . treesit-up-list))
+         ("C-M-d" . treesit-down-list)
+         ("C-M-u" . treesit-up-list))
+  :mode ("\\.odin\\'" . odin-ts-mode)
   :config
   (add-hook 'odin-ts-mode-hook
-			(lambda ()
-			  (setq-local forward-sexp-function #'treesit-forward-sexp))))
+            (lambda ()
+              (setq-local forward-sexp-function #'treesit-forward-sexp))))
 
-(use-package eglot
-  :hook (odin-ts-mode . eglot-ensure)
-  :bind (:map eglot-mode-map ("C-c e a" . eglot-code-actions)
-			  ("C-c e r" . eglot-rename)
-			  ("C-c e f" . eglot-format)
-			  ("C-c e d" . flymake-show-buffer-diagnostics))
-  :hook ((odin-ts-mode) . eglot-ensure)
-  :config
-  (add-to-list 'eglot-server-programs '(odin-ts-mode . ("ols")))
-  (add-hook 'odin-ts-mode-hook (lambda ()
-								 (add-hook 'before-save-hook #'eglot-format nil t))))
+;;
+;; AI
+;;
 
-(add-to-list 'auto-mode-alist '("\\.odin\\'" . odin-ts-mode))
+(use-package agent-shell
+  :ensure t)
 
 (use-package minuet
   :ensure t
@@ -184,6 +278,10 @@
   :config
   (setq minuet-duet-provider 'gemini))
 
+;;
+;; MISCELLANEOUS
+;;
+
 (use-package elfeed
   :demand t
   :bind ("C-x r" . elfeed)
@@ -197,26 +295,15 @@
 		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UCaTznQhurW5AaiYPbhEA-KA" youtube)
 		  ("https://thegradient.pub/rss" tech))))
 
-(use-package agent-shell
-  :ensure t)
+;;
+;; GENERAL HOOKS
+;;
 
 (dolist (mode '(eshell-mode-hook
 				ghostel-mode-hook
                 shell-mode-hook
                 magit-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-(use-package modus-themes
-  :bind
-  (C-c C-\\ . modus-themes-toggle)
-  :config
-  (setq modus-themes-italic-constructs nil)
-  (setq modus-themes-common-palette-overrides
-		'((border-mode-line-active bg-mode-line-active)
-		  (border-mode-line-inactive bg-mode-line-inactive)
-		  (bg-line-number-inactive unspecified)
-		  (bg-line-number-active unspecified)
-		  (fringe unspecified))))
 
 (load-theme 'modus-vivendi t)
 

@@ -43,7 +43,7 @@ window-rule {
 
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
-    Mod+B hotkey-overlay-title="Browser" { spawn "google-chrome-beta"; }
+    Mod+B hotkey-overlay-title="Browser" { spawn "zen-browser"; }
 
     Mod+Q repeat=false { close-window; }
 
