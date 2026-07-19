@@ -3,21 +3,13 @@ start-at-login = true
 
 persistent-workspaces = ["1", "2", "3", "4", "5", "6"]
 
-after-startup-command = [
-    "exec-and-forget sketchybar"
-]
-
-exec-on-workspace-change = ["/bin/bash","-c",
-    "sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE"
-]
-
 [gaps]
 inner.horizontal = 8
 inner.vertical = 8
 outer.bottom = 8
 outer.right = 8
 outer.left = 8
-outer.top = [{ monitor."LU" = 36 }, 8]
+outer.top = [{ monitor."LU" = 36 }, { monitor."Odyssey" = 36 }, 8]
 
 [workspace-to-monitor-force-assignment]
    1 = "main"
