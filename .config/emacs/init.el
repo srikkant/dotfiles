@@ -36,7 +36,7 @@
 
 (set-face-attribute 'default nil :family "Geist Mono" :height 100)
 (set-face-attribute 'fixed-pitch nil :family "Geist Mono" :height 100)
-(set-face-attribute 'variable-pitch nil :family "Geist" :height 110)
+(set-face-attribute 'variable-pitch nil :family "Geist" :height 105)
 
 (use-package modus-themes
   :config
@@ -125,6 +125,28 @@
 (defun my/org-style-faces ()
   (interactive)
   (display-line-numbers-mode -1)
+
+  (variable-pitch-mode 1)
+
+  (dolist (face '(org-block
+                  org-block-begin-line
+                  org-block-end-line
+                  org-code
+                  org-verbatim
+                  org-table
+                  org-formula
+                  org-latex-and-related
+                  org-checkbox
+                  org-property-value
+                  org-special-keyword
+                  org-tag
+                  org-meta-line
+                  org-document-info-keyword
+                  org-drawer
+                  org-indent
+                  line-number
+                  line-number-current-line))
+	(set-face-attribute face nil :inherit 'fixed-pitch))
 
   (dolist (face '(org-block
                   org-block-begin-line
