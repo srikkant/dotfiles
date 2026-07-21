@@ -21,6 +21,8 @@
 (global-display-line-numbers-mode 1)
 (pixel-scroll-precision-mode t)
 
+(setq fill-column 100)
+
 ;; Set up which key first. Even if something else breaks, this will
 ;; help me out.
 
@@ -91,6 +93,7 @@
   :straight (:type built-in)
   :config
   (setq project-vc-extra-root-markers '(".project"))
+  (setq project-switch-commands 'project-dired))
   :ensure t)
 
 ;;
@@ -131,19 +134,9 @@
   (org-modern-tag t)
   (org-modern-timestamp t))
 
-(use-package olivetti
-  :ensure t
-  :hook
-  (org-mode . olivetti-mode)
-  :custom
-  (olivetti-body-width 80)
-  (olivetti-style 'fancy)
-  (olivetti-minimum-body-width 80))
-
 (defun my/org-style-faces ()
   (interactive)
   (display-line-numbers-mode -1)
-  (setq fill-column 80)
   (setq line-spacing '(0.1 . 0.1))
 
   (dolist (face '(org-block
@@ -183,7 +176,10 @@
 
 (use-package ghostel
   :ensure t
-  :bind (("C-c t" . ghostel)))
+  :bind (("C-c t" . ghostel)
+		 :map project-prefix-map
+		 ("t" . ghostel-project)
+         ("T" . ghostel-project-list-buffers)))
 
 (use-package vertico
   :ensure t
@@ -210,9 +206,19 @@
          ("C-c m" . consult-mark)
          ("C-c g" . consult-xref)
          ("C-c m" . consult-mark)
-         ("C-c o" . consult-outline))
+         ("C-c o" . consult-outline)
+		 ("C-c f" . consult-find))
   :config
   (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git"))))
+
+(use-package consult-project-extra
+  :straight t
+  :custom (consult-project-function #'consult-project-extra-project-fn)
+  :bind (
+         :map project-prefix-map
+         ("b" . consult-project-buffer)
+         ("f" . consult-project-extra-find)
+         ("F" . consult-project-extra-find-other-window)))
 
 (use-package embark
   :ensure t
