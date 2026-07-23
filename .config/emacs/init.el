@@ -82,7 +82,6 @@
   :config
   (setq project-vc-extra-root-markers '(".project"))
   (setq project-switch-commands 'project-dired))
-  :ensure t)
 
 ;;
 ;; ORG & SOME RICE
@@ -106,6 +105,16 @@
   (setq org-refile-use-outline-path 'file)
   (setq org-outline-path-complete-in-steps nil))
 
+(use-package olivetti
+  :ensure t
+  :hook
+  (org-mode . olivetti-mode)
+  (markdown-mode . olivetti-mode)
+  :custom
+  (olivetti-body-width 80)
+  (olivetti-style 'fancy)
+  (olivetti-minimum-body-width 80))
+
 (use-package org-modern
   :straight t
   :hook ((org-mode . org-modern-mode)
@@ -124,8 +133,6 @@
 
 (defun my/org-style-faces ()
   (interactive)
-  (display-line-numbers-mode -1)
-
   (variable-pitch-mode 1)
 
   (dolist (face '(org-block
@@ -337,6 +344,8 @@
 
 (dolist (mode '(eshell-mode-hook
 				ghostel-mode-hook
+				org-mode-hook
+				markdown-mode-hook
                 shell-mode-hook
                 magit-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
