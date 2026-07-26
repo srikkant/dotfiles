@@ -34,21 +34,23 @@
 ;; THEME & APPEARANCE
 ;;
 
-(set-face-attribute 'default nil :family "Geist Mono" :height 100)
-(set-face-attribute 'fixed-pitch nil :family "Geist Mono" :height 100)
-(set-face-attribute 'variable-pitch nil :family "Geist" :height 105)
+(set-face-attribute 'default nil :family "Iosevka" :height 100 :width 'expanded)
+(set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 100 :width 'expanded)
+(set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 100)
 
-(use-package modus-themes
+(use-package doom-themes
+  :ensure t
   :config
-  (setq modus-themes-italic-constructs nil)
-  (setq modus-themes-common-palette-overrides
-		'((border-mode-line-active bg-mode-line-active)
-		  (border-mode-line-inactive bg-mode-line-inactive)
-		  (bg-line-number-inactive unspecified)
-		  (bg-line-number-active unspecified)
-		  (fringe unspecified)))
-  :bind
-  (("C-c C-\\" . modus-themes-toggle)))
+  (load-theme 'doom-solarized-dark t))
+
+(use-package ligature
+  :config
+  (ligature-set-ligatures 'prog-mode '("<---" "<--"  "<<-" "<-" "->" "-->" "--->" "<->" "<-->" "<--->" "<---->" "<!--"
+                                       "<==" "<===" "<=" "=>" "=>>" "==>" "===>" ">=" "<=>" "<==>" "<===>" "<====>" "<!---"
+                                       "<~~" "<~" "~>" "~~>" "::" ":::" "==" "!=" "===" "!=="
+                                       ":=" ":-" ":+" "<*" "<*>" "*>" "<|" "<|>" "|>" "+:" "-:" "=:" "<******>" "++" "+++"))
+
+  (global-ligature-mode t))
 
 ;;
 ;; ESSENTIAL BUILT IN PACKAGES
@@ -212,42 +214,12 @@
      (variable (styles orderless))))
   (orderless-matching-styles '(orderless-regexp orderless-flex)))
 
-(use-package consult
-  :ensure t
-  :bind (
-         ("C-x b" . consult-buffer)
-         ("C-x B" . consult-buffer-other-window)
-         ("C-s" . consult-line)
-         ("C-c r" . consult-ripgrep)
-         ("C-c m" . consult-mark)
-         ("C-c g" . consult-xref)
-         ("C-c m" . consult-mark)
-         ("C-c o" . consult-outline)
-		 ("C-c f" . consult-find))
-  :config
-  (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git"))))
-
-(use-package consult-project-extra
-  :straight t
-  :custom (consult-project-function #'consult-project-extra-project-fn)
-  :bind (
-         :map project-prefix-map
-         ("b" . consult-project-buffer)
-         ("f" . consult-project-extra-find)
-         ("F" . consult-project-extra-find-other-window)))
-
 (use-package embark
   :ensure t
   :bind (("C-." . embark-act)
          ("C-;" . embark-dwim)
          ("C-h B" . embark-bindings))
   :init (setq prefix-help-command #'embark-prefix-help-command))
-
-(add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
-
-(use-package embark-consult
-  :ensure t
-  :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 ;;
 ;; LANGUAGE SUPPORT
@@ -349,8 +321,6 @@
                 shell-mode-hook
                 magit-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-(load-theme 'modus-vivendi t)
 
 (when (file-exists-p "~/.emacs.local.el")
   (load "~/.emacs.local.el"))
