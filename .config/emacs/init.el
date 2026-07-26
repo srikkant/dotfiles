@@ -34,9 +34,9 @@
 ;; THEME & APPEARANCE
 ;;
 
-(set-face-attribute 'default nil :family "Geist Mono" :height 100)
-(set-face-attribute 'fixed-pitch nil :family "Geist Mono" :height 100)
-(set-face-attribute 'variable-pitch nil :family "Geist" :height 105)
+(set-face-attribute 'default nil :family "Cascadia Code" :height 130)
+(set-face-attribute 'fixed-pitch nil :family "Cascadia Code" :height 130)
+(set-face-attribute 'variable-pitch nil :family "Spectral" :height 150)
 
 (use-package modus-themes
   :config
@@ -82,6 +82,25 @@
   :config
   (setq project-vc-extra-root-markers '(".project"))
   (setq project-switch-commands 'project-dired))
+
+(use-package ligature
+  :config
+  (ligature-set-ligatures 't '("www"))
+  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                       "\\\\" "://"))
+  (global-ligature-mode t))
 
 ;;
 ;; ORG & SOME RICE
@@ -134,6 +153,7 @@
 (defun my/org-style-faces ()
   (interactive)
   (variable-pitch-mode 1)
+  (setq line-spacing '(0.1 . 0.1))
 
   (dolist (face '(org-block
                   org-block-begin-line
@@ -210,7 +230,7 @@
    '((file (styles partial-completion orderless))
      (command (styles orderless))
      (variable (styles orderless))))
-  (orderless-matching-styles '(orderless-regexp orderless-flex)))
+  (orderless-matching-styles '(orderless-regexp orderless-literal orderless-flex)))
 
 (use-package consult
   :ensure t
@@ -225,6 +245,8 @@
          ("C-c o" . consult-outline)
 		 ("C-c f" . consult-find))
   :config
+  (setq xref-show-xrefs-function #'consult-xref
+      xref-show-definitions-function #'consult-xref)
   (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git"))))
 
 (use-package consult-project-extra
@@ -284,59 +306,6 @@
   (add-hook 'odin-ts-mode-hook
             (lambda ()
               (setq-local forward-sexp-function #'treesit-forward-sexp))))
-
-;;
-;; AI
-;;
-
-(use-package agent-shell
-  :ensure t)
-
-(use-package minuet
-  :ensure t
-  :bind
-  (("M-y" . #'minuet-complete-with-minibuffer)
-   ("M-i" . #'minuet-show-suggestion)
-   :map minuet-active-mode-map
-   ("M-p" . #'minuet-previous-suggestion)
-   ("M-n" . #'minuet-next-suggestion)
-   ("M-a" . #'minuet-accept-suggestion)
-   ("M-A" . #'minuet-accept-suggestion-line)
-   ("M-e" . #'minuet-dismiss-suggestion))
-  :config
-  (require 'minuet-duet)
-  (setq minuet-gemini-options
-		(plist-put minuet-gemini-options
-				   :model "gemini-flash-lite-latest"))
-  (setq minuet-provider 'gemini))
-
-(use-package minuet-duet
-  :straight nil
-  :after minuet
-  :bind
-  (("C-c d" . #'minuet-duet-predict)
-   :map minuet-duet-active-mode-map
-   ("M-a" . #'minuet-duet-apply)
-   ("M-e" . #'minuet-duet-dismiss))
-  :config
-  (setq minuet-duet-provider 'gemini))
-
-;;
-;; MISCELLANEOUS
-;;
-
-(use-package elfeed
-  :demand t
-  :bind ("C-x r" . elfeed)
-  :config
-  (setq-default elfeed-search-filter "@1-month-ago +unread")
-  (setq elfeed-feeds
-		'(("https://www.reddit.com/user/srikkant/m/srikkant.rss" reddit)
-		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UChk6TQce1EJMn6_liKdHDog" youtube)
-		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ" youtube)
-		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw" youtube)
-		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UCaTznQhurW5AaiYPbhEA-KA" youtube)
-		  ("https://thegradient.pub/rss" tech))))
 
 ;;
 ;; GENERAL HOOKS
