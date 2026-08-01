@@ -1,5 +1,4 @@
-background-opacity = 0.85
+font-family = Iosevka
+font-style = Extended
 font-size = 10
-font-family = Geist Mono
-font-style = medium
-theme = dankcolors
+theme = iTerm2 Solarized Dark

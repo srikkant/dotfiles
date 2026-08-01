@@ -38,10 +38,12 @@
 (set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 100 :width 'expanded)
 (set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 100)
 
-(use-package doom-themes
+(use-package solarized-theme
   :ensure t
+  :demand t
+  :bind (("C-c \\" . solarized-toggle-theme))
   :config
-  (load-theme 'doom-solarized-dark t))
+  (load-theme 'solarized-dark t))
 
 (use-package ligature
   :config
@@ -66,10 +68,6 @@
   :ensure t
   :bind (("C-x g" . magit-status)
 		 ("C-c g" . magit-file-dispatch)))
-
-(use-package eshell
-  :straight (:type built-in)
-  :bind (("C-c s" . eshell)))
 
 (use-package windmove
   :straight (:type built-in)
@@ -186,12 +184,6 @@
 ;; THIRD PARTY PACKAGES
 ;;
 
-(use-package corfu
-  :ensure t
-  :custom (corfu-cycle t)
-  (corfu-auto t)
-  :init (global-corfu-mode))
-
 (use-package ghostel
   :ensure t
   :bind (("C-c t" . ghostel)
@@ -212,7 +204,7 @@
    '((file (styles partial-completion orderless))
      (command (styles orderless))
      (variable (styles orderless))))
-  (orderless-matching-styles '(orderless-regexp orderless-flex)))
+  (orderless-matching-styles '(orderless-regexp orderless-literal orderless-flex)))
 
 (use-package embark
   :ensure t
@@ -220,6 +212,14 @@
          ("C-;" . embark-dwim)
          ("C-h B" . embark-bindings))
   :init (setq prefix-help-command #'embark-prefix-help-command))
+
+(use-package completion-preview
+  :ensure nil
+  :hook (prog-mode . completion-preview-mode)
+  :bind
+  ( :map completion-preview-active-mode-map
+    ("M-n" . completion-preview-next-candidate)
+    ("M-p" . completion-preview-prev-candidate)))
 
 ;;
 ;; LANGUAGE SUPPORT
@@ -256,59 +256,6 @@
   (add-hook 'odin-ts-mode-hook
             (lambda ()
               (setq-local forward-sexp-function #'treesit-forward-sexp))))
-
-;;
-;; AI
-;;
-
-(use-package agent-shell
-  :ensure t)
-
-(use-package minuet
-  :ensure t
-  :bind
-  (("M-y" . #'minuet-complete-with-minibuffer)
-   ("M-i" . #'minuet-show-suggestion)
-   :map minuet-active-mode-map
-   ("M-p" . #'minuet-previous-suggestion)
-   ("M-n" . #'minuet-next-suggestion)
-   ("M-a" . #'minuet-accept-suggestion)
-   ("M-A" . #'minuet-accept-suggestion-line)
-   ("M-e" . #'minuet-dismiss-suggestion))
-  :config
-  (require 'minuet-duet)
-  (setq minuet-gemini-options
-		(plist-put minuet-gemini-options
-				   :model "gemini-flash-lite-latest"))
-  (setq minuet-provider 'gemini))
-
-(use-package minuet-duet
-  :straight nil
-  :after minuet
-  :bind
-  (("C-c d" . #'minuet-duet-predict)
-   :map minuet-duet-active-mode-map
-   ("M-a" . #'minuet-duet-apply)
-   ("M-e" . #'minuet-duet-dismiss))
-  :config
-  (setq minuet-duet-provider 'gemini))
-
-;;
-;; MISCELLANEOUS
-;;
-
-(use-package elfeed
-  :demand t
-  :bind ("C-x r" . elfeed)
-  :config
-  (setq-default elfeed-search-filter "@1-month-ago +unread")
-  (setq elfeed-feeds
-		'(("https://www.reddit.com/user/srikkant/m/srikkant.rss" reddit)
-		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UChk6TQce1EJMn6_liKdHDog" youtube)
-		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ" youtube)
-		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw" youtube)
-		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UCaTznQhurW5AaiYPbhEA-KA" youtube)
-		  ("https://thegradient.pub/rss" tech))))
 
 ;;
 ;; GENERAL HOOKS
