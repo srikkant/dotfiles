@@ -13,12 +13,16 @@
 (straight-use-package 'use-package)
 
 (load custom-file 'noerror 'nomessage)
-(setopt mode-line-collapse-minor-modes t)
 
-(global-display-line-numbers-mode 1)
-(pixel-scroll-precision-mode t)
-
-(setq fill-column 100)
+(use-package emacs
+  :ensure nil
+  :config
+  (setopt mode-line-collapse-minor-modes t)
+  (global-display-line-numbers-mode 1)
+  (pixel-scroll-precision-mode t)
+  :bind
+  (("C-c [" . next-error)
+   ("C-c ]" . next-error)))
 
 ;; Set up which key first. Even if something else breaks, this will
 ;; help me out.
@@ -34,31 +38,17 @@
 ;; THEME & APPEARANCE
 ;;
 
-(set-face-attribute 'default nil :family "Cascadia Code" :height 130)
-(set-face-attribute 'fixed-pitch nil :family "Cascadia Code" :height 130)
-(set-face-attribute 'variable-pitch nil :family "Spectral" :height 150)
+(set-face-attribute 'default nil :family "Geist Mono" :height 130)
+(set-face-attribute 'fixed-pitch nil :family "Geist Mono" :height 130)
+(set-face-attribute 'variable-pitch nil :family "Geist" :height 130)
 
-(use-package modus-themes
+(use-package doom-themes
   :config
-  (setq modus-themes-italic-constructs nil)
-  (setq modus-themes-common-palette-overrides
-		'((border-mode-line-active bg-mode-line-active)
-		  (border-mode-line-inactive bg-mode-line-inactive)
-		  (bg-line-number-inactive unspecified)
-		  (bg-line-number-active unspecified)
-		  (fringe unspecified)))
-  :bind
-  (("C-c C-\\" . modus-themes-toggle)))
+  (load-theme 'doom-solarized-dark t))
 
 ;;
 ;; ESSENTIAL BUILT IN PACKAGES
 ;;
-
-(use-package emacs
-  :ensure nil
-  :bind
-  (("C-c [" . next-error)
-   ("C-c ]" . next-error)))
 
 (use-package magit
   :ensure t
@@ -200,15 +190,17 @@
 
 (add-hook 'org-mode-hook #'my/org-style-faces)
 
+(use-package completion-preview
+  :ensure nil
+  :hook (prog-mode . completion-preview-mode)
+  :bind
+  (:map completion-preview-active-mode-map
+    ("M-n" . completion-preview-next-candidate)
+    ("M-p" . completion-preview-prev-candidate)))
+
 ;;
 ;; THIRD PARTY PACKAGES
 ;;
-
-(use-package corfu
-  :ensure t
-  :custom (corfu-cycle t)
-  (corfu-auto t)
-  :init (global-corfu-mode))
 
 (use-package ghostel
   :ensure t
@@ -232,32 +224,6 @@
      (variable (styles orderless))))
   (orderless-matching-styles '(orderless-regexp orderless-literal orderless-flex)))
 
-(use-package consult
-  :ensure t
-  :bind (
-         ("C-x b" . consult-buffer)
-         ("C-x B" . consult-buffer-other-window)
-         ("C-s" . consult-line)
-         ("C-c r" . consult-ripgrep)
-         ("C-c m" . consult-mark)
-         ("C-c g" . consult-xref)
-         ("C-c m" . consult-mark)
-         ("C-c o" . consult-outline)
-		 ("C-c f" . consult-find))
-  :config
-  (setq xref-show-xrefs-function #'consult-xref
-      xref-show-definitions-function #'consult-xref)
-  (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git"))))
-
-(use-package consult-project-extra
-  :straight t
-  :custom (consult-project-function #'consult-project-extra-project-fn)
-  :bind (
-         :map project-prefix-map
-         ("b" . consult-project-buffer)
-         ("f" . consult-project-extra-find)
-         ("F" . consult-project-extra-find-other-window)))
-
 (use-package embark
   :ensure t
   :bind (("C-." . embark-act)
@@ -265,18 +231,12 @@
          ("C-h B" . embark-bindings))
   :init (setq prefix-help-command #'embark-prefix-help-command))
 
-(add-hook 'embark-collect-mode-hook #'consult-preview-at-point-mode)
-
-(use-package embark-consult
-  :ensure t
-  :hook (embark-collect-mode . consult-preview-at-point-mode))
-
 ;;
 ;; LANGUAGE SUPPORT
 ;;
 
 (use-package eglot
-  :hook ((odin-ts-mode js-ts-mode) . eglot-ensure)
+  :hook ((odin-ts-mode) . eglot-ensure)
   :bind (:map eglot-mode-map ("C-c e a" . eglot-code-actions)
               ("C-c e r" . eglot-rename)
               ("C-c e f" . eglot-format)
@@ -318,8 +278,6 @@
                 shell-mode-hook
                 magit-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-(load-theme 'modus-vivendi t)
 
 (when (file-exists-p "~/.emacs.local.el")
   (load "~/.emacs.local.el"))
