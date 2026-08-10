@@ -45,6 +45,8 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+B hotkey-overlay-title="Browser" { spawn "zen-browser"; }
 
+	Mod+Return { spawn "emacsclient" "-c" "%"; }
+
     Mod+Q repeat=false { close-window; }
 
     Mod+Left  { focus-column-left; }

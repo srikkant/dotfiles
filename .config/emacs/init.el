@@ -11,14 +11,24 @@
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
-
 (load custom-file 'noerror 'nomessage)
-(setopt mode-line-collapse-minor-modes t)
 
-(global-display-line-numbers-mode 1)
-(pixel-scroll-precision-mode t)
+(use-package emacs
+  :ensure nil
+  :config
+  (setopt mode-line-collapse-minor-modes t)
 
-(setq fill-column 100)
+  (global-display-line-numbers-mode 1)
+  (pixel-scroll-precision-mode t)
+
+  (global-set-key (kbd "<pinch>") 'ignore)
+  (global-set-key (kbd "<C-wheel-up>") 'ignore)
+  (global-set-key (kbd "<C-wheel-down>") 'ignore)
+
+  (set-face-attribute 'default nil :family "Geist Mono" :height 100)
+  (set-face-attribute 'fixed-pitch nil :family "Geist Mono" :height 100)
+  (set-face-attribute 'variable-pitch nil :family "Geist" :height 100))
+
 
 ;; Set up which key first. Even if something else breaks, this will
 ;; help me out.
@@ -34,33 +44,31 @@
 ;; THEME & APPEARANCE
 ;;
 
-(set-face-attribute 'default nil :family "Geist Mono" :height 100)
-(set-face-attribute 'fixed-pitch nil :family "Geist Mono" :height 100)
-(set-face-attribute 'variable-pitch nil :family "Geist" :height 100)
-
-(use-package doom-themes
-  :ensure t
-  :config
-  (setq modus-themes-italic-constructs nil)
-  (setq modus-themes-common-palette-overrides
-		'((border-mode-line-active bg-mode-line-active)
-		  (border-mode-line-inactive bg-mode-line-inactive)
-		  (bg-line-number-inactive unspecified)
-		  (bg-line-number-active unspecified)
-		  (fringe unspecified)))
-  (load-theme 'modus-vivendi t)
+(use-package solarized-theme
+  :demand t
   :bind
-  (("C-c C-\\" . modus-themes-toggle)))
+  (("C-c \\" . solarized-toggle-theme))
+  :config
+  (setq solarized-scale-org-headlines nil)
+  (setq solarized-height-minus-1 1.0)
+  (setq solarized-height-plus-1 1.0)
+  (setq solarized-height-plus-2 1.0)
+  (setq solarized-height-plus-3 1.0)
+  (setq solarized-height-plus-4 1.0)
+  (load-theme 'solarized-dark t))
+
+(use-package ligature
+  :config
+  (ligature-set-ligatures 'prog-mode '("<---" "<--"  "<<-" "<-" "->" "-->" "--->" "<->" "<-->" "<--->" "<---->" "<!--"
+                                       "<==" "<===" "<=" "=>" "=>>" "==>" "===>" ">=" "<=>" "<==>" "<===>" "<====>" "<!---"
+                                       "<~~" "<~" "~>" "~~>" "::" ":::" "==" "!=" "===" "!=="
+                                       ":=" ":-" ":+" "<*" "<*>" "*>" "<|" "<|>" "|>" "+:" "-:" "=:" "<******>" "++" "+++"))
+
+  (global-ligature-mode t))
 
 ;;
 ;; ESSENTIAL BUILT IN PACKAGES
 ;;
-
-(use-package emacs
-  :ensure nil
-  :bind
-  (("C-c [" . next-error)
-   ("C-c ]" . next-error)))
 
 (use-package magit
   :ensure t
@@ -71,19 +79,19 @@
   :straight (:type built-in)
   :bind (("C-c s" . eshell)))
 
-(use-package windmove
-  :straight (:type built-in)
-  :ensure t
-  :bind (("C-c <up>" . windmove-up)
-		 ("C-c <down>" . windmove-down)
-		 ("C-c <left>" . windmove-left)
-		 ("C-c <right>" . windmove-right)))
-
 (use-package project
   :straight (:type built-in)
   :config
   (setq project-vc-extra-root-markers '(".project"))
   (setq project-switch-commands 'project-dired))
+
+(use-package completion-preview
+  :ensure nil
+  :hook (prog-mode . completion-preview-mode)
+  :bind
+  ( :map completion-preview-active-mode-map
+    ("M-n" . completion-preview-next-candidate)
+    ("M-p" . completion-preview-prev-candidate)))
 
 ;;
 ;; ORG & SOME RICE
@@ -105,7 +113,10 @@
   (global-set-key (kbd "C-c c") #'org-capture)
   (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
   (setq org-refile-use-outline-path 'file)
-  (setq org-outline-path-complete-in-steps nil))
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-directory "~/sync/org")
+  (setq org-agenda-files '("~/sync/org/"))
+  (setq org-default-notes-file "~/sync/org/todo.org"))
 
 (use-package olivetti
   :ensure t
@@ -186,12 +197,6 @@
 ;; THIRD PARTY PACKAGES
 ;;
 
-(use-package corfu
-  :ensure t
-  :custom (corfu-cycle t)
-  (corfu-auto t)
-  :init (global-corfu-mode))
-
 (use-package ghostel
   :ensure t
   :bind (("C-c t" . ghostel)
@@ -258,59 +263,6 @@
               (setq-local forward-sexp-function #'treesit-forward-sexp))))
 
 ;;
-;; AI
-;;
-
-(use-package agent-shell
-  :ensure t)
-
-(use-package minuet
-  :ensure t
-  :bind
-  (("M-y" . #'minuet-complete-with-minibuffer)
-   ("M-i" . #'minuet-show-suggestion)
-   :map minuet-active-mode-map
-   ("M-p" . #'minuet-previous-suggestion)
-   ("M-n" . #'minuet-next-suggestion)
-   ("M-a" . #'minuet-accept-suggestion)
-   ("M-A" . #'minuet-accept-suggestion-line)
-   ("M-e" . #'minuet-dismiss-suggestion))
-   :config
-   (require 'minuet-duet)
-   (setq minuet-gemini-options
-		(plist-put minuet-gemini-options
-				   :model "gemini-flash-lite-latest"))
-  (setq minuet-provider 'gemini))
-
-(use-package minuet-duet
-  :straight nil
-  :after minuet
-  :bind
-  (("C-c d" . #'minuet-duet-predict)
-   :map minuet-duet-active-mode-map
-   ("M-a" . #'minuet-duet-apply)
-   ("M-e" . #'minuet-duet-dismiss))
-  :config
-  (setq minuet-duet-provider 'gemini))
-
-;;
-;; MISCELLANEOUS
-;;
-
-(use-package elfeed
-  :demand t
-  :bind ("C-x r" . elfeed)
-  :config
-  (setq-default elfeed-search-filter "@1-month-ago +unread")
-  (setq elfeed-feeds
-		'(("https://www.reddit.com/user/srikkant/m/srikkant.rss" reddit)
-		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UChk6TQce1EJMn6_liKdHDog" youtube)
-		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UCUyeluBRhGPCW4rPe_UvBZQ" youtube)
-		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw" youtube)
-		  ("https://www.youtube.com/feeds/videos.xml?channel_id=UCaTznQhurW5AaiYPbhEA-KA" youtube)
-		  ("https://thegradient.pub/rss" tech))))
-
-;;
 ;; GENERAL HOOKS
 ;;
 
@@ -321,6 +273,3 @@
                 shell-mode-hook
                 magit-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-(when (file-exists-p "~/.emacs.local.el")
-  (load "~/.emacs.local.el"))

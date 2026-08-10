@@ -3,7 +3,7 @@
   "currentThemeCategory": "dynamic",
   "customThemeFile": "",
   "registryThemeVariants": {},
-  "matugenScheme": "scheme-content",
+  "matugenScheme": "scheme-neutral",
   "runUserMatugenTemplates": true,
   "matugenTargetMonitor": "",
   "popupTransparency": 1,
@@ -224,7 +224,6 @@
   "launcherLogoContrast": 1,
   "launcherLogoSizeOffset": 0,
   "fontFamily": "Geist",
-  "fontWeight": 400,
   "monoFontFamily": "Geist Mono",
   "fontWeight": 400,
   "fontScale": 1,
@@ -422,12 +421,7 @@
       "leftWidgets": [
         "workspaceSwitcher"
       ],
-      "centerWidgets": [
-        {
-          "id": "clock",
-          "enabled": true
-        }
-      ],
+      "centerWidgets": [],
       "rightWidgets": [
         {
           "id": "battery",
@@ -435,6 +429,10 @@
         },
         {
           "id": "music",
+          "enabled": true
+        },
+        {
+          "id": "clock",
           "enabled": true
         },
         {
@@ -447,7 +445,7 @@
         }
       ],
       "spacing": 4,
-      "innerPadding": 0,
+      "innerPadding": -5,
       "bottomGap": 0,
       "transparency": 0,
       "widgetTransparency": 0.85,
