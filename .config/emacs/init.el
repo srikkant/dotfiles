@@ -18,11 +18,14 @@
   :ensure nil
   :config
   (setopt mode-line-collapse-minor-modes t)
+
+  (set-face-attribute 'default nil :family "Geist Mono" :height 130)
+  (set-face-attribute 'fixed-pitch nil :family "Geist Mono" :height 130)
+  (set-face-attribute 'variable-pitch nil :family "Geist" :height 130)
+
   (global-display-line-numbers-mode 1)
-  (pixel-scroll-precision-mode t)
-  :bind
-  (("C-c [" . next-error)
-   ("C-c ]" . next-error)))
+  (pixel-scroll-precision-mode t))
+
 
 ;; Set up which key first. Even if something else breaks, this will
 ;; help me out.
@@ -38,13 +41,20 @@
 ;; THEME & APPEARANCE
 ;;
 
-(set-face-attribute 'default nil :family "Geist Mono" :height 130)
-(set-face-attribute 'fixed-pitch nil :family "Geist Mono" :height 130)
-(set-face-attribute 'variable-pitch nil :family "Geist" :height 130)
 
-(use-package doom-themes
+(use-package solarized-theme
+  :demand t
+  :bind
+  (("C-c \\" . solarized-toggle-theme))
   :config
-  (load-theme 'doom-solarized-dark t))
+  (setq solarized-scale-org-headlines nil)
+  (setq solarized-height-minus-1 1.0)
+  (setq solarized-height-plus-1 1.0)
+  (setq solarized-height-plus-2 1.0)
+  (setq solarized-height-plus-3 1.0)
+  (setq solarized-height-plus-4 1.0)
+  (load-theme 'solarized-dark t))
+
 
 ;;
 ;; ESSENTIAL BUILT IN PACKAGES
@@ -58,14 +68,6 @@
 (use-package eshell
   :straight (:type built-in)
   :bind (("C-c s" . eshell)))
-
-(use-package windmove
-  :straight (:type built-in)
-  :ensure t
-  :bind (("C-c <up>" . windmove-up)
-		 ("C-c <down>" . windmove-down)
-		 ("C-c <left>" . windmove-left)
-		 ("C-c <right>" . windmove-right)))
 
 (use-package project
   :straight (:type built-in)
@@ -112,7 +114,10 @@
   (global-set-key (kbd "C-c c") #'org-capture)
   (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
   (setq org-refile-use-outline-path 'file)
-  (setq org-outline-path-complete-in-steps nil))
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-directory "~/Google Drive/My Drive/sync/org")
+  (setq org-agenda-files '("~/Google Drive/My Drive/sync/org/"))
+  (setq org-default-notes-file (concat org-directory "/todo.org")))
 
 (use-package olivetti
   :ensure t
