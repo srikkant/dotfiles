@@ -44,6 +44,7 @@ window-rule {
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+B hotkey-overlay-title="Browser" { spawn "zen-browser"; }
+	Mod+Return hotkey-overlay-title="Emacs" { spawn "emacsclient" "-c" "-a" ""; }
 
     Mod+Q repeat=false { close-window; }
 

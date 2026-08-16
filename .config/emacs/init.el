@@ -12,13 +12,18 @@
 
 (straight-use-package 'use-package)
 
-(load custom-file 'noerror 'nomessage)
-(setopt mode-line-collapse-minor-modes t)
+(use-package emacs
+  :ensure nil
+  :config
+  (load custom-file 'noerror 'nomessage)
+  (setopt mode-line-collapse-minor-modes t)
 
-(global-display-line-numbers-mode 1)
-(pixel-scroll-precision-mode t)
+  (global-display-line-numbers-mode 1)
+  (pixel-scroll-precision-mode t)
 
-(setq fill-column 100)
+  (set-face-attribute 'default nil :family "Hasklig" :height 100)
+  (set-face-attribute 'fixed-pitch nil :family "Hasklig" :height 100)
+  (set-face-attribute 'variable-pitch nil :family "Source Sans 3" :height 110))
 
 ;; Set up which key first. Even if something else breaks, this will
 ;; help me out.
@@ -34,10 +39,6 @@
 ;; THEME & APPEARANCE
 ;;
 
-(set-face-attribute 'default nil :family "Iosevka" :height 100 :width 'expanded)
-(set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 100 :width 'expanded)
-(set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :height 100)
-
 (use-package solarized-theme
   :ensure t
   :demand t
@@ -51,37 +52,26 @@
                                        "<==" "<===" "<=" "=>" "=>>" "==>" "===>" ">=" "<=>" "<==>" "<===>" "<====>" "<!---"
                                        "<~~" "<~" "~>" "~~>" "::" ":::" "==" "!=" "===" "!=="
                                        ":=" ":-" ":+" "<*" "<*>" "*>" "<|" "<|>" "|>" "+:" "-:" "=:" "<******>" "++" "+++"))
-
   (global-ligature-mode t))
 
 ;;
 ;; ESSENTIAL BUILT IN PACKAGES
 ;;
 
-(use-package emacs
-  :ensure nil
-  :bind
-  (("C-c [" . next-error)
-   ("C-c ]" . next-error)))
-
 (use-package magit
   :ensure t
   :bind (("C-x g" . magit-status)
 		 ("C-c g" . magit-file-dispatch)))
 
-(use-package windmove
-  :straight (:type built-in)
-  :ensure t
-  :bind (("C-c <up>" . windmove-up)
-		 ("C-c <down>" . windmove-down)
-		 ("C-c <left>" . windmove-left)
-		 ("C-c <right>" . windmove-right)))
+(use-package xref
+  :straight (:type built-in))
 
 (use-package project
   :straight (:type built-in)
   :config
-  (setq project-vc-extra-root-markers '(".project"))
-  (setq project-switch-commands 'project-dired))
+  (setq project-vc-extra-root-markers '(".project")))
+
+(use-package hyperbole)
 
 ;;
 ;; ORG & SOME RICE
@@ -103,7 +93,10 @@
   (global-set-key (kbd "C-c c") #'org-capture)
   (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
   (setq org-refile-use-outline-path 'file)
-  (setq org-outline-path-complete-in-steps nil))
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-directory "~/sync/org")
+  (setq org-agenda-files '("~/sync/org"))
+  (setq org-default-notes-file "~/sync/org/todo.org"))
 
 (use-package olivetti
   :ensure t
@@ -226,13 +219,14 @@
 ;;
 
 (use-package eglot
-  :hook ((odin-ts-mode js-ts-mode) . eglot-ensure)
+  :hook ((odin-ts-mode dart-mode) . eglot-ensure)
   :bind (:map eglot-mode-map ("C-c e a" . eglot-code-actions)
               ("C-c e r" . eglot-rename)
               ("C-c e f" . eglot-format)
               ("C-c e d" . flymake-show-buffer-diagnostics))
   :config
   (add-to-list 'eglot-server-programs '(odin-ts-mode . ("ols")))
+  (add-to-list 'eglot-server-programs '(dart-mode . ("fvm" "dart" "language-server")))
   (add-hook 'eglot-managed-mode-hook
             (lambda ()
               (add-hook 'before-save-hook #'eglot-format nil t))))
@@ -257,6 +251,14 @@
             (lambda ()
               (setq-local forward-sexp-function #'treesit-forward-sexp))))
 
+(use-package dart-mode
+  :hook (dart-mode . flutter-test-mode))
+
+(use-package flutter
+  :after dart-mode
+  :bind (:map dart-mode-map
+              ("C-c r" . #'flutter-run-or-hot-reload)))
+
 ;;
 ;; GENERAL HOOKS
 ;;
@@ -268,6 +270,3 @@
                 shell-mode-hook
                 magit-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-(when (file-exists-p "~/.emacs.local.el")
-  (load "~/.emacs.local.el"))
