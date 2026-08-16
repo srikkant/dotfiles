@@ -12,16 +12,20 @@
 
 (straight-use-package 'use-package)
 
-(load custom-file 'noerror 'nomessage)
+(when (and (boundp 'custom-file) custom-file (file-exists-p custom-file))
+  (load custom-file 'noerror 'nomessage))
+
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (use-package emacs
   :ensure nil
   :config
   (setopt mode-line-collapse-minor-modes t)
-
-  (set-face-attribute 'default nil :family "Geist Mono" :height 130)
-  (set-face-attribute 'fixed-pitch nil :family "Geist Mono" :height 130)
-  (set-face-attribute 'variable-pitch nil :family "Geist" :height 130)
+  (setq-default truncate-lines t)
+  (setq eldoc-echo-area-use-multiline-p nil)
+  (set-face-attribute 'default nil :family "Hasklig" :height 130)
+  (set-face-attribute 'fixed-pitch nil :family "Hasklig" :height 130)
+  (set-face-attribute 'variable-pitch nil :family "Source Sans 3" :height 150)
 
   (global-display-line-numbers-mode 1)
   (pixel-scroll-precision-mode t))
@@ -55,10 +59,15 @@
   (setq solarized-height-plus-4 1.0)
   (load-theme 'solarized-dark t))
 
-
 ;;
 ;; ESSENTIAL BUILT IN PACKAGES
 ;;
+
+(use-package srikkant-annotate
+  :straight nil
+  :demand t
+  :bind (("C-x C-/" . srikkant-annotate-menu)
+         ("C-x C-_" . srikkant-annotate-menu)))
 
 (use-package magit
   :ensure t
@@ -72,8 +81,7 @@
 (use-package project
   :straight (:type built-in)
   :config
-  (setq project-vc-extra-root-markers '(".project"))
-  (setq project-switch-commands 'project-dired))
+  (setq project-vc-extra-root-markers '(".project")))
 
 (use-package ligature
   :config
@@ -118,16 +126,6 @@
   (setq org-directory "~/Google Drive/My Drive/sync/org")
   (setq org-agenda-files '("~/Google Drive/My Drive/sync/org/"))
   (setq org-default-notes-file (concat org-directory "/todo.org")))
-
-(use-package olivetti
-  :ensure t
-  :hook
-  (org-mode . olivetti-mode)
-  (markdown-mode . olivetti-mode)
-  :custom
-  (olivetti-body-width 80)
-  (olivetti-style 'fancy)
-  (olivetti-minimum-body-width 80))
 
 (use-package org-modern
   :straight t
@@ -241,13 +239,14 @@
 ;;
 
 (use-package eglot
-  :hook ((odin-ts-mode) . eglot-ensure)
+  :hook ((odin-ts-mode dart-mode) . eglot-ensure)
   :bind (:map eglot-mode-map ("C-c e a" . eglot-code-actions)
               ("C-c e r" . eglot-rename)
               ("C-c e f" . eglot-format)
               ("C-c e d" . flymake-show-buffer-diagnostics))
   :config
   (add-to-list 'eglot-server-programs '(odin-ts-mode . ("ols")))
+  (add-to-list 'eglot-server-programs '(dart-mode . ("dart" "language-server" "--client-id" "emacs.eglot-dart")))
   (add-hook 'eglot-managed-mode-hook
             (lambda ()
               (add-hook 'before-save-hook #'eglot-format nil t))))
@@ -263,14 +262,19 @@
   :straight (odin-ts-mode :type git
 						  :host github
 						  :repo "Sampie159/odin-ts-mode")
-  :bind (:map odin-ts-mode-map
-         ("C-M-d" . treesit-down-list)
-         ("C-M-u" . treesit-up-list))
   :mode ("\\.odin\\'" . odin-ts-mode)
   :config
   (add-hook 'odin-ts-mode-hook
             (lambda ()
               (setq-local forward-sexp-function #'treesit-forward-sexp))))
+
+(use-package dart-mode
+  :hook (dart-mode . flutter-test-mode))
+
+(use-package flutter
+  :after dart-mode
+  :bind (:map dart-mode-map
+              ("C-c r" . #'flutter-run-or-hot-reload)))
 
 ;;
 ;; GENERAL HOOKS
@@ -283,6 +287,3 @@
                 shell-mode-hook
                 magit-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-(when (file-exists-p "~/.emacs.local.el")
-  (load "~/.emacs.local.el"))

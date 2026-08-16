@@ -1,2 +1,4 @@
 font-family = Geist Mono
 macos-titlebar-style = hidden
+theme = dark:iTerm2 Solarized Dark,light:iTerm2 Solarized Light
+
