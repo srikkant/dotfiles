@@ -17,13 +17,9 @@
   :config
   (load custom-file 'noerror 'nomessage)
   (setopt mode-line-collapse-minor-modes t)
-
   (global-display-line-numbers-mode 1)
-  (pixel-scroll-precision-mode t)
+  (pixel-scroll-precision-mode t))
 
-  (set-face-attribute 'default nil :family "Hasklig" :height 100)
-  (set-face-attribute 'fixed-pitch nil :family "Hasklig" :height 100)
-  (set-face-attribute 'variable-pitch nil :family "Source Sans 3" :height 110))
 
 ;; Set up which key first. Even if something else breaks, this will
 ;; help me out.
@@ -39,12 +35,66 @@
 ;; THEME & APPEARANCE
 ;;
 
-(use-package solarized-theme
-  :ensure t
-  :demand t
-  :bind (("C-c \\" . solarized-toggle-theme))
-  :config
-  (load-theme 'solarized-dark t))
+(straight-use-package
+ '(nano :type git :host github :repo "rougier/nano-emacs"))
+
+(require 'nano-base-colors)
+(require 'nano-faces)
+(require 'nano-theme)
+(require 'nano-layout)
+
+(defun nano-theme-set-light ()
+  "Apply Alabaster light theme base for Nano."
+  (setq frame-background-mode    'light)
+  (setq nano-color-foreground "#000000") ;; Alabaster FG (black)
+  (setq nano-color-background "#F7F7F7") ;; Alabaster BG
+  (setq nano-color-highlight  "#F0F0F0") ;; Line highlight / active line
+  (setq nano-color-critical   "#AA3731") ;; Red / comments & errors
+  (setq nano-color-salient    "#325CC0") ;; Blue / definitions & functions
+  (setq nano-color-strong     "#000000") ;; Black / bold elements
+  (setq nano-color-popout     "#7A3E9D") ;; Magenta / constants & symbols
+  (setq nano-color-subtle     "#BFDBFE") ;; Light blue / selection & modeline
+  (setq nano-color-faded      "#777777") ;; Grey / punctuation & dim text
+  (setq nano-theme-var "light"))
+
+(defun nano-theme-set-dark ()
+  "Apply Alabaster dark theme base for Nano."
+  (setq frame-background-mode     'dark)
+  (setq nano-color-foreground "#CECECE") ;; Light grey / base text
+  (setq nano-color-background "#0E1415") ;; Dark teal-black BG
+  (setq nano-color-highlight  "#1A2426") ;; Current line highlight
+  (setq nano-color-critical   "#F06560") ;; Bright coral red / comments & errors
+  (setq nano-color-salient    "#70B0FF") ;; Light blue / definitions & functions
+  (setq nano-color-strong     "#FFFFFF") ;; Pure white / bold elements
+  (setq nano-color-popout     "#D994FF") ;; Soft lavender / constants & symbols
+  (setq nano-color-subtle     "#233336") ;; Muted dark teal / selection & modeline
+  (setq nano-color-faded      "#6C7D80") ;; Muted cyan-grey / punctuation & dim text
+  (setq nano-theme-var "dark"))
+
+(defun my/set-font-faces ()
+  (set-face-attribute 'default nil :family "OverpassM Nerd Font Mono" :height 100)
+  (set-face-attribute 'fixed-pitch nil :inherit 'default)
+  (set-face-attribute 'variable-pitch nil :family "Overpass" :height 1.15))
+
+(defun my/toggle-theme ()
+  (interactive)
+  (nano-toggle-theme)
+  (my/set-font-faces))
+
+(nano-theme-set-light)
+(nano-faces)
+(nano-theme)
+(my/set-font-faces)
+
+(require 'nano-layout)
+(require 'nano-modeline)
+
+(keymap-global-set "C-c \\" #'my/toggle-theme)
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
 
 (use-package ligature
   :config
@@ -97,16 +147,6 @@
   (setq org-directory "~/sync/org")
   (setq org-agenda-files '("~/sync/org"))
   (setq org-default-notes-file "~/sync/org/todo.org"))
-
-(use-package olivetti
-  :ensure t
-  :hook
-  (org-mode . olivetti-mode)
-  (markdown-mode . olivetti-mode)
-  :custom
-  (olivetti-body-width 80)
-  (olivetti-style 'fancy)
-  (olivetti-minimum-body-width 80))
 
 (use-package org-modern
   :straight t
