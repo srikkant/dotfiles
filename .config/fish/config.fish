@@ -1,4 +1,5 @@
-# specifically for emacs and eat
-bind \177 backward-delete-char
-
 zoxide init fish | source
+mise activate fish | source
+
+set -gx EDITOR emacsclient
+set -gx VISUAL emacsclient

@@ -1,7 +1,11 @@
 .luarc.json
 .DS_Store
 
-jj
+.theme.css
+.theme.toml
+
+.config/foot/dank-colors.ini
+.config/doom/custom.el
 
 .config/zed/conversations
 .config/zed/prompts
