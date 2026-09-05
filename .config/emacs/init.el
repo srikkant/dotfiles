@@ -11,6 +11,8 @@
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
+(setq straight-built-in-pseudo-packages
+      '(xref project eldoc eglot))
 
 (when (and (boundp 'custom-file) custom-file (file-exists-p custom-file))
   (load custom-file 'noerror 'nomessage))
@@ -23,13 +25,8 @@
   (setopt mode-line-collapse-minor-modes t)
   (setq-default truncate-lines t)
   (setq eldoc-echo-area-use-multiline-p nil)
-  (set-face-attribute 'default nil :family "Hasklig" :height 130)
-  (set-face-attribute 'fixed-pitch nil :family "Hasklig" :height 130)
-  (set-face-attribute 'variable-pitch nil :family "Source Sans 3" :height 150)
-
   (global-display-line-numbers-mode 1)
   (pixel-scroll-precision-mode t))
-
 
 ;; Set up which key first. Even if something else breaks, this will
 ;; help me out.
@@ -45,29 +42,81 @@
 ;; THEME & APPEARANCE
 ;;
 
+(straight-use-package
+ '(nano :type git :host github :repo "rougier/nano-emacs"))
 
-(use-package solarized-theme
-  :demand t
-  :bind
-  (("C-c \\" . solarized-toggle-theme))
-  :config
-  (setq solarized-scale-org-headlines nil)
-  (setq solarized-height-minus-1 1.0)
-  (setq solarized-height-plus-1 1.0)
-  (setq solarized-height-plus-2 1.0)
-  (setq solarized-height-plus-3 1.0)
-  (setq solarized-height-plus-4 1.0)
-  (load-theme 'solarized-dark t))
+(require 'nano-base-colors)
+(require 'nano-faces)
+(require 'nano-theme)
+(require 'nano-layout)
+
+(defun nano-theme-set-light ()
+  "Apply Alabaster light theme base for Nano."
+  (setq frame-background-mode    'light)
+  (setq nano-color-foreground "#000000") ;; Alabaster FG (black)
+  (setq nano-color-background "#F7F7F7") ;; Alabaster BG
+  (setq nano-color-highlight  "#F0F0F0") ;; Line highlight / active line
+  (setq nano-color-critical   "#AA3731") ;; Red / comments & errors
+  (setq nano-color-salient    "#325CC0") ;; Blue / definitions & functions
+  (setq nano-color-strong     "#000000") ;; Black / bold elements
+  (setq nano-color-popout     "#7A3E9D") ;; Magenta / constants & symbols
+  (setq nano-color-subtle     "#BFDBFE") ;; Light blue / selection & modeline
+  (setq nano-color-faded      "#777777") ;; Grey / punctuation & dim text
+  (setq nano-theme-var "light"))
+
+(defun nano-theme-set-dark ()
+  "Apply Alabaster dark theme base for Nano."
+  (setq frame-background-mode     'dark)
+  (setq nano-color-foreground "#CECECE") ;; Light grey / base text
+  (setq nano-color-background "#0E1415") ;; Dark teal-black BG
+  (setq nano-color-highlight  "#1A2426") ;; Current line highlight
+  (setq nano-color-critical   "#F06560") ;; Bright coral red / comments & errors
+  (setq nano-color-salient    "#70B0FF") ;; Light blue / definitions & functions
+  (setq nano-color-strong     "#FFFFFF") ;; Pure white / bold elements
+  (setq nano-color-popout     "#D994FF") ;; Soft lavender / constants & symbols
+  (setq nano-color-subtle     "#233336") ;; Muted dark teal / selection & modeline
+  (setq nano-color-faded      "#6C7D80") ;; Muted cyan-grey / punctuation & dim text
+  (setq nano-theme-var "dark"))
+
+(defun my/set-font-faces ()
+  (set-face-attribute 'default nil :family "OverpassM Nerd Font Mono" :height 110)
+  (set-face-attribute 'fixed-pitch nil :family "OverpassM Nerd Font Mono" :height 110)
+  (set-face-attribute 'variable-pitch nil :family "Overpass" :height 130))
+
+(defun my/toggle-theme ()
+  (interactive)
+  (nano-toggle-theme)
+  (my/set-font-faces))
+
+(setq nano-font-family-monospaced "OverpassM Nerd Font Mono")
+(setq nano-font-family-proportional "Overpass")
+(setq nano-font-size 11)
+(nano-theme-set-dark)
+(nano-faces)
+(nano-theme)
+(my/set-font-faces)
+
+(require 'nano-layout)
+(require 'nano-modeline)
+
+(keymap-global-set "C-c \\" #'my/toggle-theme)
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
 
 ;;
-;; ESSENTIAL BUILT IN PACKAGES
+;; SRIKKANT
 ;;
 
 (use-package srikkant-annotate
   :straight nil
   :demand t
-  :bind (("C-x C-/" . srikkant-annotate-menu)
-         ("C-x C-_" . srikkant-annotate-menu)))
+  :bind (("C-x C-/" . srikkant-annotate-menu)))
+
+;;
+;; ESSENTIAL BUILT IN PACKAGES
+;;
 
 (use-package magit
   :ensure t
@@ -124,8 +173,18 @@
   (setq org-refile-use-outline-path 'file)
   (setq org-outline-path-complete-in-steps nil)
   (setq org-directory "~/Google Drive/My Drive/sync/org")
-  (setq org-agenda-files '("~/Google Drive/My Drive/sync/org/"))
+  (setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
   (setq org-default-notes-file (concat org-directory "/todo.org")))
+
+(use-package org-roam
+  :demand t
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture))
+  :config
+  (setq org-roam-directory "~/Google Drive/My Drive/sync/org/roam")
+  (org-roam-db-autosync-mode))
 
 (use-package org-modern
   :straight t
@@ -146,7 +205,6 @@
 (defun my/org-style-faces ()
   (interactive)
   (variable-pitch-mode 1)
-  (setq line-spacing '(0.1 . 0.1))
 
   (dolist (face '(org-block
                   org-block-begin-line
@@ -196,14 +254,26 @@
 (use-package completion-preview
   :ensure nil
   :hook (prog-mode . completion-preview-mode)
+  :config
+  (setq completion-show-help nil)
+  (setq completions-header-format nil)
+  (setq completions-format 'one-column)
+  (setq completions-max-height 15)
+  (setq completions-detailed t)
   :bind
   (:map completion-preview-active-mode-map
-    ("M-n" . completion-preview-next-candidate)
-    ("M-p" . completion-preview-prev-candidate)))
+		("M-n" . completion-preview-next-candidate)
+		("M-p" . completion-preview-prev-candidate)))
 
 ;;
 ;; THIRD PARTY PACKAGES
 ;;
+
+(use-package hyperbole)
+
+(use-package mise
+  :config
+  (global-mise-mode))
 
 (use-package ghostel
   :ensure t
@@ -272,6 +342,7 @@
   :hook (dart-mode . flutter-test-mode))
 
 (use-package flutter
+  :demand
   :after dart-mode
   :bind (:map dart-mode-map
               ("C-c r" . #'flutter-run-or-hot-reload)))

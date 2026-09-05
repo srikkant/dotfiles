@@ -712,7 +712,6 @@ Searches draft session notes first; if empty, offers saved notes from disk."
   :lighter " 📝"
   :keymap (let ((map (make-sparse-keymap)))
             (define-key map (kbd "C-c /") #'srikkant-annotate-menu)
-            (define-key map (kbd "C-c n") #'srikkant-annotate-menu)
             map)
   (if srikkant-annotate-mode
       (progn

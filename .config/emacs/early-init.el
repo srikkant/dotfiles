@@ -19,4 +19,7 @@
       '((menu-bar-lines . 0)
         (tool-bar-lines . 0)
         (vertical-scroll-bars . nil)
+        (alpha-background . 70)
+        (ns-background-blur . 20)
+        (ns-alpha-elements ns-alpha-all)
         (undecorated-round . t)))
