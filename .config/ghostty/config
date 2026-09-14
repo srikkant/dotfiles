@@ -1,4 +1,9 @@
-font-family = Geist Mono
-macos-titlebar-style = hidden
-theme = dark:iTerm2 Solarized Dark,light:iTerm2 Solarized Light
-
+adjust-cell-height = 30%
+font-family = SF Mono
+font-size = 12
+background-opacity = 0.95
+background-blur = true
+window-padding-x = 8
+window-padding-y = 8
+window-padding-balance = true
+theme = dark:Rose Pine, light:Rose Pine Dawn
