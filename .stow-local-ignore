@@ -1,5 +1,6 @@
 RCS
 .git
 .gitignore
+.jj
 
 ^/README.*

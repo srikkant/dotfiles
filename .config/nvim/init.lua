@@ -19,52 +19,79 @@ vim.opt.wrap = false
 vim.opt.wildmode = "longest:full,full"
 
 vim.pack.add({
-    "https://github.com/neovim/nvim-lspconfig",
-    "https://github.com/ibhagwan/fzf-lua",
-    "https://github.com/stevearc/conform.nvim",
-    "https://github.com/mason-org/mason.nvim",
-    "https://github.com/supermaven-inc/supermaven-nvim",
-    "https://github.com/mfussenegger/nvim-dap",
-    "https://github.com/thehamsta/nvim-dap-virtual-text"
+    { src = "https://github.com/ibhagwan/fzf-lua" },
+    { src = "https://github.com/supermaven-inc/supermaven-nvim" },
+    { src = "https://github.com/rose-pine/neovim",              name = "rose-pine" },
 })
 
 require("fzf-lua").setup()
-require("mason").setup()
 require("supermaven-nvim").setup({})
 
-require("conform").setup({
-    formatters_by_ft = {
-        markdown = { "prettierd", "prettier", stop_after_first = true },
+require("rose-pine").setup({
+    variant = "auto",
+    styles = {
+        bold = false,
+        italic = false,
+        transparency = true,
     },
-    format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
+    highlight_groups = {
+        DiagnosticUnderlineError = { undercurl = true, sp = "love" },
+        DiagnosticUnderlineWarn  = { undercurl = true, sp = "gold" },
+        DiagnosticUnderlineInfo  = { undercurl = true, sp = "foam" },
+        DiagnosticUnderlineHint  = { undercurl = true, sp = "iris" },
+        SpellBad                 = { undercurl = true, sp = "love" },
+    }
 })
 
-for _, server in ipairs({ "lua_ls", "ols" }) do
-    vim.lsp.enable(server)
-end
+vim.cmd("colorscheme rose-pine")
 
-local dap = require("dap")
+vim.lsp.config("tsc", {
+    cmd = { "tsc", "--lsp", "--stdio" },
+    filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+    root_markers = { "tsconfig.json", "package.json", "bun.lockb", "bun.lock", ".git" },
+})
 
-dap.adapters.codelldb = {
-    type = "executable",
-    command = "codelldb",
-}
+vim.lsp.config("oxfmt", {
+    cmd = { "oxfmt", "--lsp" },
+    root_markers = { ".oxlintrc.json", "oxlint.json", "package.json", ".git" },
+})
 
-dap.configurations.odin = {
-    {
-        name = "Launch",
-        type = "codelldb",
-        request = "launch",
-        program = function()
-            return vim.fn.getcwd() .. "/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-        end,
-        cwd = "${workspaceFolder}",
-        stopOnEntry = false,
-        args = {},
+vim.lsp.config("oxlint", {
+    cmd = { "oxlint", "--lsp" },
+    root_markers = { ".oxlintrc.json", "oxlint.json", "package.json", ".git" },
+    on_attach = function(client)
+        client.server_capabilities.semanticTokensProvider = nil
+    end,
+})
+
+vim.lsp.config("lua_ls", {
+    cmd = { "lua-language-server" },
+    root_markers = { ".luarc.json", "stylua.toml", ".git" },
+    filetypes = { "lua" },
+    settings = {
+        Lua = {
+            codeLens = { enable = true },
+            hint = { enable = true, semicolon = "Disable" },
+            diagnostics = { globals = { "vim" } },
+            workspace = { library = vim.api.nvim_get_runtime_file("", true), checkThirdParty = false },
+        },
     },
-}
+})
 
-require("nvim-dap-virtual-text").setup()
+vim.lsp.config("ols", {
+    cmd = { "ols" },
+    filetypes = { "odin" },
+    root_markers = { ".ols.json", ".git", "*.odin" },
+    init_options = {
+        checker_args = "-strict-style",
+    }
+})
+
+vim.lsp.enable("tsc")
+vim.lsp.enable("oxlint")
+vim.lsp.enable("oxfmt")
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("ols")
 
 vim.keymap.set({ "n", "v" }, "+y", [["+y]])
 vim.keymap.set({ "n", "v" }, "+d", [["_d]])
@@ -78,22 +105,6 @@ vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua files<cr>")
 vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>")
 vim.keymap.set("n", "<leader>/", "<cmd>FzfLua live_grep<cr>")
 vim.keymap.set("n", "<leader><leader>", "<cmd>FzfLua global<cr>")
-
-vim.keymap.set("n", "<F5>", dap.continue)
-vim.keymap.set("n", "<F7>", dap.terminate)
-vim.keymap.set("n", "<F10>", dap.step_over)
-vim.keymap.set("n", "<F11>", dap.step_into)
-vim.keymap.set("n", "<F12>", dap.step_out)
-vim.keymap.set("n", "<F9>", dap.toggle_breakpoint)
-
-vim.keymap.set("n", "<F6>", function()
-    local widgets = require("dap.ui.widgets")
-    widgets.centered_element(widgets.scopes)
-end)
-
-vim.keymap.set("n", "<F8>", function()
-    require("dap.ui.widgets").hover()
-end)
 
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
@@ -112,17 +123,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 end,
             })
         end
-
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-        vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
     end,
-})
-
-vim.api.nvim_create_autocmd("OptionSet", {
-    pattern = "background",
-    callback = function()
-        vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-    end
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -137,3 +138,18 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.bo.errorformat = "%f:%l:%c: %m"
     end,
 })
+
+-- Temporary fix: for neovim 0.12
+local og_glob = vim.glob.to_lpeg
+vim.glob.to_lpeg = function(pattern)
+    if type(pattern) == "string" then
+        pattern = pattern:gsub("bundled:///", "")
+        pattern = pattern:gsub("%*%*%*", "**")
+    end
+
+    local status, result = pcall(og_glob, pattern)
+    if not status then
+        return og_glob("")
+    end
+    return result
+end
