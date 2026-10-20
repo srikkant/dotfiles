@@ -40,6 +40,7 @@ outer.top = 4
     alt-shift-4 = "move-node-to-workspace 4"
 	alt-shift-5 = "move-node-to-workspace 5"
     alt-shift-6 = "move-node-to-workspace 6"
+    alt-shift-f = ["layout floating tiling"]
 
 [[on-window-detected]]
 if.app-id="com.mitchellh.ghostty"

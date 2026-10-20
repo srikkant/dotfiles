@@ -1,9 +1,17 @@
+macos-titlebar-style = tabs
 adjust-cell-height = 30%
 font-family = SF Mono
 font-size = 12
-background-opacity = 0.95
+background-opacity = 0.85
 background-blur = true
-window-padding-x = 8
-window-padding-y = 8
-window-padding-balance = true
-theme = dark:Rose Pine, light:Rose Pine Dawn
+theme = light:Rose Pine Dawn,dark:Rose Pine
+
+keybind = super+h=goto_split:left
+keybind = super+j=goto_split:down
+keybind = super+k=goto_split:up
+keybind = super+l=goto_split:right
+
+keybind = super+ctrl+h=resize_split:left,10
+keybind = super+ctrl+j=resize_split:down,10
+keybind = super+ctrl+k=resize_split:up,10
+keybind = super+ctrl+l=resize_split:right,10
