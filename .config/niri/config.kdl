@@ -17,6 +17,7 @@ layout {
 }
 
 input {
+    focus-follows-mouse
     touchpad {
         dwt;
         dwtp;
@@ -41,10 +42,15 @@ window-rule {
     }
 }
 
+window-rule {
+    match title="Graha Mandala"
+    open-on-output "DP-1"
+}
+
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
-    Mod+B hotkey-overlay-title="Browser" { spawn "zen-browser"; }
-	Mod+Return hotkey-overlay-title="Emacs" { spawn "emacsclient" "-c" "-a" ""; }
+    Mod+B hotkey-overlay-title="Browser" { spawn "google-chrome-stable"; }
+	Mod+Return hotkey-overlay-title="Ghostty" { spawn "ghostty"; }
 
     Mod+Q repeat=false { close-window; }
 

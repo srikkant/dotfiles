@@ -20,40 +20,32 @@ vim.opt.wildmode = "longest:full,full"
 
 vim.pack.add({
     { src = "https://github.com/ibhagwan/fzf-lua" },
-    { src = "https://github.com/supermaven-inc/supermaven-nvim" },
-    { src = "https://github.com/rose-pine/neovim",              name = "rose-pine" },
+    { src = "https://github.com/stevearc/conform.nvim" },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 })
 
-require("fzf-lua").setup()
-require("supermaven-nvim").setup({})
+require("fzf-lua").setup({})
 
-require("rose-pine").setup({
-    variant = "auto",
-    styles = {
-        bold = false,
-        italic = false,
-        transparency = true,
+require("conform").setup({
+    formatters_by_ft = {
+        markdown = { "oxfmt" },
+        typescript = { "oxfmt" },
+        javascript = { "oxfmt" },
+        typescriptreact = { "oxfmt" },
+        javascriptreact = { "oxfmt" },
+        json = { "oxfmt" },
+        yaml = { "oxfmt" },
+        go = { "goimports" },
+        gomod = { "goimports" },
+        odin = { "odinfmt" }
     },
-    highlight_groups = {
-        DiagnosticUnderlineError = { undercurl = true, sp = "love" },
-        DiagnosticUnderlineWarn  = { undercurl = true, sp = "gold" },
-        DiagnosticUnderlineInfo  = { undercurl = true, sp = "foam" },
-        DiagnosticUnderlineHint  = { undercurl = true, sp = "iris" },
-        SpellBad                 = { undercurl = true, sp = "love" },
-    }
+    format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
 })
-
-vim.cmd("colorscheme rose-pine")
 
 vim.lsp.config("tsc", {
     cmd = { "tsc", "--lsp", "--stdio" },
     filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
     root_markers = { "tsconfig.json", "package.json", "bun.lockb", "bun.lock", ".git" },
-})
-
-vim.lsp.config("oxfmt", {
-    cmd = { "oxfmt", "--lsp" },
-    root_markers = { ".oxlintrc.json", "oxlint.json", "package.json", ".git" },
 })
 
 vim.lsp.config("oxlint", {
@@ -87,24 +79,32 @@ vim.lsp.config("ols", {
     }
 })
 
+vim.lsp.config("gopls", {
+    cmd = { "gopls" },
+    filetypes = { "go" },
+    root_markers = { "go.mod", ".git", "*.go" },
+})
+
 vim.lsp.enable("tsc")
 vim.lsp.enable("oxlint")
-vim.lsp.enable("oxfmt")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("ols")
+vim.lsp.enable("gopls")
 
 vim.keymap.set({ "n", "v" }, "+y", [["+y]])
 vim.keymap.set({ "n", "v" }, "+d", [["_d]])
 vim.keymap.set("n", "-", "<cmd>Ex<cr>")
-vim.keymap.set("n", "<leader>cq", vim.diagnostic.setqflist)
-vim.keymap.set("n", "<leader>cl", vim.diagnostic.setloclist)
-vim.keymap.set("n", "<leader>cm", ":make ")
+vim.keymap.set("n", "<leader>cm", "<cmd>make<cr>")
 vim.keymap.set("n", "<leader>cc", "<cmd>make<cr>")
 vim.keymap.set("n", "<leader>cr", "<cmd>make run<cr>")
+
+vim.keymap.set("n", "<leader><leader>", "<cmd>FzfLua global<cr>")
 vim.keymap.set("n", "<leader>ff", "<cmd>FzfLua files<cr>")
 vim.keymap.set("n", "<leader>fb", "<cmd>FzfLua buffers<cr>")
 vim.keymap.set("n", "<leader>/", "<cmd>FzfLua live_grep<cr>")
-vim.keymap.set("n", "<leader><leader>", "<cmd>FzfLua global<cr>")
+vim.keymap.set("n", "<leader>'", "<cmd>FzfLua resume<cr>")
+vim.keymap.set("n", "gd", "<cmd>FzfLua lsp_definitions<cr>")
+vim.keymap.set("n", "grr", "<cmd>FzfLua lsp_references<cr>")
 
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
@@ -114,22 +114,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
         if client:supports_method("textDocument/completion", args.buf) then
             vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
         end
-
-        if client:supports_method("textDocument/formatting") then
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                buffer = args.buf,
-                callback = function()
-                    vim.lsp.buf.format({ id = client.id })
-                end,
-            })
-        end
     end,
 })
 
-vim.api.nvim_create_autocmd("TextYankPost", {
-    callback = function()
-        vim.highlight.on_yank()
-    end
+vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("TreesitterHighlight", { clear = true }),
+    callback = function(args)
+        pcall(vim.treesitter.start, args.buf)
+    end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -139,17 +131,9 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
--- Temporary fix: for neovim 0.12
-local og_glob = vim.glob.to_lpeg
-vim.glob.to_lpeg = function(pattern)
-    if type(pattern) == "string" then
-        pattern = pattern:gsub("bundled:///", "")
-        pattern = pattern:gsub("%*%*%*", "**")
-    end
-
-    local status, result = pcall(og_glob, pattern)
-    if not status then
-        return og_glob("")
-    end
-    return result
-end
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { undercurl = true })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { undercurl = true })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { undercurl = true })
