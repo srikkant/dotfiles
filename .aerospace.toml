@@ -2,6 +2,7 @@ config-version = 2
 start-at-login = true
 
 persistent-workspaces = ["1", "2", "3", "4", "5", "6"]
+accordion-padding = 8
 
 [gaps]
 inner.horizontal = 8
@@ -41,10 +42,5 @@ outer.top = 4
 	alt-shift-5 = "move-node-to-workspace 5"
     alt-shift-6 = "move-node-to-workspace 6"
     alt-shift-f = ["layout floating tiling"]
-
-[[on-window-detected]]
-if.app-id="com.mitchellh.ghostty"
-run= [
-  "layout floating",
-]
-
+    alt-slash = 'layout tiles horizontal vertical'
+    alt-comma = 'layout accordion horizontal vertical'

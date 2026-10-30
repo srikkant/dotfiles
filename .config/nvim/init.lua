@@ -19,16 +19,14 @@ vim.opt.wrap = false
 vim.opt.wildmode = "longest:full,full"
 
 vim.pack.add({
+    { src = "https://github.com/nvim-tree/nvim-web-devicons" },
     { src = "https://github.com/folke/snacks.nvim" },
-    { src = "https://github.com/supermaven-inc/supermaven-nvim" },
     { src = "https://github.com/stevearc/conform.nvim" },
+    { src = "https://github.com/dchinmay2/alabaster.nvim" },
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
-    { src = "https://github.com/rose-pine/neovim",                name = "rose-pine" },
 })
 
-require("nvim-treesitter").setup({})
-
-require("supermaven-nvim").setup({})
+vim.cmd.colorscheme("alabaster")
 
 require("conform").setup({
     formatters_by_ft = {
@@ -46,28 +44,8 @@ require("conform").setup({
     format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
 })
 
-require("rose-pine").setup({
-    variant = "auto",
-    styles = {
-        italic = false,
-        transparency = true,
-    },
-    highlight_groups = {
-        DiagnosticUnderlineError = { undercurl = true, sp = "love" },
-        DiagnosticUnderlineWarn  = { undercurl = true, sp = "gold" },
-        DiagnosticUnderlineInfo  = { undercurl = true, sp = "foam" },
-        DiagnosticUnderlineHint  = { undercurl = true, sp = "iris" },
-        SpellBad                 = { undercurl = true, sp = "love" },
-    }
-})
-
-vim.cmd("colorscheme rose-pine")
-
-local Snacks = require("snacks")
-Snacks.setup()
-
 vim.lsp.config("tsc", {
-    cmd = { "tsc", "--lsp", "--stdio" },
+    cmd = { "bunx", "tsc", "--lsp", "--stdio" },
     filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
     root_markers = { "tsconfig.json", "package.json", "bun.lockb", "bun.lock", ".git" },
 })
@@ -115,23 +93,22 @@ vim.lsp.enable("lua_ls")
 vim.lsp.enable("ols")
 vim.lsp.enable("gopls")
 
+local Snacks = require("snacks")
+
 vim.keymap.set({ "n", "v" }, "+y", [["+y]])
 vim.keymap.set({ "n", "v" }, "+d", [["_d]])
 vim.keymap.set("n", "-", "<cmd>Ex<cr>")
-vim.keymap.set("n", "<leader>cm", ":make ")
+vim.keymap.set("n", "<leader>cm", "<cmd>make<cr>")
 vim.keymap.set("n", "<leader>cc", "<cmd>make<cr>")
 vim.keymap.set("n", "<leader>cr", "<cmd>make run<cr>")
 
 vim.keymap.set("n", "<leader><leader>", function() Snacks.picker.smart() end)
+vim.keymap.set("n", "<leader>fp", function() Snacks.picker.projects() end)
 vim.keymap.set("n", "<leader>ff", function() Snacks.picker.files() end)
 vim.keymap.set("n", "<leader>fb", function() Snacks.picker.buffers() end)
-vim.keymap.set("n", "<leader>fp", function() Snacks.picker.projects() end)
 vim.keymap.set("n", "<leader>/", function() Snacks.picker.grep() end)
-vim.keymap.set("n", "<leader>sd", function() Snacks.picker.diagnostics() end)
-vim.keymap.set("n", "<leader>sD", function() Snacks.picker.diagnostics_buffer() end)
-vim.keymap.set("n", "<leader>;", function() Snacks.picker.resume() end)
+vim.keymap.set("n", "<leader>'", function() Snacks.picker.resume() end)
 vim.keymap.set("n", "gd", function() Snacks.picker.lsp_definitions() end)
-vim.keymap.set("n", "gD", function() Snacks.picker.lsp_declarations() end)
 vim.keymap.set("n", "grr", function() Snacks.picker.lsp_references() end)
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -152,15 +129,17 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
-vim.api.nvim_create_autocmd("TextYankPost", {
-    callback = function()
-        vim.highlight.on_yank()
-    end
-})
-
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "odin",
     callback = function()
         vim.bo.errorformat = "%f:%l:%c: %m"
     end,
 })
+
+
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { undercurl = true })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { undercurl = true })
+vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { undercurl = true })
