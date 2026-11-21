@@ -19,14 +19,11 @@ vim.opt.wrap = false
 vim.opt.wildmode = "longest:full,full"
 
 vim.pack.add({
-    { src = "https://github.com/nvim-tree/nvim-web-devicons" },
     { src = "https://github.com/folke/snacks.nvim" },
     { src = "https://github.com/stevearc/conform.nvim" },
-    { src = "https://github.com/dchinmay2/alabaster.nvim" },
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 })
 
-vim.cmd.colorscheme("alabaster")
 
 require("conform").setup({
     formatters_by_ft = {
@@ -94,6 +91,7 @@ vim.lsp.enable("ols")
 vim.lsp.enable("gopls")
 
 local Snacks = require("snacks")
+Snacks.setup({ picker = { icons = { files = { enabled = false }}}})
 
 vim.keymap.set({ "n", "v" }, "+y", [["+y]])
 vim.keymap.set({ "n", "v" }, "+d", [["_d]])
@@ -135,7 +133,6 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.bo.errorformat = "%f:%l:%c: %m"
     end,
 })
-
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
