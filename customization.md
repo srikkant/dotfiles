@@ -9,10 +9,6 @@ Please apply these customizations to my Omarchy setup (omitting items already ma
      ```
 
 2. **Hyprland Look & Feel (`~/.config/hypr/looknfeel.lua`):**
-   - Set `OMARCHY_MENU_FONT="Geist"`:
-     ```lua
-     hl.env("OMARCHY_MENU_FONT", "Geist")
-     ```
    - Enable frosted glass blur:
      ```lua
      require("default.hypr.glass")()
@@ -24,12 +20,7 @@ Please apply these customizations to my Omarchy setup (omitting items already ma
      o.window("[Ee]macs", { opacity = "0.88 0.85" })
      ```
 
-3. **Environment & Fontconfig:**
-   - Write `~/.config/environment.d/omarchy-font.conf` with: `OMARCHY_MENU_FONT=Geist`
-   - Configure `~/.config/fontconfig/fonts.conf` so `quickshell` resolves monospace as `"Geist"`, with fallback to the system monospace font and emoji fonts, while all other apps use the system monospace font.
-   - Install a persistence hook in `~/.config/omarchy/hooks/font-set.d/topbar-geist.sh` so running `omarchy font set` preserves the Geist topbar setting.
-
-4. **Scroll Direction (`~/.config/hypr/input.lua`):**
+3. **Scroll Direction (`~/.config/hypr/input.lua`):**
    - Configure natural scrolling for touchpads only while keeping standard wheel scrolling for physical mice:
      ```lua
      hl.config({
@@ -43,7 +34,7 @@ Please apply these customizations to my Omarchy setup (omitting items already ma
      ```
    - Reload Hyprland and verify with `hyprctl reload && hyprctl configerrors`.
 
-5. **Sync Zen Browser with Omarchy Theme:**
+4. **Sync Zen Browser with Omarchy Theme:**
    - In all Zen profiles under `~/.config/zen/`, ensure `~/.config/zen/<profile>/user.js` has:
      ```js
      user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
@@ -54,7 +45,7 @@ Please apply these customizations to my Omarchy setup (omitting items already ma
    - In `userChrome.css`, make `#zen-toolbar-background` translucent with `backdrop-filter: blur(16px)` and an opacity of `0.90` (derived from theme background), clear `#zen-browser-background::before` and `::after`, and ensure `#appcontent` and `.browserSidebarContainer` stay 100% solid/opaque.
    - Run the hook to apply the current theme immediately.
 
-6. **Scrolling Workspace Layout & Column Resizing:**
+5. **Scrolling Workspace Layout & Column Resizing:**
    - In `~/.config/hypr/looknfeel.lua`, configure the scrolling layout so each window defaults to 1 full screen width (`0.97` width with subtle peek margin) and define preconfigured widths:
      ```lua
      hl.config({
@@ -80,7 +71,7 @@ Please apply these customizations to my Omarchy setup (omitting items already ma
      o.bind("SUPER + ALT + minus", "Set column half width (0.5)", hl.dsp.layout("colresize 0.5"))
      ```
 
-7. **Idle & Display Off Behavior (`~/.config/omarchy/shell.json`):**
+6. **Idle & Display Off Behavior (`~/.config/omarchy/shell.json`):**
    - Disable screensaver and turn display off after 2 minutes of idle:
      ```json
      "idle": {
@@ -89,7 +80,7 @@ Please apply these customizations to my Omarchy setup (omitting items already ma
      }
      ```
 
-8. **Monitor Navigation Keybindings (`~/.config/hypr/bindings.lua`):**
+7. **Monitor Navigation Keybindings (`~/.config/hypr/bindings.lua`):**
    - Rebind `Super + Ctrl + Left/Right` (and `Up/Down`) to move focus across monitors:
      ```lua
      o.rebind("SUPER + CTRL + LEFT", "Focus on left monitor", hl.dsp.focus({ monitor = "l" }))
@@ -98,7 +89,7 @@ Please apply these customizations to my Omarchy setup (omitting items already ma
      o.bind("SUPER + CTRL + DOWN", "Focus on below monitor", hl.dsp.focus({ monitor = "d" }))
      ```
 
-9. **Rclone Google Drive Bisync (`~/.config/systemd/user/rclone-bisync.{service,timer}`):**
+8. **Rclone Google Drive Bisync (`~/.config/systemd/user/rclone-bisync.{service,timer}`):**
    - The systemd user units are stowed from dotfiles (syncing `~/GoogleDrive/sync` ↔ `gdrive:sync` every 3 minutes).
    - On a new device:
      1. Configure the `gdrive` remote: `rclone config` (do not commit `~/.config/rclone/rclone.conf`).
