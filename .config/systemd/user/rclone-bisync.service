@@ -1,0 +1,8 @@
+[Unit]
+Description=Bidirectional sync of GoogleDrive/sync with gdrive:sync
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rclone bisync %h/GoogleDrive/sync gdrive:sync --conflict-resolve newer --conflict-loser num --resilient --recover --max-lock 2m --verbose

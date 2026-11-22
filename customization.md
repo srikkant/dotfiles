@@ -97,3 +97,15 @@ Please apply these customizations to my Omarchy setup (omitting items already ma
      o.bind("SUPER + CTRL + UP", "Focus on above monitor", hl.dsp.focus({ monitor = "u" }))
      o.bind("SUPER + CTRL + DOWN", "Focus on below monitor", hl.dsp.focus({ monitor = "d" }))
      ```
+
+9. **Rclone Google Drive Bisync (`~/.config/systemd/user/rclone-bisync.{service,timer}`):**
+   - The systemd user units are stowed from dotfiles (syncing `~/GoogleDrive/sync` ↔ `gdrive:sync` every 3 minutes).
+   - On a new device:
+     1. Configure the `gdrive` remote: `rclone config` (do not commit `~/.config/rclone/rclone.conf`).
+     2. Create the local sync directory: `mkdir -p ~/GoogleDrive/sync`
+     3. Run the initial resync: `rclone bisync ~/GoogleDrive/sync gdrive:sync --resync`
+     4. Enable and start the timer:
+        ```bash
+        systemctl --user daemon-reload
+        systemctl --user enable --now rclone-bisync.timer
+        ```
