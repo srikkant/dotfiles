@@ -5,6 +5,8 @@
 
 (load (expand-file-name "omarchy" user-emacs-directory))
 
+(set-face-attribute 'default nil :height 90)
+
 ;; -*- lexical-binding: t; -*-
 
 ;; Bootstrap straight.el
@@ -143,55 +145,6 @@
   (org-modern-tag t)
   (org-modern-timestamp t))
 
-(defun my/org-style-faces ()
-  (interactive)
-  (variable-pitch-mode 1)
-
-  (dolist (face '(org-block
-                  org-block-begin-line
-                  org-block-end-line
-                  org-code
-                  org-verbatim
-                  org-table
-                  org-formula
-                  org-latex-and-related
-                  org-checkbox
-                  org-property-value
-                  org-special-keyword
-                  org-tag
-                  org-meta-line
-                  org-document-info-keyword
-                  org-drawer
-                  org-indent
-                  line-number
-                  line-number-current-line))
-	(set-face-attribute face nil :inherit 'fixed-pitch))
-
-  (dolist (face '(org-block
-                  org-block-begin-line
-                  org-block-end-line
-                  org-code
-                  org-date
-                  org-formula
-                  org-inline-src-block
-                  org-latex-and-related
-                  org-special-keyword
-                  org-table
-                  org-verbatim
-				  line-number
-                  line-number-current-line))
-    (set-face-attribute face nil :inherit 'fixed-pitch))
-
-  (dolist (face '(org-level-1
-                  org-level-2
-                  org-level-3
-                  org-level-4
-                  org-level-5))
-    (set-face-attribute face nil
-                        :inherit 'variable-pitch)))
-
-(add-hook 'org-mode-hook #'my/org-style-faces)
-
 (use-package completion-preview
   :ensure nil
   :hook (prog-mode . completion-preview-mode)
@@ -248,16 +201,23 @@
 
 (use-package eglot
   :straight t
-  :hook ((odin-ts-mode) . eglot-ensure)
+  :hook ((odin-ts-mode typescript-ts-mode tsx-ts-mode js-ts-mode) . eglot-ensure)
   :bind (:map eglot-mode-map ("C-c e a" . eglot-code-actions)
               ("C-c e r" . eglot-rename)
               ("C-c e f" . eglot-format)
               ("C-c e d" . flymake-show-buffer-diagnostics))
   :config
   (add-to-list 'eglot-server-programs '(odin-ts-mode . ("ols")))
+  (add-to-list 'eglot-server-programs
+               '((typescript-ts-mode tsx-ts-mode js-ts-mode) . ("bunx" "tsc" "--lsp" "--stdio")))
   (add-hook 'eglot-managed-mode-hook
             (lambda ()
               (add-hook 'before-save-hook #'eglot-format nil t))))
+
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+(add-to-list 'major-mode-remap-alist '(javascript-mode . js-ts-mode))
+(add-to-list 'major-mode-remap-alist '(js-mode . js-ts-mode))
 
 (use-package markdown-mode
   :ensure t
