@@ -5,7 +5,12 @@
 
 (load (expand-file-name "omarchy" user-emacs-directory))
 
-(set-face-attribute 'default nil :height 90)
+(defun my/set-default-font-height (&optional frame)
+  (set-face-attribute 'default (or frame (selected-frame)) :height 90))
+
+(advice-add 'omarchy-apply-font :after (lambda (&rest _) (my/set-default-font-height)))
+(add-hook 'after-make-frame-functions #'my/set-default-font-height)
+(my/set-default-font-height)
 
 ;; -*- lexical-binding: t; -*-
 
@@ -73,26 +78,6 @@
   :config
   (setq project-vc-extra-root-markers '(".project")))
 
-(use-package ligature
-  :straight t
-  :config
-  (ligature-set-ligatures 't '("www"))
-  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
-  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
-                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
-                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
-                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
-                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
-                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
-                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
-                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
-                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
-                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
-                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
-                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
-                                       "\\\\" "://"))
-  (global-ligature-mode t))
-
 ;;
 ;; ORG & SOME RICE
 ;;
@@ -128,22 +113,6 @@
   :config
   (setq org-roam-directory "~/GoogleDrive/sync/org/roam")
   (org-roam-db-autosync-mode))
-
-(use-package org-modern
-  :straight t
-  :hook ((org-mode . org-modern-mode)
-         (org-agenda-finalize . org-modern-agenda))
-  :custom
-  (org-modern-star "replace")
-  (org-modern-replace-stars "◈◇★○✦")
-  (org-modern-table t)
-  (org-modern-block-name t)
-  (org-modern-block-fringe t)
-  (org-modern-keyword t)
-  (org-modern-todo t)
-  (org-modern-priority t)
-  (org-modern-tag t)
-  (org-modern-timestamp t))
 
 (use-package completion-preview
   :ensure nil

@@ -5,4 +5,4 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/rclone bisync %h/GoogleDrive/sync gdrive:sync --conflict-resolve newer --conflict-loser num --resilient --recover --max-lock 2m --verbose
+ExecStart=/usr/bin/rclone bisync /home/srikkant/GoogleDrive/sync gdrive:sync --conflict-resolve newer --conflict-loser num --resilient --recover --max-lock 2m --verbose
