@@ -103,17 +103,6 @@
   (setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
   (setq org-default-notes-file (concat org-directory "/todo.org")))
 
-(use-package org-roam
-  :straight t
-  :demand t
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture))
-  :config
-  (setq org-roam-directory "~/GoogleDrive/sync/org/roam")
-  (org-roam-db-autosync-mode))
-
 (use-package completion-preview
   :ensure nil
   :hook (prog-mode . completion-preview-mode)
@@ -164,13 +153,25 @@
          ("C-h B" . embark-bindings))
   :init (setq prefix-help-command #'embark-prefix-help-command))
 
+(use-package hyperbole
+  :straight (hyperbole :type git
+                       :host github
+                       :repo "rswgnu/hyperbole")
+  :demand t
+  :init
+  (add-to-list 'load-path
+               (expand-file-name "straight/build/hyperbole/kotl" user-emacs-directory))
+  :config
+  (hyperbole-mode 1))
+
 ;;
 ;; LANGUAGE SUPPORT
 ;;
 
 (use-package eglot
   :straight t
-  :hook ((odin-ts-mode typescript-ts-mode tsx-ts-mode js-ts-mode) . eglot-ensure)
+  :hook ((odin-ts-mode typescript-ts-mode tsx-ts-mode js-ts-mode
+          go-ts-mode go-mod-ts-mode rust-ts-mode) . eglot-ensure)
   :bind (:map eglot-mode-map ("C-c e a" . eglot-code-actions)
               ("C-c e r" . eglot-rename)
               ("C-c e f" . eglot-format)
@@ -181,7 +182,17 @@
                '((typescript-ts-mode tsx-ts-mode js-ts-mode) . ("bunx" "tsc" "--lsp" "--stdio")))
   (add-hook 'eglot-managed-mode-hook
             (lambda ()
-              (add-hook 'before-save-hook #'eglot-format nil t))))
+              (add-hook 'before-save-hook #'eglot-format nil t)
+              (when (derived-mode-p 'go-ts-mode)
+                (add-hook 'before-save-hook
+                          (lambda () (ignore-errors (eglot-code-action-organize-imports (point-min) (point-max))))
+                          nil t)))))
+
+
+(add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
+(add-to-list 'auto-mode-alist '("go\\.mod\\'" . go-mod-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
+(setq go-ts-mode-indent-offset 4)
 
 (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
