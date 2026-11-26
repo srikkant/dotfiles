@@ -1,5 +1,9 @@
 {
   "plugins": {
+    "alabaster.nvim": {
+      "rev": "b902c73fabefc13583bfc0c18b28950ea8f6244f",
+      "src": "https://github.com/dchinmay2/alabaster.nvim"
+    },
     "conform.nvim": {
       "rev": "40dcec5555f960b0a04340d76eabdf4efe78599d",
       "src": "https://github.com/stevearc/conform.nvim"

@@ -5,12 +5,35 @@
 
 (load (expand-file-name "omarchy" user-emacs-directory))
 
-(defun my/set-default-font-height (&optional frame)
-  (set-face-attribute 'default (or frame (selected-frame)) :height 90))
+(defun my/omarchy-apply-ansi-colors (&rest _)
+  "Sync Emacs `ansi-color-*' faces (used by ghostel) with Omarchy's palette."
+  (when (boundp 'omarchy-color-black)
+    (require 'ansi-color)
+    (dolist (pair `((ansi-color-black          . ,omarchy-color-black)
+                    (ansi-color-red            . ,omarchy-color-red)
+                    (ansi-color-green          . ,omarchy-color-green)
+                    (ansi-color-yellow         . ,omarchy-color-yellow)
+                    (ansi-color-blue           . ,omarchy-color-blue)
+                    (ansi-color-magenta        . ,omarchy-color-magenta)
+                    (ansi-color-cyan           . ,omarchy-color-cyan)
+                    (ansi-color-white          . ,omarchy-color-white)
+                    (ansi-color-bright-black   . ,omarchy-color-bright-black)
+                    (ansi-color-bright-red     . ,omarchy-color-bright-red)
+                    (ansi-color-bright-green   . ,omarchy-color-bright-green)
+                    (ansi-color-bright-yellow  . ,omarchy-color-bright-yellow)
+                    (ansi-color-bright-blue    . ,omarchy-color-bright-blue)
+                    (ansi-color-bright-magenta . ,omarchy-color-bright-magenta)
+                    (ansi-color-bright-cyan    . ,omarchy-color-bright-cyan)
+                    (ansi-color-bright-white   . ,omarchy-color-bright-white)))
+      (set-face-attribute (car pair) nil :foreground (cdr pair) :background (cdr pair)))
+    (when (fboundp 'ghostel--apply-palette)
+      (dolist (buf (buffer-list))
+        (with-current-buffer buf
+          (when (derived-mode-p 'ghostel-mode)
+            (ignore-errors (ghostel--apply-palette))))))))
 
-(advice-add 'omarchy-apply-font :after (lambda (&rest _) (my/set-default-font-height)))
-(add-hook 'after-make-frame-functions #'my/set-default-font-height)
-(my/set-default-font-height)
+(advice-add 'omarchy-apply-theme :after #'my/omarchy-apply-ansi-colors)
+(my/omarchy-apply-ansi-colors)
 
 ;; -*- lexical-binding: t; -*-
 
@@ -40,7 +63,10 @@
   (setq-default truncate-lines t)
   (setq eldoc-echo-area-use-multiline-p nil)
   (global-display-line-numbers-mode 1)
-  (pixel-scroll-precision-mode t))
+  (pixel-scroll-precision-mode t)
+  ;; Translucent background with crisp text; Hyprland blurs behind the frame
+  (add-to-list 'default-frame-alist '(alpha-background . 95))
+  (set-frame-parameter nil 'alpha-background 95))
 
 ;; Set up which key first. Even if something else breaks, this will
 ;; help me out.
@@ -59,6 +85,12 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+
+(use-package modus-themes
+  :ensure t
+  :config
+  (setq modus-themes-to-toggle '(modus-operandi modus-vivendi)
+        modus-themes-italic-constructs f))
 
 ;;
 ;; ESSENTIAL BUILT IN PACKAGES
@@ -116,6 +148,8 @@
   (:map completion-preview-active-mode-map
 		("M-n" . completion-preview-next-candidate)
 		("M-p" . completion-preview-prev-candidate)))
+
+
 
 ;;
 ;; THIRD PARTY PACKAGES
@@ -188,6 +222,8 @@
                           (lambda () (ignore-errors (eglot-code-action-organize-imports (point-min) (point-max))))
                           nil t)))))
 
+
+(add-hook 'prog-mode-hook #'hs-minor-mode)
 
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
 (add-to-list 'auto-mode-alist '("go\\.mod\\'" . go-mod-ts-mode))
